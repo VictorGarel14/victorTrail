@@ -20,8 +20,15 @@ const plan=P.map(w=>({ws:w.ws,label:w.label,ph:w.phase.key,phase:w.phase.name,mi
 const strat={};RACES.forEach(r=>{const st=stratState(r.id),C=CPS[r.id],H=+st.goal||1;const NR=nRates(r.id);const o={goal:H,gh:st.gh,ml:st.ml,na:st.na};
   if(NR){const FL=NR.fl;o.fl={n:FL.n,vol:FL.vol,water:FL.water,iso:FL.iso,el:FL.el,drink:NR.R.d?nShort(NR.R.d):'',elec:NR.R.e?nShort(NR.R.e):''};o.rhythm=nRhythm(NR);o.items=NR.R.items.map(it=>({n:nShort(it.p),q:it.q}));o.tot={c:r0(NR.R.tot.c),na:r0(NR.R.tot.na),caf:r0(NR.R.tot.caf||0)};
     const L20=[];NR.L.forEach(x=>{if(x.kind==='drink')L20.push(fr(NR.drinkMl/3)+' ml de '+nShort(x.p));else if(x.kind==='elec'&&x.p.ml&&NR.fl.el)L20.push(fr(x.per*x.p.ml/3)+' ml de '+nShort(x.p));else{const k=x.per/3,nb=Math.round(1/k);L20.push(k>=1.5?fr(k)+' '+nShort(x.p):nb<=1?'1 '+nShort(x.p):'1 '+nShort(x.p)+' tous les '+nb+' bips (toutes les '+nEvery(x.per)+')')}});if(NR.water>5)L20.push(fr(NR.water/3)+" ml d'eau");o.cues=L20}
-  if(C&&C.pts.length){let prev=0;o.rows=C.pts.map(([nm,km,bar])=>{const t=C.limit?H*bar/C.limit:null;const c=clockAt(r,t),cb=clockAt(r,bar);const row={nm,km,t:fmtH(t),clock:c.txt,night:c.night,bar:fmtH(bar),barClock:cb.txt,marge:fmtH(bar-t),base:C.base.includes(nm)};
+  if(C&&C.pts.length){let prev=0;o.rows=C.pts.map(([nm,km,bar])=>{const t=C.limit?H*bar/C.limit:null;const c=clockAt(r,t),cb=clockAt(r,bar);const row={nm,km,t:fmtH(t),th:+t.toFixed(3),bh:bar,clock:c.txt,night:c.night,bar:fmtH(bar),barClock:cb.txt,marge:fmtH(bar-t),base:C.base.includes(nm)};
     if(NR){const ca=nCarry(NR,prev,t);row.carry=ca.map(z=>z.n+' '+nShort(z.x.p)).join(' · ')}prev=t;return row})}
+  if(NR&&o.rows){const A=st.assist||{};const isA=nm=>A[nm]!==false;const FL=NR.fl;const pts=[{nm:'Départ',th:0}].concat(o.rows.slice(0,-1));
+    const nextA=i=>{for(let j=i+1;j<pts.length;j++)if(isA(pts[j].nm))return pts[j];return null};
+    const lab=c=>c.n+' '+(c.x.kind==='drink'||(c.x.kind==='elec'&&c.x.p.ml)?'dose'+(c.n>1?'s':'')+' de ':'')+nShort(c.x.p);
+    o.assist=pts.map((p,i)=>{const on=i===0||isA(p.nm);if(!on)return{nm:p.nm,on:false};const nx=nextA(i);const t1=nx?nx.th:H;const L=(t1-p.th)*st.ml;const fills=Math.max(1,Math.ceil(L/FL.cap));
+      const cc=nCarry(NR,p.th,t1).filter(c=>!(c.x.kind==='drink'||(c.x.kind==='elec'&&c.x.p.ml&&FL.el)));
+      NR.L.forEach(x=>{const k=x.kind==='drink'?FL.iso:(x.kind==='elec'&&x.p.ml&&FL.el)?FL.el:0;if(k)cc.unshift({x,n:Math.ceil(fills*k*FL.vol/(x.p.ml||500)-1e-9)})});
+      return{nm:p.nm,on:true,give:cc.map(lab),solid:NR.solid>1?r0(NR.solid*(t1-p.th)):0,until:nx?nx.nm:'arrivée',dur:fmtH(t1-p.th),liters:+(L/1000).toFixed(1),fills:fills-1,flasks:{water:FL.water,iso:FL.iso,el:FL.el,drink:NR.R.d?nShort(NR.R.d):''}}})}
   strat[r.id]=o});
 const tr=trajectory();
 return {plan,strat,today:t,prog:seasonProg(),phase:phaseOf(t).name,phaseGoal:phaseOf(t).goal,planStart:PLAN_START,week:wk(ws),next:wk(addD(ws,7)),weekReal:{h:+(st.min/60).toFixed(1),km:+st.km.toFixed(1),dp:r0(st.dp),n:st.n},

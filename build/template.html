@@ -244,6 +244,32 @@ section.blk{scroll-margin-top:64px}
 .live span{font-size:.88rem;opacity:.92}
 .live a{background:#fff;color:var(--red);text-decoration:none;font:800 .74rem var(--f);letter-spacing:.12em;text-transform:uppercase;padding:11px 16px;white-space:nowrap;min-height:44px;display:flex;align-items:center}
 @media (max-width:760px){.live{top:48px}.live span{display:none}}
+
+/* assistance */
+.as-top{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;margin-bottom:16px}
+@media (max-width:860px){.as-top{grid-template-columns:1fr}}
+.nextpt{background:var(--night);color:var(--nightink);border:0}
+.nextpt .label{color:#9AA0A8}
+.nextpt .nm{font:800 1.6rem/1.1 var(--f);margin:6px 0 2px}
+.nextpt .eta{font:800 2.6rem/1 var(--f);color:var(--gold2);font-variant-numeric:tabular-nums;margin:10px 0 4px}
+.nextpt .win{font-size:.86rem;color:#C5C8CD}
+.nextpt ul{margin:12px 0 0;padding-left:18px;font-size:.92rem}
+.form2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.form2 label{font:600 .68rem var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.form2 select,.form2 input{font:500 1rem var(--f);padding:11px 10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:0;min-height:46px;width:100%}
+.btn2{font:800 .74rem var(--f);letter-spacing:.12em;text-transform:uppercase;padding:13px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer;min-height:46px}
+.btn2.ghost{background:none;color:var(--ink)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pts{display:grid;gap:8px}
+.pt{background:var(--paper);border:1px solid var(--line);padding:12px 16px;display:grid;grid-template-columns:1fr auto;gap:2px 12px}
+.pt.done{opacity:.6}.pt.next{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.pt.bv{background:color-mix(in srgb,var(--gold) 10%,var(--paper))}
+.pt .a{font-weight:700}.pt .b{font:800 1.1rem var(--f);text-align:right;font-variant-numeric:tabular-nums}
+.pt .c,.pt .e{font-size:.8rem;color:var(--muted)}.pt .e{text-align:right}
+.pt details{grid-column:1/-1;margin-top:6px;font-size:.86rem}
+.pt details summary{cursor:pointer;color:var(--ink2);font-weight:600;min-height:32px;display:flex;align-items:center}
+.pt details ul{margin:4px 0 0;padding-left:18px}
+.risk{color:var(--bad);font-weight:700}
 footer{background:var(--night);color:#9AA0A8;margin-top:72px;padding:40px 0;font-size:.86rem}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
 footer a{color:var(--gold2)}
@@ -253,7 +279,7 @@ footer a{color:var(--gold2)}
 </head>
 <body>
 <nav class="top"><div class="wrap"><a class="brand" href="#top" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="__BRAND_C__" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a>
-<ul><li><a href="#courses">Courses</a></li><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
+<ul><li><a href="#courses">Courses</a></li><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#assistance">Assistance</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
 <div class="live" id="live" role="status" aria-live="polite"><div class="wrap"><b><i></i>EN DIRECT</b><span id="liveT"></span><a id="liveA" href="#" target="_blank" rel="noopener">Suivre ma trace</a></div></div>
 <header class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Saison 2026 – 2027 · Objectif Diagonale des Fous</div>
@@ -284,6 +310,9 @@ footer a{color:var(--gold2)}
 <section class="blk wrap" id="strategie"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Stratégie de course</span><h2>Le plan de bataille</h2><p>Objectif chrono, nutrition heure par heure et temps de passage prévus à chaque point de contrôle.</p></div></div>
   <div class="seg" id="stTabs"></div><div id="stBody"></div>
 </section>
+<section class="blk wrap" id="assistance"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Pour mon assistance</span><h2>Où et quand me retrouver</h2><p>Heures d'arrivée estimées à chaque point, recalculées dès que vous indiquez mon dernier passage (visible sur le suivi officiel ou sur mon lien Coros). Ce que vous devez me donner est listé à chaque point.</p></div></div>
+  <div class="seg" id="asTabs"></div><div id="asBody"></div>
+</section>
 <section class="blk wrap" id="tenue"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Le matos</span><h2>Ce que je porte</h2><p>Mon équipement réel, habillé sur un mannequin 3D à partir des photos produits.</p></div></div>
   <div class="kit" id="kit"></div>
 </section>
@@ -294,7 +323,7 @@ footer a{color:var(--gold2)}
  <a href="#plan" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/></svg>Plan</a>
  <a href="#strategie" data-tab="strategie"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Stratégie</a>
  <a href="#progression" data-tab="progression"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progrès</a>
- <a href="#courses" data-tab="courses"><svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg>Courses</a>
+ <a href="#assistance" data-tab="assistance"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Assistance</a>
  <a href="#tenue" data-tab="tenue"><svg viewBox="0 0 24 24"><path d="M8 3l-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 0 1-8 0z"/></svg>Matos</a>
 </nav>
 <script id="data" type="application/json">__DATA__</script>
@@ -385,6 +414,53 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
 (()=>{const box=document.getElementById('live');async function chk(){try{const r=await fetch('live.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const L=await r.json();const now=Date.now();const ok=L&&L.url&&/^https:\/\//.test(L.url)&&(!L.from||Date.parse(L.from)<=now)&&(!L.until||Date.parse(L.until)>now);
   box.classList.toggle('on',!!ok);if(ok){document.getElementById('liveA').href=L.url;document.getElementById('liveT').textContent=L.title||'Je suis en sortie : suis ma position en temps réel.'}}catch(e){box.classList.remove('on')}}
   chk();setInterval(chk,60000)})();
+
+// assistance : ETA aux points de passage
+(()=>{const S=D.strat||{};const TZ={diag:4,rt100:2,mb42:2};const TZN={diag:'heure de la Réunion',rt100:'heure de Corse',mb42:'heure d\'Afrique du Sud'};
+  const R=D.races;let LIVE=null;let cur=(R.find(r=>diff(t,r.date)>=-2)||R[R.length-1]).id;
+  const WD=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
+  const clk=ms=>{const d=new Date(ms);return WD[d.getUTCDay()]+' '+String(d.getUTCHours()).padStart(2,'0')+':'+String(d.getUTCMinutes()).padStart(2,'0')};
+  const dur=h=>{const m=Math.round(Math.abs(h)*60);return (h<0?'−':'')+(m>=60?Math.floor(m/60)+' h '+String(m%60).padStart(2,'0'):m+' min')};
+  const startMs=r=>pd(r.date)+(+r.start.slice(0,2))*36e5+(+r.start.slice(3,5))*6e4; // heure locale traitée en UTC
+  const nowLocal=id=>Date.now()+(TZ[id]||0)*36e5;
+  const key=id=>'assist-'+id;
+  function getPass(id){let P=null;try{const m=location.hash.match(/p=([^&]+)/);if(m){const[r,i,at]=decodeURIComponent(m[1]).split('|');if(r===id)P={i:+i,at:+at}}}catch(e){}
+    if(!P){try{P=JSON.parse(localStorage.getItem(key(id))||'null')}catch(e){}}
+    if(LIVE&&LIVE.race===id&&LIVE.pass&&LIVE.pass.length){const L=LIVE.pass[LIVE.pass.length-1];const o=S[id];const i=o.rows.findIndex(x=>x.nm===L.nm);const at=Date.parse(L.at+'Z');if(i>=0&&isFinite(at)&&(!P||P.i<i))P={i,at,src:'live'}}
+    return P}
+  function draw(){const r=R.find(x=>x.id===cur),o=S[cur]||{};
+    document.getElementById('asTabs').innerHTML=R.map(x=>'<button data-as="'+x.id+'" aria-pressed="'+(x.id===cur)+'">'+esc(SH[x.id]||x.name)+'</button>').join('');
+    let h='';
+    if(!o.rows||!o.rows.length){h='<div class="card"><p class="note" style="margin:0">Les points de passage de cette course seront ajoutés dès la publication du parcours officiel. Départ prévu le '+fmtDY(r.date)+' à '+r.start.replace(':',' h ')+' ('+TZN[cur]+').</p></div>'}
+    else{
+      const st=startMs(r);const rows=o.rows;const P=getPass(cur);const now=nowLocal(cur);
+      let f=1,done=-1,lastT=0,lastAt=st,info='Prévision d\'après mon plan (objectif '+hm(o.goal*60)+').';
+      if(P&&P.i>=0&&P.i<rows.length){done=P.i;lastAt=P.at;lastT=(P.at-st)/36e5;const pl=rows[P.i].th;const fg=lastT/pl;let fr2=fg;if(P.i>0&&P.prevAt){fr2=((P.at-P.prevAt)/36e5)/(pl-rows[P.i-1].th)}f=Math.max(.6,Math.min(1.8,fg));
+        const pct=Math.round((f-1)*100);info='Recalculé d\'après mon passage à <b>'+esc(rows[P.i].nm)+'</b> à <b>'+clk(P.at)+'</b>'+(P.src==='live'?' (mis à jour par moi)':'')+' : je vais '+(pct>2?'<b>'+pct+' % moins vite</b> que prévu':pct<-2?'<b>'+(-pct)+' % plus vite</b> que prévu':'<b>au rythme prévu</b>')+'.'}
+      const eta=rows.map((x,i)=>{if(i<=done)return null;const dh=(x.th-(done>=0?rows[done].th:0))*f;const ms=lastAt+dh*36e5;const w=Math.max(10/60,dh*.12);return{ms,lo:ms-w*36e5,hi:ms+w*36e5,risk:(ms-st)/36e5>x.bh}});
+      const nx=rows.findIndex((x,i)=>i>done);
+      const A={};(o.assist||[]).forEach(a=>A[a.nm]=a);
+      const giveHTML=a=>a&&a.on?'<ul>'+a.give.map(g=>'<li>'+esc(g)+'</li>').join('')+(a.solid?'<li>≈ '+a.solid+' g de solide (salé et sucré)</li>':'')+'</ul><div class="c" style="margin-top:4px">Pour tenir jusqu\'à '+esc(a.until)+' ('+a.dur+', '+String(a.liters).replace('.',',')+' L à boire). Remplir '+a.flasks.water+' flasque'+(a.flasks.water>1?'s':'')+' d\'eau'+(a.flasks.iso&&a.flasks.drink?' et '+a.flasks.iso+' de '+esc(a.flasks.drink):'')+'.</div>':'';
+      h+='<div class="as-top">';
+      if(nx>=0){const x=rows[nx],e=eta[nx];const left=(e.ms-now)/36e5;const before=now<st;
+        h+='<div class="card nextpt"><span class="label">'+(before?'Premier point après le départ':'Prochain point')+'</span><div class="nm">'+esc(x.nm)+(x.base?' · base vie':'')+'</div><div class="c" style="color:#9AA0A8">'+(x.km!=null?'km '+String(x.km).replace('.',','):'')+'</div><div class="eta">'+clk(e.ms)+'</div><div class="win">entre '+clk(e.lo).slice(5)+' et '+clk(e.hi).slice(5)+' · '+(left>0?'dans '+dur(left):'d\'un instant à l\'autre')+' · '+TZN[cur]+(e.risk?' · <span class="risk">barrière '+esc(x.barClock)+' !</span>':'')+'</div>'+(A[x.nm]&&A[x.nm].on?'<p class="label" style="margin:16px 0 0">À me donner</p>'+giveHTML(A[x.nm]):'')+'</div>'}
+      else h+='<div class="card nextpt"><span class="label">Course terminée</span><div class="nm">Arrivé !</div></div>';
+      const opts=rows.map((x,i)=>'<option value="'+i+'"'+(i===Math.max(0,done)?' selected':'')+'>'+esc(x.nm)+' (prévu '+esc(x.clock)+')</option>').join('');
+      h+='<div class="card"><span class="label">Mettre à jour mon dernier passage</span><p class="note" style="margin:6px 0 0">'+info+'</p><div class="form2"><label>Point<select id="asPt">'+opts+'</select></label><label>Heure de passage<input id="asTm" type="time" value="'+(P?clk(P.at).slice(5):'')+'"></label></div><div class="btns"><button class="btn2" id="asOk">Recalculer</button><button class="btn2 ghost" id="asShare">Partager aux autres</button>'+(P?'<button class="btn2 ghost" id="asReset">Effacer</button>':'')+'</div>'+(LIVE&&LIVE.url?'<div class="btns"><a class="btn2 ghost" style="text-decoration:none;display:inline-flex;align-items:center" href="'+esc(LIVE.url)+'" target="_blank" rel="noopener">Voir ma position en direct</a></div>':'')+'</div></div>';
+      h+='<div class="pts">'+[{nm:'Départ',start:true}].concat(rows).map((x,j)=>{const i=j-1;const a=A[x.nm];
+        if(x.start)return '<div class="pt'+(done>=-1&&now>st?' done':'')+'"><span class="a">Départ · '+esc(r.place.split('→')[0])+'</span><span class="b">'+clk(st)+'</span><span class="c">'+fmtDY(r.date)+'</span><span class="e">'+TZN[cur]+'</span>'+(a&&a.on?'<details><summary>À me donner au départ</summary>'+giveHTML(a)+'</details>':'')+'</div>';
+        const e=eta[i];const isDone=i<=done;
+        return '<div class="pt'+(isDone?' done':'')+(i===nx?' next':'')+(x.base?' bv':'')+'"><span class="a">'+(x.night?'☾ ':'☀ ')+esc(x.nm)+(x.base?' · base vie':'')+'</span><span class="b">'+(isDone?(i===done?'✓ '+clk(P.at):'✓'):clk(e.ms))+'</span><span class="c">'+(x.km!=null?'km '+String(x.km).replace('.',',')+' · ':'')+(isDone?'passé':'entre '+clk(e.lo).slice(5)+' et '+clk(e.hi).slice(5))+'</span><span class="e">barrière '+esc(x.barClock)+(e&&e.risk?' <span class="risk">· risque</span>':'')+'</span>'+(!isDone&&a&&a.on?'<details'+(i===nx?' open':'')+'><summary>Assistance : à me donner</summary>'+giveHTML(a)+'</details>':(!isDone&&a&&!a.on?'<span class="c" style="grid-column:1/-1">Pas d\'assistance prévue ici : ravito de l\'organisation.</span>':''))+'</div>'}).join('')+'</div>';
+      h+='<p class="note">Fourchette ±12 % sur le temps restant. Les heures sont en '+TZN[cur]+'. Vérifiez dans le règlement où l\'assistance est autorisée.</p>'}
+    document.getElementById('asBody').innerHTML=h;
+    document.querySelectorAll('[data-as]').forEach(b=>b.onclick=()=>{cur=b.dataset.as;draw()});
+    const ok=document.getElementById('asOk');if(ok){const rows=o.rows,st=startMs(r);
+      const pick=()=>{const i=+document.getElementById('asPt').value,v=document.getElementById('asTm').value;if(!v)return null;const[hh,mm]=v.split(':').map(Number);const plan=st+rows[i].th*36e5;let best=null;for(let dd=-1;dd<=4;dd++){const c=pd(r.date)+dd*864e5+hh*36e5+mm*6e4;if(!best||Math.abs(c-plan)<Math.abs(best-plan))best=c}return{i,at:best}};
+      ok.onclick=()=>{const p=pick();if(!p)return;try{localStorage.setItem(key(cur),JSON.stringify(p))}catch(e){}history.replaceState(null,'','#p='+encodeURIComponent(cur+'|'+p.i+'|'+p.at));draw()};
+      document.getElementById('asShare').onclick=async()=>{const p=pick()||getPass(cur);if(!p)return;const u=location.origin+location.pathname+'#p='+encodeURIComponent(cur+'|'+p.i+'|'+p.at);const txt='Victor est passé à '+rows[p.i].nm+' à '+clk(p.at).slice(5)+'. Prochains points : '+u;try{if(navigator.share)await navigator.share({title:'Suivi de Victor',text:txt,url:u});else{await navigator.clipboard.writeText(u);document.getElementById('asShare').textContent='Lien copié'}}catch(e){}};
+      const rs=document.getElementById('asReset');if(rs)rs.onclick=()=>{try{localStorage.removeItem(key(cur))}catch(e){}history.replaceState(null,'',location.pathname);draw()}}}
+  fetch('live.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(L=>{LIVE=L;if(L&&L.race)cur=L.race;draw()}).catch(()=>draw());
+  setInterval(draw,120000);draw()})();
 // tenue
 (()=>{const CL={casquette:'Casquette',bonnet:'Bonnet',frontale:'Frontale',tshirt:'T-shirt',secpeau:'Manches longues',coupevent:'Coupe-vent',veste:'Veste',gants:'Gants',batons:'Bâtons',cuissard:'Cuissard',short:'Short',chaussettes:'Chaussettes',chaussures:'Chaussures',sac:'Sac d\'hydratation',couv:'Couverture de survie',creme:'Crème',tel:'Téléphone',sifflet:'Sifflet',gobelet:'Gobelet'};
   const li=L=>L.map(x=>'<li>'+esc((x.brand?x.brand+' ':'')+x.name)+'<span>'+esc(CL[x.cat]||x.cat)+'</span></li>').join('');

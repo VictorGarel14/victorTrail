@@ -17,3 +17,8 @@ Le bandeau « EN DIRECT » s'affiche quand `live.json` (à la racine) contient u
 ```
 
 Le site relit ce fichier toutes les minutes. Pour couper le direct : remettre `"url": ""`. Le build hebdomadaire ne touche pas à ce fichier.
+
+## Assistance
+
+La section « Assistance » calcule les heures d'arrivée à chaque point à partir du tableau de marche. Les suiveurs saisissent le dernier passage, qui reste sur leur téléphone et peut être partagé par lien (`#p=course|point|horodatage`).
+Pour pousser un passage à tout le monde, compléter `live.json` : `{"race":"diag","pass":[{"nm":"Hell-Bourg","at":"2027-10-15T15:40"}]}` (heure locale de la course).
