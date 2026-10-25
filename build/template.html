@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Victor · De Paris au sommet</title>
+<meta name="description" content="La prépa d'un traileur amateur, 40 h de boulot par semaine, jusqu'à la Diagonale des Fous 2027. Séances, progression, matériel : tout est là.">
+<meta property="og:title" content="Victor · De Paris au sommet">
+<meta property="og:description" content="Objectif Diagonale des Fous 2027 : la prépa d'un amateur, en direct.">
+<meta property="og:image" content="img/og.png">
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@400;500&display=swap">
+<style>
+:root{--bg:#F3F1EC;--paper:#FFFFFF;--ink:#14171C;--ink2:#45494F;--muted:#6B7078;--line:#E2DFD8;--soft:#ECE9E2;--gold:#A58D4E;--gold2:#C9B37E;--red:#C0392B;--good:#2F7D5B;--bad:#B0443B;--night:#14171C;--night2:#1E232B;--nightink:#EDEDED;--f:'Manrope',system-ui,sans-serif;--kr:'Noto Sans KR',sans-serif}
+@media (prefers-color-scheme:dark){:root{--bg:#101318;--paper:#181C22;--ink:#EDEDED;--ink2:#C5C8CD;--muted:#9AA0A8;--line:#2A2F37;--soft:#20252C;--gold:#C9B37E;--good:#5DBB8E;--bad:#E07A70}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--f);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.kr{font-family:var(--kr)}
+.label{font:600 .7rem var(--f);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.mono{font-variant-numeric:tabular-nums}
+h2{font:800 clamp(1.5rem,3.4vw,2.1rem)/1.05 var(--f);letter-spacing:-.01em;margin:0}
+h3{font:700 1.05rem/1.2 var(--f);margin:0}
+section.blk{padding-top:64px;padding-bottom:8px}
+.shead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.shead p{margin:6px 0 0;color:var(--ink2);max-width:640px}
+.balise{display:inline-flex;flex-direction:column;width:26px;height:16px;margin-right:12px;vertical-align:middle;border:1px solid var(--line)}
+.balise i{flex:1}.balise i:first-child{background:#fff}.balise i:last-child{background:var(--red)}
+/* nav */
+nav.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--night) 92%,transparent);backdrop-filter:blur(8px);color:var(--nightink)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+nav.top .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:300;letter-spacing:.32em;font-size:.9rem}
+nav.top .brand svg{width:58px;height:22px}
+nav.top ul{display:flex;gap:20px;list-style:none;margin:0;padding:0;font:600 .72rem var(--f);letter-spacing:.16em;text-transform:uppercase}
+nav.top ul a{text-decoration:none;opacity:.8}nav.top ul a:hover{opacity:1;color:var(--gold2)}
+@media (max-width:760px){nav.top ul{display:none}}
+/* hero */
+.hero{background:var(--night);color:var(--nightink);padding:56px 0 64px;overflow:hidden;position:relative}
+.hero .eyebrow{font:600 .72rem var(--f);letter-spacing:.24em;color:#9AA0A8;text-transform:uppercase}
+.hero h1{font:300 clamp(3rem,10vw,6.4rem)/.95 var(--f);letter-spacing:.18em;margin:18px 0 6px}
+.hero .krname{font:400 clamp(1rem,2.4vw,1.3rem) var(--kr);letter-spacing:.5em;color:var(--gold2)}
+.hero .tag{max-width:620px;margin:22px 0 0;font-size:clamp(1.02rem,2vw,1.2rem);color:#C9CDD2}
+.hero .tag b{color:#fff;font-weight:600}
+.line{margin:40px 0 8px;max-width:760px}
+.line svg{width:100%;height:auto;display:block;overflow:visible}
+.line .base{fill:none;stroke:#3A404B;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.line .done{fill:none;stroke:#EDEDED;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.line .tower{fill:none;stroke:#3A404B;stroke-width:1.6;stroke-linecap:round}
+.line .goal{fill:none;stroke:var(--gold2);stroke-width:1.6}
+.line .dot{fill:var(--gold2)}
+.linecap{display:flex;justify-content:space-between;font:500 .78rem var(--f);color:#9AA0A8;max-width:760px;letter-spacing:.04em}
+.bibs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:40px}
+@media (max-width:760px){.bibs{grid-template-columns:1fr}}
+.bib{background:#F7F5EF;color:#14171C;border-radius:4px;padding:0 0 14px;position:relative;box-shadow:0 10px 30px rgba(0,0,0,.35);transform:rotate(var(--r,0deg))}
+.bib::before,.bib::after{content:'';position:absolute;top:10px;width:9px;height:9px;border-radius:50%;background:var(--night);box-shadow:inset 0 0 0 2px #888}
+.bib::before{left:10px}.bib::after{right:10px}
+.bib .band{background:var(--red);color:#fff;font:700 .72rem var(--f);letter-spacing:.18em;text-transform:uppercase;padding:9px 30px;text-align:center;border-radius:4px 4px 0 0}
+.bib.A .band{background:#14171C;color:var(--gold2)}
+.bib .n{font:800 3.4rem/1 var(--f);text-align:center;margin:12px 0 2px;letter-spacing:-.02em}
+.bib .n small{font-size:1.2rem;font-weight:600;margin-right:4px}
+.bib .d{text-align:center;font:600 .78rem var(--f);color:#45494F;letter-spacing:.04em}
+.bib .p{text-align:center;font-size:.8rem;color:#6B7078;margin-top:2px}
+/* cards */
+.grid{display:grid;gap:16px}
+.g4{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.card{background:var(--paper);border:1px solid var(--line);padding:20px;min-width:0}
+.kpi .v{font:700 2.1rem/1.05 var(--f);letter-spacing:-.02em;margin:6px 0 2px}
+.kpi .v small{font-size:.85rem;font-weight:500;color:var(--muted);margin-left:4px}
+.kpi .dl{font:700 .78rem var(--f);white-space:nowrap}
+.kpi .sub{font-size:.82rem;color:var(--muted)}
+.kpi svg{width:100%;height:46px;display:block;margin:10px 0 4px}
+.kpi .row{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+/* semaine */
+.week{display:grid;grid-template-columns:1.25fr 1fr;gap:16px}
+@media (max-width:860px){.week{grid-template-columns:1fr}}
+.sess{list-style:none;margin:0;padding:0}
+.sess li{display:grid;grid-template-columns:44px 22px 1fr auto;gap:10px;align-items:start;padding:11px 0;border-bottom:1px solid var(--line)}
+.sess li:last-child{border-bottom:0}
+.sess .day{font:700 .74rem var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding-top:2px}
+.sess .ck{width:18px;height:18px;border:1.5px solid var(--line);border-radius:50%;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:.7rem}
+.sess .ck.ok{background:var(--good);border-color:var(--good);color:#fff}
+.sess .t{font-weight:600}.sess .g{font-size:.8rem;color:var(--muted)}
+.sess .m{font:600 .8rem var(--f);color:var(--ink2);white-space:nowrap;text-align:right}
+.zchip{display:inline-block;font:700 .62rem var(--f);padding:1px 6px;border-radius:2px;color:#fff;margin-left:6px;vertical-align:1px}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.tiles div{background:var(--paper);padding:16px}
+.tiles b{display:block;font:700 1.7rem/1.1 var(--f);margin-top:4px}
+.tiles b small{font-size:.8rem;color:var(--muted);font-weight:500;margin-left:3px}
+.note{font-size:.92rem;color:var(--ink2);margin:14px 0 0}
+/* chart */
+.chart svg{width:100%;height:auto;display:block}
+.chart text{font:500 11px var(--f);fill:var(--muted)}
+/* séances */
+.acts{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.acts li{background:var(--paper);border:1px solid var(--line);padding:14px 16px;display:grid;grid-template-columns:54px 1fr auto;gap:14px;align-items:center}
+.acts .dt{text-align:center;line-height:1}.acts .dt b{display:block;font:800 1.5rem var(--f)}.acts .dt span{font:600 .66rem var(--f);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.acts .nm{font-weight:600}.acts .k{font-size:.8rem;color:var(--muted)}
+.acts .st{font:600 .86rem var(--f);text-align:right;white-space:nowrap;color:var(--ink2)}
+.acts .st div+div{color:var(--muted);font-weight:500;font-size:.8rem}
+.feel{grid-column:2/-1;font-size:.88rem;color:var(--ink2);font-style:italic;margin-top:-4px}
+/* courses */
+.race{position:relative;padding-top:0;overflow:hidden}
+.race .rb{background:var(--red);color:#fff;margin:0 -20px 16px;padding:10px 20px;display:flex;justify-content:space-between;font:700 .72rem var(--f);letter-spacing:.16em;text-transform:uppercase}
+.race.A .rb{background:var(--night);color:var(--gold2)}
+.race .nums{display:flex;gap:22px;margin:14px 0}
+.race .nums b{display:block;font:800 1.7rem/1 var(--f)}
+.race .nums span{font-size:.75rem;color:var(--muted)}
+.race p{font-size:.9rem;color:var(--ink2);margin:0}
+.ready{display:flex;align-items:center;gap:10px;margin-top:14px;font-size:.82rem;color:var(--muted)}
+.ready i{flex:1;height:5px;background:var(--soft);position:relative;overflow:hidden}.ready i::after{content:'';position:absolute;inset:0 auto 0 0;width:var(--p);background:var(--gold)}
+table.q{width:100%;border-collapse:collapse;font-size:.92rem}
+table.q td{padding:12px 8px;border-bottom:1px solid var(--line)}
+table.q td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip{display:inline-block;font:700 .66rem var(--f);letter-spacing:.1em;padding:3px 8px;border:1px solid currentColor;white-space:nowrap}
+/* tenue */
+.kit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:760px){.kit{grid-template-columns:1fr}}
+.kit .card{display:grid;grid-template-columns:minmax(140px,220px) 1fr;gap:18px;align-items:center;background:#F3F1EC;color:#14171C;border-color:#E2DFD8}
+@media (max-width:520px){.kit .card{grid-template-columns:1fr}.kit img{max-width:220px;margin:0 auto}}
+.kit img{width:100%;height:auto;display:block}
+.kit ul{list-style:none;margin:10px 0 0;padding:0;font-size:.88rem}
+.kit li{padding:6px 0;border-bottom:1px solid #E2DFD8}.kit li span{color:#6B7078;font-size:.78rem;display:block}
+.kit .label{color:#6B7078}
+footer{background:var(--night);color:#9AA0A8;margin-top:72px;padding:40px 0;font-size:.86rem}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+footer a{color:var(--gold2)}
+.soc{display:flex;gap:12px}.soc a{border:1px solid #3A404B;padding:8px 14px;text-decoration:none;font:600 .76rem var(--f);letter-spacing:.12em;text-transform:uppercase}
+.muted{color:var(--muted)}
+</style>
+</head>
+<body>
+<nav class="top"><div class="wrap"><a class="brand" href="#top" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="__BRAND_C__" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a>
+<ul><li><a href="#courses">Courses</a></li><li><a href="#semaine">Semaine</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
+<header class="hero" id="top"><div class="wrap">
+  <div class="eyebrow">Saison 2026 – 2027 · Objectif Diagonale des Fous</div>
+  <h1>VICTOR</h1>
+  <div class="krname">빅토르 · 파리에서 정상까지</div>
+  <p class="tag">Traileur <b>amateur</b>, consultant à plein temps, <b>40 h de boulot par semaine</b> et une vie à côté. Ici, toute ma prépa jusqu'à la <b>Diagonale des Fous</b>, le 14 octobre 2027 : les séances, la progression, le matos. Pour montrer que c'est possible.</p>
+  <div class="line" id="line"></div>
+  <div class="linecap"><span>Départ · 19 oct. 2026</span><span id="linepct"></span><span>La Réunion · 14 oct. 2027</span></div>
+  <div class="bibs" id="bibs"></div>
+</div></header>
+<main>
+<section class="blk wrap" id="semaine"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Cette semaine</span><h2 id="wkTitle"></h2><p id="wkGoal"></p></div><span class="label" id="wkDates"></span></div>
+  <div class="week"><div class="card" id="wkList"></div><div><div class="tiles" id="wkTiles"></div><div class="card chart" style="margin-top:16px"><span class="label">Volume · 12 dernières semaines</span><div id="volChart" style="margin-top:12px"></div></div></div></div>
+</section>
+<section class="blk wrap" id="progression"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Progression</span><h2>Où j'en suis</h2><p>Les indicateurs que je suis chaque semaine. L'écart compare aux 4 dernières semaines.</p></div></div>
+  <div class="grid g4" id="kpis"></div>
+</section>
+<section class="blk wrap" id="seances"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Journal</span><h2>Dernières séances</h2><p>Synchronisées depuis ma montre Coros.</p></div></div>
+  <ul class="acts" id="acts"></ul>
+</section>
+<section class="blk wrap" id="courses"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>La route</span><h2>Trois courses, une ligne d'arrivée</h2><p>Deux courses de préparation, puis la course A. La jauge indique où j'en suis des repères à atteindre avant chaque départ.</p></div></div>
+  <div class="grid g3" id="races"></div>
+  <div class="card" style="margin-top:16px"><span class="label">Qualification Diagonale</span><h3 style="margin:6px 0 4px">2 courses d'au moins 85 points</h3><p class="muted" style="margin:0 0 6px;font-size:.88rem">1 point par km et 1 point par tranche de 100 m de dénivelé positif.</p><table class="q" id="qual"></table></div>
+</section>
+<section class="blk wrap" id="tenue"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Le matos</span><h2>Ce que je porte</h2><p>Mon équipement réel, habillé sur un mannequin 3D à partir des photos produits.</p></div></div>
+  <div class="kit" id="kit"></div>
+</section>
+</main>
+<footer><div class="wrap"><div><div style="color:#EDEDED;font-weight:300;letter-spacing:.3em">VICTOR <span class="kr" style="color:var(--gold2);letter-spacing:.2em">빅토르</span></div><div id="upd" style="margin-top:6px"></div></div><div class="soc" id="soc"></div></div></footer>
+<script id="data" type="application/json">__DATA__</script>
+<script>
+const D=JSON.parse(document.getElementById('data').textContent);
+const BRAND_D='__BRAND_D__',BRAND_T='__BRAND_T__';
+const MOIS=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
+const JOURS=['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
+const pd=s=>{const[y,m,d]=s.split('-').map(Number);return Date.UTC(y,m-1,d)};
+const fmtD=s=>{const d=new Date(pd(s));return d.getUTCDate()+' '+MOIS[d.getUTCMonth()]};
+const fmtDY=s=>fmtD(s)+' '+s.slice(0,4);
+const diff=(a,b)=>Math.round((pd(b)-pd(a))/864e5);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const hm=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?h+'h'+String(r).padStart(2,'0'):r+"'"};
+const fr=n=>Math.round(n).toLocaleString('fr-FR');
+const ZC={Z1:'#5B8DB8',Z2:'#2F7D5B',Z3:'#C9A227',Z4:'#D9752B',Z5:'#B0443B'};
+const SH={mb42:'MUT 60',rt100:'Restonica',diag:'Diagonale'};
+const t=D.today;
+// ligne de saison
+(()=>{const el=document.getElementById('line');el.innerHTML='<svg viewBox="0 -12 568 115" role="img" aria-label="Progression de la saison"><path class="base" d="'+BRAND_D+'"/><path class="tower" d="'+BRAND_T+'"/><path class="done" d="'+BRAND_D+'"/><circle class="goal" cx="262" cy="2" r="6"/><circle class="dot" r="7" cx="0" cy="92"/></svg>';
+  const p=el.querySelector('.done'),L=p.getTotalLength(),pr=D.prog;const pt=p.getPointAtLength(L*pr);p.style.strokeDasharray=(L*pr)+' '+L;const dt=el.querySelector('.dot');dt.setAttribute('cx',pt.x);dt.setAttribute('cy',pt.y);
+  document.getElementById('linepct').textContent=Math.round(pr*100)+' % de la saison'})();
+// dossards
+document.getElementById('bibs').innerHTML=D.races.map((r,i)=>{const n=diff(t,r.date);return '<div class="bib '+r.role+'" style="--r:'+[-1.5,1,-.8][i]+'deg"><div class="band">'+(r.role==='A'?'Course A · ':'')+esc(SH[r.id]||r.name)+'</div><div class="n">'+(n>=0?'<small>J−</small>'+n:'✓')+'</div><div class="d">'+fmtDY(r.date)+' · '+r.km+' km · '+fr(r.dp)+' m D+</div><div class="p">'+esc(r.place.split('(')[0])+'</div></div>'}).join('');
+// semaine
+(()=>{const W=D.week;const ws=W?W.ws:t;document.getElementById('wkDates').textContent=W?'du '+fmtD(ws)+' au '+fmtD(new Date(pd(ws)+6*864e5).toISOString().slice(0,10)):'';
+  const pre=t<D.planStart;document.getElementById('wkTitle').textContent=pre?'Pré-saison libre':(W.label===W.phase?W.label:W.label+' · '+W.phase);
+  document.getElementById('wkGoal').textContent=pre?'La prépa démarre le lundi '+fmtD(D.planStart)+', juste après mon test d\'effort en labo. D\'ici là : footings au feeling, en aisance.':D.phaseGoal;
+  const show=(!W||!W.sessions.length)&&D.next&&D.next.sessions.length?D.next:W;
+  let h='';if(show&&show.sessions.length){if(show!==W)h+='<span class="label">Au programme la semaine prochaine</span>';
+    h+='<ul class="sess">'+show.sessions.slice().sort((a,b)=>a.d-b.d).map(s=>'<li><span class="day">'+JOURS[s.d].slice(0,3)+'</span><span class="ck'+(s.done?' ok':'')+'">'+(s.done?'✓':'')+'</span><span><span class="t">'+esc(s.title)+'</span>'+(s.z?'<span class="zchip" style="background:'+ZC[s.z]+'">'+s.z+'</span>':'')+'<div class="g">'+esc(s.goal)+'</div></span><span class="m">'+hm(s.min)+(s.km?'<br><span class="muted">≈ '+String(s.km).replace('.',',')+' km</span>':'')+(s.dp?'<br><span class="muted">'+fr(s.dp)+' m D+</span>':'')+'</span></li>').join('')+'</ul>'}
+  else h+='<span class="label">Programme</span><p class="note">Pas de programme imposé avant le '+fmtD(D.planStart).replace(/\.$/,'')+' : je cours au feeling, uniquement en aisance.</p>';
+  if(W&&W.note&&!pre)h+='<p class="note">'+esc(W.note)+'</p>';
+  document.getElementById('wkList').innerHTML=h;
+  const R=D.weekReal;document.getElementById('wkTiles').innerHTML=[['Temps',hm(R.h*60),''],['Distance',String(R.km).replace('.',','),'km'],['Dénivelé',fr(R.dp),'m D+'],['Séances',R.n,'']].map(([l,v,u])=>'<div><span class="label">'+l+'</span><b class="mono">'+v+(u?'<small>'+u+'</small>':'')+'</b></div>').join('')})();
+// volume
+(()=>{const W=D.weeks||[];if(!W.length)return;const w=520,h=170,pl=28,pb=26,pt=10;const mx=Math.max(4,...W.map(x=>Math.max(x.h,x.plan||0)));const top=Math.ceil(mx/2)*2;const bw=(w-pl)/W.length;const Y=v=>pt+(1-v/top)*(h-pt-pb);
+  let g='';for(let v=0;v<=top;v+=top>10?4:2)g+='<line x1="'+pl+'" x2="'+w+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--line)"/><text x="'+(pl-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+v+'h</text>';
+  W.forEach((x,i)=>{const x0=pl+i*bw;if(x.plan)g+='<rect x="'+(x0+bw*.14)+'" width="'+bw*.72+'" y="'+Y(x.plan)+'" height="'+(Y(0)-Y(x.plan))+'" fill="none" stroke="var(--muted)" stroke-dasharray="3 3"/>';
+    if(x.h)g+='<rect x="'+(x0+bw*.24)+'" width="'+bw*.52+'" y="'+Y(x.h)+'" height="'+(Y(0)-Y(x.h))+'" fill="'+(i===W.length-1?'var(--gold)':'var(--ink)')+'"><title>Semaine du '+fmtD(x.ws)+' : '+hm(x.h*60)+' · '+String(x.km).replace('.',',')+' km · '+fr(x.dp)+' m D+</title></rect>';
+    if(i%2===(W.length-1)%2)g+='<text x="'+(x0+bw/2)+'" y="'+(h-8)+'" text-anchor="middle">'+(+x.ws.slice(8))+' '+MOIS[+x.ws.slice(5,7)-1].replace('.','')+'</text>'});
+  document.getElementById('volChart').innerHTML='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Heures d\'entraînement par semaine">'+g+'</svg>'})();
+// KPI
+(()=>{const want=['ctl','vma','vo2','thr','ef','vam','vol','dp','long','utmb','rhr','hrv'];
+  const K=D.kpis.filter(k=>want.includes(k.id)&&k.val!=null).sort((a,b)=>want.indexOf(a.id)-want.indexOf(b.id));
+  const spark=k=>{const P=k.spark;if(P.length<2)return '<svg viewBox="0 0 220 46" aria-hidden="true"><line x1="0" x2="220" y1="40" y2="40" stroke="var(--line)" stroke-dasharray="3 3"/></svg>';
+    const W=220,H=46,p=4;const vs=P.map(x=>x[1]);let mn=Math.min(...vs),mx=Math.max(...vs);if(k.bars)mn=0;if(mx===mn){mx+=1;mn-=k.bars?0:1}
+    const x0=pd(P[0][0]),x1=pd(P[P.length-1][0]);const X=d=>p+(pd(d)-x0)/((x1-x0)||1)*(W-2*p);const Y=v=>{const r=(v-mn)/(mx-mn);return p+(k.inv?r:1-r)*(H-2*p)};
+    if(k.bars){const bw=(W-2*p)/P.length*.7;return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'+P.map((q,i)=>'<rect x="'+(p+i*(W-2*p)/P.length).toFixed(1)+'" width="'+bw.toFixed(1)+'" y="'+Y(q[1]).toFixed(1)+'" height="'+Math.max(.5,H-p-Y(q[1])).toFixed(1)+'" fill="'+(i===P.length-1?'var(--gold)':'var(--ink)')+'" fill-opacity="'+(i===P.length-1?1:.5)+'"/>').join('')+'</svg>'}
+    const L=P[P.length-1];return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><path d="'+P.map((q,i)=>(i?'L':'M')+X(q[0]).toFixed(1)+','+Y(q[1]).toFixed(1)).join('')+'" fill="none" stroke="var(--ink)" stroke-width="2" vector-effect="non-scaling-stroke"/>'+(k.pts?P.map(q=>'<circle cx="'+X(q[0]).toFixed(1)+'" cy="'+Y(q[1]).toFixed(1)+'" r="2.5" fill="var(--ink)"/>').join(''):'')+'<circle cx="'+X(L[0]).toFixed(1)+'" cy="'+Y(L[1]).toFixed(1)+'" r="3.5" fill="var(--gold)"/></svg>'};
+  document.getElementById('kpis').innerHTML=K.map(k=>'<div class="card kpi" title="'+esc(k.why)+'"><div class="row"><span class="label">'+esc(k.l)+'</span>'+(k.delta&&k.delta!=='= stable'?'<span class="dl" style="color:'+(k.good>0?'var(--good)':k.good<0?'var(--bad)':'var(--muted)')+'">'+esc(k.delta)+'</span>':'')+'</div><div class="v mono">'+esc(k.val)+(k.u?'<small>'+esc(k.u)+'</small>':'')+'</div>'+spark(k)+'<div class="sub">'+esc(k.why)+'</div></div>').join('')})();
+// séances
+(()=>{const KL={trail:'Trail',run:'Course à pied',gym:'Renforcement',bike:'Vélo',hike:'Randonnée',other:'Activité'};
+  document.getElementById('acts').innerHTML=(D.acts||[]).map(a=>{const d=new Date(pd(a.date));return '<li><div class="dt"><b>'+d.getUTCDate()+'</b><span>'+MOIS[d.getUTCMonth()]+'</span></div><div><div class="nm">'+esc(a.name||KL[a.k]||'Séance')+'</div><div class="k">'+esc(KL[a.k]||'')+(a.z?' · zone principale '+a.z:'')+'</div></div><div class="st">'+(a.km?'<div>'+String(a.km).replace('.',',')+' km</div>':'')+'<div>'+hm(a.dur/60)+(a.dp?' · '+fr(a.dp)+' m D+':'')+'</div></div>'+(a.feel?'<div class="feel">« '+esc(a.feel)+' »</div>':'')+'</li>'}).join('')||'<li>Pas encore de séance publiée.</li>'})();
+// courses
+document.getElementById('races').innerHTML=D.races.map(r=>{const n=diff(t,r.date);return '<div class="card race '+r.role+'"><div class="rb"><span>Course '+r.role+' · '+fmtDY(r.date)+'</span><span>'+(n>=0?'J−'+n:'Courue')+'</span></div><h3>'+esc(r.name)+'</h3><div class="muted" style="font-size:.85rem">'+esc(r.place)+' · départ '+r.start.replace(':',' h ')+'</div><div class="nums"><div><b class="mono">'+r.km+'</b><span>km</span></div><div><b class="mono">'+fr(r.dp)+'</b><span>m D+</span></div><div><b class="mono">'+Math.round(r.km+r.dp/100)+'</b><span>km-effort</span></div></div><p>'+esc(r.info)+'</p><div class="ready"><span>Prêt à</span><i style="--p:'+r.ready+'%"></i><b>'+r.ready+' %</b></div></div>'}).join('');
+document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026','109 + 54',163,'Validée','var(--good)'],['MUT 60 · Afrique du Sud','29 mai 2027','58 + 30',88,'À courir','var(--gold)']].map(([n,d,c,p,s,col])=>'<tr><td><b>'+n+'</b><div class="muted" style="font-size:.8rem">'+d+'</div></td><td class="n muted">'+c+'</td><td class="n"><b>'+p+'</b> pts</td><td class="n"><span class="chip" style="color:'+col+'">'+s+'</span></td></tr>').join('');
+// tenue
+(()=>{const CL={casquette:'Casquette',bonnet:'Bonnet',frontale:'Frontale',tshirt:'T-shirt',secpeau:'Manches longues',coupevent:'Coupe-vent',veste:'Veste',gants:'Gants',batons:'Bâtons',cuissard:'Cuissard',short:'Short',chaussettes:'Chaussettes',chaussures:'Chaussures',sac:'Sac d\'hydratation',couv:'Couverture de survie',creme:'Crème',tel:'Téléphone',sifflet:'Sifflet',gobelet:'Gobelet'};
+  const li=L=>L.map(x=>'<li>'+esc((x.brand?x.brand+' ':'')+x.name)+'<span>'+esc(CL[x.cat]||x.cat)+'</span></li>').join('');
+  const tr=(D.fits.train||[]).filter(x=>!x.bag),dg=D.fits.diag||[];
+  const night=['secpeau','cuissard','chaussettes','chaussures','sac','frontale','gants','bonnet'];const all=Object.values(D.fits).flat();const pick=c=>all.find(x=>x.cat===c);
+  const nt=night.map(pick).filter(Boolean);
+  const bag=dg.filter(x=>x.bag);
+  document.getElementById('kit').innerHTML='<div class="card"><img src="img/tenue-entrainement.webp" width="370" height="860" alt="Mannequin en tenue d\'entraînement : casquette, t-shirt, sac, cuissard, chaussures de trail"><div><span class="label">À l\'entraînement</span><h3 style="margin-top:4px">Sortie trail</h3><ul>'+li(tr)+'</ul></div></div>'+
+   '<div class="card"><img src="img/tenue-nuit.webp" width="370" height="860" alt="Mannequin en tenue de nuit : bonnet, frontale, manches longues, gants, sac, cuissard"><div><span class="label">La nuit sur la Diag</span><h3 style="margin-top:4px">Frontale allumée</h3><ul>'+li(nt)+'</ul>'+(bag.length?'<p class="label" style="margin:14px 0 0">Dans le sac</p><ul>'+li(bag.filter(x=>!night.includes(x.cat)))+'</ul>':'')+'</div></div>'})();
+document.getElementById('upd').textContent='Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros';
+(()=>{const S=D.social||{};const L=[];if(S.ig)L.push(['Instagram','https://instagram.com/'+S.ig.replace('@','')]);if(S.tt)L.push(['TikTok','https://tiktok.com/@'+S.tt.replace('@','')]);document.getElementById('soc').innerHTML=L.map(([n,u])=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+n+'</a>').join('')})();
+</script>
+</body>
+</html>
