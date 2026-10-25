@@ -232,6 +232,18 @@ section.blk{scroll-margin-top:64px}
   table.q td{padding:10px 4px}
   footer{margin-top:48px;padding-bottom:calc(40px + 64px + env(safe-area-inset-bottom))}
 }
+
+/* direct */
+.live{display:none;position:sticky;top:56px;z-index:19;background:var(--red);color:#fff}
+.live.on{display:block}
+.live .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding-top:8px;padding-bottom:8px}
+.live b{font:800 .78rem var(--f);letter-spacing:.18em;display:flex;align-items:center;gap:10px}
+.live b i{width:10px;height:10px;border-radius:50%;background:#fff;animation:pulse 1.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.8)}70%{box-shadow:0 0 0 10px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+@media (prefers-reduced-motion:reduce){.live b i{animation:none}}
+.live span{font-size:.88rem;opacity:.92}
+.live a{background:#fff;color:var(--red);text-decoration:none;font:800 .74rem var(--f);letter-spacing:.12em;text-transform:uppercase;padding:11px 16px;white-space:nowrap;min-height:44px;display:flex;align-items:center}
+@media (max-width:760px){.live{top:48px}.live span{display:none}}
 footer{background:var(--night);color:#9AA0A8;margin-top:72px;padding:40px 0;font-size:.86rem}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
 footer a{color:var(--gold2)}
@@ -242,6 +254,7 @@ footer a{color:var(--gold2)}
 <body>
 <nav class="top"><div class="wrap"><a class="brand" href="#top" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="M50 92 C60 88 66 80 70 70 L76 50 L80 30 L83 14 L86 30 L90 50 L96 70 C100 80 106 88 114 92 H150 L196 52 L214 64 L262 2 L286 34 L304 22 L330 92" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a>
 <ul><li><a href="#courses">Courses</a></li><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
+<div class="live" id="live" role="status" aria-live="polite"><div class="wrap"><b><i></i>EN DIRECT</b><span id="liveT"></span><a id="liveA" href="#" target="_blank" rel="noopener">Suivre ma trace</a></div></div>
 <header class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Saison 2026 – 2027 · Objectif Diagonale des Fous</div>
   <h1>VICTOR</h1>
@@ -367,6 +380,11 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
     else h+='<div class="card"><span class="label">Tableau de marche</span><p class="note" style="margin-top:6px">Les points de contrôle de cette course seront ajoutés dès la publication du parcours officiel.</p></div>';
     document.getElementById('stBody').innerHTML=h;document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{cur=b.dataset.st;draw()})}
   draw()})();
+
+// suivi en direct (live.json, modifiable sans reconstruire le site)
+(()=>{const box=document.getElementById('live');async function chk(){try{const r=await fetch('live.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const L=await r.json();const now=Date.now();const ok=L&&L.url&&/^https:\/\//.test(L.url)&&(!L.from||Date.parse(L.from)<=now)&&(!L.until||Date.parse(L.until)>now);
+  box.classList.toggle('on',!!ok);if(ok){document.getElementById('liveA').href=L.url;document.getElementById('liveT').textContent=L.title||'Je suis en sortie : suis ma position en temps réel.'}}catch(e){box.classList.remove('on')}}
+  chk();setInterval(chk,60000)})();
 // tenue
 (()=>{const CL={casquette:'Casquette',bonnet:'Bonnet',frontale:'Frontale',tshirt:'T-shirt',secpeau:'Manches longues',coupevent:'Coupe-vent',veste:'Veste',gants:'Gants',batons:'Bâtons',cuissard:'Cuissard',short:'Short',chaussettes:'Chaussettes',chaussures:'Chaussures',sac:'Sac d\'hydratation',couv:'Couverture de survie',creme:'Crème',tel:'Téléphone',sifflet:'Sifflet',gobelet:'Gobelet'};
   const li=L=>L.map(x=>'<li>'+esc((x.brand?x.brand+' ':'')+x.name)+'<span>'+esc(CL[x.cat]||x.cat)+'</span></li>').join('');
