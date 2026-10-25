@@ -279,7 +279,7 @@ footer a{color:var(--gold2)}
 </head>
 <body>
 <nav class="top"><div class="wrap"><a class="brand" href="#top" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="__BRAND_C__" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a>
-<ul><li><a href="#courses">Courses</a></li><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#assistance">Assistance</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
+<ul><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#assistance">Assistance</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#courses">Courses</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
 <div class="live" id="live" role="status" aria-live="polite"><div class="wrap"><b><i></i>EN DIRECT</b><span id="liveT"></span><a id="liveA" href="#" target="_blank" rel="noopener">Suivre ma trace</a></div></div>
 <header class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Saison 2026 – 2027 · Objectif Diagonale des Fous</div>
@@ -297,6 +297,12 @@ footer a{color:var(--gold2)}
 <section class="blk wrap" id="plan"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Plan d'entraînement</span><h2>Une saison, semaine par semaine</h2><p>Le plan complet jusqu'à la Diagonale. Les allures et les fréquences cardiaques se recalent sur mes résultats de test labo.</p></div></div>
   <div id="phbar"></div><div class="weeks" id="weeks"></div>
 </section>
+<section class="blk wrap" id="strategie"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Stratégie de course</span><h2>Le plan de bataille</h2><p>Objectif chrono, nutrition heure par heure et temps de passage prévus à chaque point de contrôle.</p></div></div>
+  <div class="seg" id="stTabs"></div><div id="stBody"></div>
+</section>
+<section class="blk wrap" id="assistance"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Pour mon assistance</span><h2>Où et quand me retrouver</h2><p>Heures d'arrivée estimées à chaque point, recalculées dès que vous indiquez mon dernier passage (visible sur le suivi officiel ou sur mon lien Coros). Ce que vous devez me donner est listé à chaque point.</p></div></div>
+  <div class="seg" id="asTabs"></div><div id="asBody"></div>
+</section>
 <section class="blk wrap" id="progression"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Progression</span><h2>Où j'en suis</h2><p>Les indicateurs que je suis chaque semaine. L'écart compare aux 4 dernières semaines.</p></div></div>
   <div class="grid g4" id="kpis"></div>
 </section>
@@ -307,12 +313,6 @@ footer a{color:var(--gold2)}
   <div class="grid g3" id="races"></div>
   <div class="card" style="margin-top:16px"><span class="label">Qualification Diagonale</span><h3 style="margin:6px 0 4px">2 courses d'au moins 85 points</h3><p class="muted" style="margin:0 0 6px;font-size:.88rem">1 point par km et 1 point par tranche de 100 m de dénivelé positif.</p><table class="q" id="qual"></table></div>
 </section>
-<section class="blk wrap" id="strategie"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Stratégie de course</span><h2>Le plan de bataille</h2><p>Objectif chrono, nutrition heure par heure et temps de passage prévus à chaque point de contrôle.</p></div></div>
-  <div class="seg" id="stTabs"></div><div id="stBody"></div>
-</section>
-<section class="blk wrap" id="assistance"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Pour mon assistance</span><h2>Où et quand me retrouver</h2><p>Heures d'arrivée estimées à chaque point, recalculées dès que vous indiquez mon dernier passage (visible sur le suivi officiel ou sur mon lien Coros). Ce que vous devez me donner est listé à chaque point.</p></div></div>
-  <div class="seg" id="asTabs"></div><div id="asBody"></div>
-</section>
 <section class="blk wrap" id="tenue"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Le matos</span><h2>Ce que je porte</h2><p>Mon équipement réel, habillé sur un mannequin 3D à partir des photos produits.</p></div></div>
   <div class="kit" id="kit"></div>
 </section>
@@ -322,8 +322,8 @@ footer a{color:var(--gold2)}
  <a href="#semaine" data-tab="semaine"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Semaine</a>
  <a href="#plan" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/></svg>Plan</a>
  <a href="#strategie" data-tab="strategie"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Stratégie</a>
- <a href="#progression" data-tab="progression"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progrès</a>
  <a href="#assistance" data-tab="assistance"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Assistance</a>
+ <a href="#progression" data-tab="progression"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progrès</a>
  <a href="#tenue" data-tab="tenue"><svg viewBox="0 0 24 24"><path d="M8 3l-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 0 1-8 0z"/></svg>Matos</a>
 </nav>
 <script id="data" type="application/json">__DATA__</script>
