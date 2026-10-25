@@ -184,7 +184,7 @@ section.blk{scroll-margin-top:64px}
   section.blk{padding-top:44px;scroll-margin-top:56px}
   h2{font-size:1.55rem}
   .shead{margin-bottom:16px}.shead p{font-size:.95rem}
-  .tabbar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--night) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:6px 4px calc(6px + env(safe-area-inset-bottom));border-top:1px solid #2A2F37}
+  .tabbar{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--night) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:6px 4px calc(6px + env(safe-area-inset-bottom));border-top:1px solid #2A2F37}
   .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:#9AA0A8;font:600 .6rem var(--f);letter-spacing:.02em;padding:4px 0;min-height:44px;justify-content:center;-webkit-tap-highlight-color:transparent}
   .tabbar a svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   .tabbar a.on{color:var(--gold2)}
@@ -279,13 +279,13 @@ footer a{color:var(--gold2)}
 </head>
 <body>
 <nav class="top"><div class="wrap"><a class="brand" href="#top" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="__BRAND_C__" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a>
-<ul><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#assistance">Assistance</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#courses">Courses</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
+<ul><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#assistance">Assistance</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#courses">Courses</a></li></ul></div></nav>
 <div class="live" id="live" role="status" aria-live="polite"><div class="wrap"><b><i></i>EN DIRECT</b><span id="liveT"></span><a id="liveA" href="#" target="_blank" rel="noopener">Suivre ma trace</a></div></div>
 <header class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Saison 2026 – 2027 · Objectif Diagonale des Fous</div>
   <h1>VICTOR</h1>
   <div class="krname">빅토르 · 파리에서 정상까지</div>
-  <p class="tag">💼 Consultant le jour, 🏃 traileur entre midi et deux, et le week-end ⛰️ je vais vérifier que les montagnes sont toujours là. <b>40 h de boulot par semaine</b>, une vie à côté, et un objectif un peu fou : les <b>180 km de la Diagonale des Fous</b> 🌋, le 14 octobre 2027. Ici, je montre tout : les séances ⏱️, les jambes lourdes 🥵, les progrès 📈 et le matos 🎒. Rendez-vous sur la ligne d'arrivée, à La Redoute 🏁</p>
+  <p class="tag">💼 Consultant le jour, 🏃 traileur entre midi et deux, et le week-end ⛰️ je vais vérifier que les montagnes sont toujours là. <b>40 h de boulot par semaine</b>, une vie à côté, et un objectif un peu fou : les <b>180 km de la Diagonale des Fous</b> 🌋, le 14 octobre 2027. Ici, je montre tout : les séances ⏱️, les jambes lourdes 🥵 et les progrès 📈. Rendez-vous sur la ligne d'arrivée, à La Redoute 🏁</p>
   <div class="line" id="line"></div>
   <div class="linecap"><span>Départ · 19 oct. 2026</span><span id="linepct"></span><span>La Réunion · 14 oct. 2027</span></div>
   <div class="bibs" id="bibs"></div>
@@ -313,9 +313,6 @@ footer a{color:var(--gold2)}
   <div class="grid g3" id="races"></div>
   <div class="card" style="margin-top:16px"><span class="label">Qualification Diagonale</span><h3 style="margin:6px 0 4px">2 courses d'au moins 85 points</h3><p class="muted" style="margin:0 0 6px;font-size:.88rem">1 point par km et 1 point par tranche de 100 m de dénivelé positif.</p><table class="q" id="qual"></table></div>
 </section>
-<section class="blk wrap" id="tenue"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Le matos</span><h2>Ce que je porte</h2><p>Mon équipement réel, habillé sur un mannequin 3D à partir des photos produits.</p></div></div>
-  <div class="kit" id="kit"></div>
-</section>
 </main>
 <footer><div class="wrap"><div><div style="color:#EDEDED;font-weight:300;letter-spacing:.3em">VICTOR <span class="kr" style="color:var(--gold2);letter-spacing:.2em">빅토르</span></div><div id="upd" style="margin-top:6px"></div></div><div class="soc" id="soc"></div></div></footer>
 <nav class="tabbar" aria-label="Sections">
@@ -324,7 +321,6 @@ footer a{color:var(--gold2)}
  <a href="#strategie" data-tab="strategie"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Stratégie</a>
  <a href="#assistance" data-tab="assistance"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Assistance</a>
  <a href="#progression" data-tab="progression"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progrès</a>
- <a href="#tenue" data-tab="tenue"><svg viewBox="0 0 24 24"><path d="M8 3l-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 0 1-8 0z"/></svg>Matos</a>
 </nav>
 <script id="data" type="application/json">__DATA__</script>
 <script>
@@ -461,15 +457,7 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
       const rs=document.getElementById('asReset');if(rs)rs.onclick=()=>{try{localStorage.removeItem(key(cur))}catch(e){}history.replaceState(null,'',location.pathname);draw()}}}
   fetch('live.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(L=>{LIVE=L;if(L&&L.race)cur=L.race;draw()}).catch(()=>draw());
   setInterval(draw,120000);draw()})();
-// tenue
-(()=>{const CL={casquette:'Casquette',bonnet:'Bonnet',frontale:'Frontale',tshirt:'T-shirt',secpeau:'Manches longues',coupevent:'Coupe-vent',veste:'Veste',gants:'Gants',batons:'Bâtons',cuissard:'Cuissard',short:'Short',chaussettes:'Chaussettes',chaussures:'Chaussures',sac:'Sac d\'hydratation',couv:'Couverture de survie',creme:'Crème',tel:'Téléphone',sifflet:'Sifflet',gobelet:'Gobelet'};
-  const li=L=>L.map(x=>'<li>'+esc((x.brand?x.brand+' ':'')+x.name)+'<span>'+esc(CL[x.cat]||x.cat)+'</span></li>').join('');
-  const tr=(D.fits.train||[]).filter(x=>!x.bag),dg=D.fits.diag||[];
-  const night=['secpeau','cuissard','chaussettes','chaussures','sac','frontale','gants','bonnet'];const all=Object.values(D.fits).flat();const pick=c=>all.find(x=>x.cat===c);
-  const nt=night.map(pick).filter(Boolean);
-  const bag=dg.filter(x=>x.bag);
-  document.getElementById('kit').innerHTML='<div class="card"><img src="img/tenue-entrainement.webp" width="370" height="860" alt="Mannequin en tenue d\'entraînement : casquette, t-shirt, sac, cuissard, chaussures de trail"><div><span class="label">À l\'entraînement</span><h3 style="margin-top:4px">Sortie trail</h3><ul>'+li(tr)+'</ul></div></div>'+
-   '<div class="card"><img src="img/tenue-nuit.webp" width="370" height="860" alt="Mannequin en tenue de nuit : bonnet, frontale, manches longues, gants, sac, cuissard"><div><span class="label">La nuit sur la Diag</span><h3 style="margin-top:4px">Frontale allumée</h3><ul>'+li(nt)+'</ul>'+(bag.length?'<p class="label" style="margin:14px 0 0">Dans le sac</p><ul>'+li(bag.filter(x=>!night.includes(x.cat)))+'</ul>':'')+'</div></div>'})();
+
 (()=>{const L=[...document.querySelectorAll('.tabbar a')];const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)L.forEach(x=>x.classList.toggle('on',x.dataset.tab===e.target.id))})},{rootMargin:'-45% 0px -50% 0px'});L.forEach(x=>{const el=document.getElementById(x.dataset.tab);if(el)io.observe(el)})})();
 document.getElementById('upd').textContent='Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros';
 (()=>{const S=D.social||{};const L=[];if(S.ig)L.push(['Instagram','https://instagram.com/'+S.ig.replace('@','')]);if(S.tt)L.push(['TikTok','https://tiktok.com/@'+S.tt.replace('@','')]);document.getElementById('soc').innerHTML=L.map(([n,u])=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+n+'</a>').join('')})();
