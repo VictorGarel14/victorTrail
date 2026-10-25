@@ -2,7 +2,12 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14171C">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Victor Trail">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <title>Victor · De Paris au sommet</title>
 <meta name="description" content="La prépa d'un traileur amateur, 40 h de boulot par semaine, jusqu'à la Diagonale des Fous 2027. Séances, progression, matériel : tout est là.">
 <meta property="og:title" content="Victor · De Paris au sommet">
@@ -165,6 +170,68 @@ table.tm td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:t
 table.tm td.n,table.tm th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 table.tm tr.bv td{background:color-mix(in srgb,var(--gold) 12%,transparent)}
 table.tm .cy{font-size:.78rem;color:var(--muted)}
+
+/* ===== iPhone ===== */
+section.blk{scroll-margin-top:64px}
+.tabbar{display:none}
+.phchips{display:none}
+.tm-cards{display:none}
+@media (max-width:760px){
+  body{padding-bottom:calc(64px + env(safe-area-inset-bottom))}
+  .wrap{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  nav.top{padding-top:env(safe-area-inset-top)}
+  nav.top .wrap{height:48px}
+  section.blk{padding-top:44px;scroll-margin-top:56px}
+  h2{font-size:1.55rem}
+  .shead{margin-bottom:16px}.shead p{font-size:.95rem}
+  .tabbar{display:grid;grid-template-columns:repeat(6,1fr);position:fixed;left:0;right:0;bottom:0;z-index:30;background:color-mix(in srgb,var(--night) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:6px 4px calc(6px + env(safe-area-inset-bottom));border-top:1px solid #2A2F37}
+  .tabbar a{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;color:#9AA0A8;font:600 .6rem var(--f);letter-spacing:.02em;padding:4px 0;min-height:44px;justify-content:center;-webkit-tap-highlight-color:transparent}
+  .tabbar a svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .tabbar a.on{color:var(--gold2)}
+  .hero{padding:36px 0 40px}
+  .hero .tag{font-size:1rem}
+  .line{margin-top:28px}
+  .bibs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:28px -16px 0;padding:6px 16px 14px;scrollbar-width:none}
+  .bibs::-webkit-scrollbar{display:none}
+  .bib{flex:0 0 78%;scroll-snap-align:center;transform:none}
+  .bib .n{font-size:3rem}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .kpi{padding:14px}.kpi .v{font-size:1.55rem}.kpi .sub{display:none}.kpi .row{flex-direction:column;gap:2px}.kpi svg{height:36px;margin:8px 0 0}
+  .card{padding:16px}
+  .tiles b{font-size:1.4rem}
+  .sess li{grid-template-columns:38px 20px 1fr;gap:8px}
+  .sess .m{grid-column:3;text-align:left;font-weight:500}
+  .sess .m br{display:none}.sess .m .muted::before{content:' · '}
+  .wkbody{padding:4px 14px 12px 16px}
+  .wkbody .sess li{grid-template-columns:38px 1fr}
+  .wkbody .sess .m{grid-column:2}
+  .wo li{grid-template-columns:88px 1fr;row-gap:0}.wo li span.muted{grid-column:2;font-size:.74rem}
+  details.wk>summary{padding:12px 14px 12px 0;gap:12px}
+  .phbar{display:none}.phleg{display:none}
+  .phchips{display:flex;gap:8px;overflow-x:auto;margin:0 -16px 14px;padding:2px 16px 8px;scrollbar-width:none;scroll-snap-type:x proximity}
+  .phchips::-webkit-scrollbar{display:none}
+  .phchips button{flex:0 0 auto;scroll-snap-align:start;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:9px 14px 9px 10px;font:600 .82rem var(--f);display:flex;align-items:center;gap:8px;min-height:40px}
+  .phchips button i{width:10px;height:10px;border-radius:50%}
+  .phchips button small{color:var(--muted);font-weight:500}
+  .phchips button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+  .phchips button[aria-pressed=true] small{color:inherit;opacity:.7}
+  .seg{width:100%}.seg button{flex:1;padding:12px 6px;min-height:44px}
+  .stg{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .stg .card b{font-size:1.3rem}
+  .rh li{flex-direction:column;gap:2px}
+  .tm-wrap{display:none}
+  .tm-cards{display:grid;gap:8px;margin-top:10px}
+  .tmc{border:1px solid var(--line);padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 12px}
+  .tmc.bv{background:color-mix(in srgb,var(--gold) 12%,transparent);border-color:var(--gold)}
+  .tmc .a{font-weight:700}.tmc .b{font:700 1.05rem var(--f);text-align:right;font-variant-numeric:tabular-nums}
+  .tmc .c,.tmc .e{font-size:.78rem;color:var(--muted)}.tmc .e{text-align:right}
+  .tmc .f{grid-column:1/-1;font-size:.78rem;color:var(--ink2);margin-top:6px;border-top:1px dashed var(--line);padding-top:6px}
+  .acts li{grid-template-columns:44px 1fr;padding:12px 14px;gap:12px}
+  .acts .st{grid-column:2;text-align:left;display:flex;gap:10px}.acts .st div+div{font-size:.86rem}
+  .race .nums{gap:16px}
+  table.q td{padding:10px 4px}
+  footer{margin-top:48px;padding-bottom:calc(40px + 64px + env(safe-area-inset-bottom))}
+}
 footer{background:var(--night);color:#9AA0A8;margin-top:72px;padding:40px 0;font-size:.86rem}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
 footer a{color:var(--gold2)}
@@ -209,6 +276,14 @@ footer a{color:var(--gold2)}
 </section>
 </main>
 <footer><div class="wrap"><div><div style="color:#EDEDED;font-weight:300;letter-spacing:.3em">VICTOR <span class="kr" style="color:var(--gold2);letter-spacing:.2em">빅토르</span></div><div id="upd" style="margin-top:6px"></div></div><div class="soc" id="soc"></div></div></footer>
+<nav class="tabbar" aria-label="Sections">
+ <a href="#semaine" data-tab="semaine"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Semaine</a>
+ <a href="#plan" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/></svg>Plan</a>
+ <a href="#strategie" data-tab="strategie"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Stratégie</a>
+ <a href="#progression" data-tab="progression"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progrès</a>
+ <a href="#courses" data-tab="courses"><svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h12l-2 4 2 4H5"/></svg>Courses</a>
+ <a href="#tenue" data-tab="tenue"><svg viewBox="0 0 24 24"><path d="M8 3l-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 0 1-8 0z"/></svg>Matos</a>
+</nav>
 <script id="data" type="application/json">__DATA__</script>
 <script>
 const D=JSON.parse(document.getElementById('data').textContent);
@@ -271,12 +346,12 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
   const segs=[{key:'pre',short:'Pré-saison',from:first,to:'2026-11-08'}].concat(PH.map((p,i)=>Object.assign({key:['reprise','fondation','dev','spe1','spe2','recup','diag','taper','post'][i]},p)));
   let sel=(PL.find(w=>w.ws<=t&&diff(w.ws,t)<7)||PL[0]).ph||'pre';if(t<D.planStart)sel='fondation';
   const nowX=Math.max(0,Math.min(100,diff(first,t)/span*100));
-  function draw(){document.getElementById('phbar').innerHTML='<div class="phbar">'+segs.map(p=>{const w=(diff(p.from,p.to)+1)/span*100;return '<button style="width:'+w+'%;background:'+(PC[p.key]||'#888')+'" data-ph="'+p.key+'" aria-pressed="'+(p.key===sel)+'" title="'+esc(p.name||p.short)+'">'+esc(p.short)+'</button>'}).join('')+'<i class="now" style="left:'+nowX+'%" title="Aujourd\'hui"></i></div><div class="phleg"><span>'+fmtD(first)+' 2026</span><span>Clique sur une phase</span><span>'+fmtD(last)+' 2027</span></div>';
+  function draw(){document.getElementById('phbar').innerHTML='<div class="phchips">'+segs.map(p=>'<button data-ph="'+p.key+'" aria-pressed="'+(p.key===sel)+'"><i style="background:'+(PC[p.key]||'#888')+'"></i>'+esc(p.name||p.short)+' <small>'+fmtD(p.from).replace(/\.$/,'')+'</small></button>').join('')+'</div>'+'<div class="phbar">'+segs.map(p=>{const w=(diff(p.from,p.to)+1)/span*100;return '<button style="width:'+w+'%;background:'+(PC[p.key]||'#888')+'" data-ph="'+p.key+'" aria-pressed="'+(p.key===sel)+'" title="'+esc(p.name||p.short)+'">'+esc(p.short)+'</button>'}).join('')+'<i class="now" style="left:'+nowX+'%" title="Aujourd\'hui"></i></div><div class="phleg"><span>'+fmtD(first)+' 2026</span><span>Clique sur une phase</span><span>'+fmtD(last)+' 2027</span></div>';
     const W=PL.filter(w=>(w.ph||'pre')===sel||(sel==='pre'&&w.ws<D.planStart));
     document.getElementById('weeks').innerHTML=(sel!=='pre'&&W.length?'<p class="note" style="margin:0 0 6px"><b>'+esc(W[0].phase)+'</b> · '+esc((PH.find(p=>p.name===W[0].phase)||{}).goal||'')+'</p>':'')+W.map(w=>{const cur=w.ws<=t&&diff(w.ws,t)<7;const end=new Date(pd(w.ws)+6*864e5).toISOString().slice(0,10);
       return '<details class="wk'+(cur?' cur':'')+'"'+(cur?' open':'')+'><summary><i class="bar" style="background:'+(PC[w.ph]||'#888')+'"></i><span><span class="w1">'+esc(w.label)+(cur?' · <span style="color:var(--gold)">cette semaine</span>':'')+'</span><br><span class="w2">'+fmtD(w.ws)+' – '+fmtD(end)+'</span></span><span class="w3">'+(w.min?hm(w.min):'libre')+(w.km?'<br><span class="muted">'+w.km+' km · '+fr(w.dp)+' m</span>':'')+'</span></summary><div class="wkbody">'+(w.note?'<p class="note" style="margin-top:6px">'+esc(w.note)+'</p>':'')+
        (w.s.length?'<ul class="sess">'+w.s.slice().sort((a,b)=>a.d-b.d).map(s=>'<li><span class="day">'+JOURS[s.d].slice(0,3)+'</span><span><span class="t">'+(s.done?'✓ ':'')+esc(s.t)+'</span>'+(s.z?'<span class="zchip" style="background:'+ZC[s.z]+'">'+s.z+'</span>':'')+(s.k?' <span class="chip" style="color:var(--gold);font-size:.58rem;padding:1px 5px">CLÉ</span>':'')+'<div class="ds">'+esc(s.ds.replace(/\s*Voir (la checklist dans )?(l\')?onglet [^.]+\.?/g,''))+'</div>'+(s.wo?'<ul class="wo">'+s.wo.map(b=>'<li><b>'+esc(b[0])+'</b><span>'+esc(b[1])+'</span><span class="muted">'+esc(b[3])+'</span></li>').join('')+'</ul>':'')+'</span><span class="m">'+hm(s.m)+(s.km?'<br><span class="muted">≈ '+String(s.km).replace('.',',')+' km</span>':'')+(s.dp?'<br><span class="muted">'+fr(s.dp)+' m</span>':'')+'</span></li>').join('')+'</ul>':'<p class="note">Pas de programme imposé : footings au feeling.</p>')+'</div></details>'}).join('');
-    document.querySelectorAll('[data-ph]').forEach(b=>b.onclick=()=>{sel=b.dataset.ph;draw()})}
+    document.querySelectorAll('[data-ph]').forEach(b=>b.onclick=()=>{sel=b.dataset.ph;draw()});const c=document.querySelector('.phchips [aria-pressed=true]');if(c){c.parentElement.scrollLeft=c.offsetLeft-16}}
   draw()})();
 // stratégie
 (()=>{const S=D.strat||{};let cur='diag';const R=D.races;
@@ -288,7 +363,7 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
       if(o.cues)h+='<div class="card"><span class="label">À chaque bip de la montre (toutes les 20 min)</span><ul class="cues">'+o.cues.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul>'+(o.items?'<p class="label" style="margin:16px 0 0">À prévoir pour la course</p><ul class="rh">'+o.items.map(x=>'<li><div>'+esc(x.n)+'</div><b class="mono">'+x.q+'</b></li>').join('')+'</ul>':'')+'</div>';
       h+='</div>'}
     else h+='<div class="card" style="margin-bottom:16px"><span class="label">Toutes les 20 minutes</span><p class="note" style="margin-top:6px">'+fr(o.gh/3)+' g de glucides, '+fr(o.ml/3)+' ml d\'eau et '+fr(o.na/3)+' mg de sodium. Les produits exacts seront calés après mes sorties longues tests.</p></div>';
-    if(o.rows&&o.rows.length){h+='<div class="card"><span class="label">Tableau de marche · départ '+fmtDY(r.date)+' à '+r.start.replace(':',' h ')+'</span><div class="scroll" style="margin-top:10px"><table class="tm"><thead><tr><th>Point</th><th class="n">Km</th><th class="n">Passage prévu</th><th class="n">Barrière</th><th class="n">Marge</th>'+(o.rows.some(x=>x.carry)?'<th>À emporter pour ce tronçon</th>':'')+'</tr></thead><tbody>'+o.rows.map(x=>'<tr'+(x.base?' class="bv"':'')+'><td>'+(x.night?'☾ ':'☀ ')+esc(x.nm)+(x.base?' <span class="chip" style="font-size:.56rem;padding:1px 5px">BASE VIE</span>':'')+'</td><td class="n">'+(x.km!=null?String(x.km).replace('.',','):'–')+'</td><td class="n"><b>'+esc(x.clock)+'</b><div class="cy">'+esc(x.t)+' de course</div></td><td class="n">'+esc(x.barClock)+'<div class="cy">'+esc(x.bar)+'</div></td><td class="n">'+esc(x.marge)+'</td>'+(o.rows.some(y=>y.carry)?'<td class="cy">'+esc(x.carry||'')+'</td>':'')+'</tr>').join('')+'</tbody></table></div><p class="note">Temps de passage estimés au prorata des barrières horaires pour un objectif de '+hm(H*60)+'. ☾ = de nuit.</p></div>'}
+    if(o.rows&&o.rows.length){h+='<div class="card"><span class="label">Tableau de marche · départ '+fmtDY(r.date)+' à '+r.start.replace(':',' h ')+'</span><div class="scroll tm-wrap" style="margin-top:10px"><table class="tm"><thead><tr><th>Point</th><th class="n">Km</th><th class="n">Passage prévu</th><th class="n">Barrière</th><th class="n">Marge</th>'+(o.rows.some(x=>x.carry)?'<th>À emporter pour ce tronçon</th>':'')+'</tr></thead><tbody>'+o.rows.map(x=>'<tr'+(x.base?' class="bv"':'')+'><td>'+(x.night?'☾ ':'☀ ')+esc(x.nm)+(x.base?' <span class="chip" style="font-size:.56rem;padding:1px 5px">BASE VIE</span>':'')+'</td><td class="n">'+(x.km!=null?String(x.km).replace('.',','):'–')+'</td><td class="n"><b>'+esc(x.clock)+'</b><div class="cy">'+esc(x.t)+' de course</div></td><td class="n">'+esc(x.barClock)+'<div class="cy">'+esc(x.bar)+'</div></td><td class="n">'+esc(x.marge)+'</td>'+(o.rows.some(y=>y.carry)?'<td class="cy">'+esc(x.carry||'')+'</td>':'')+'</tr>').join('')+'</tbody></table></div><div class="tm-cards">'+o.rows.map(x=>'<div class="tmc'+(x.base?' bv':'')+'"><span class="a">'+(x.night?'☾ ':'☀ ')+esc(x.nm)+'</span><span class="b">'+esc(x.clock)+'</span><span class="c">'+(x.km!=null?'km '+String(x.km).replace('.',',')+' · ':'')+esc(x.t)+' de course'+(x.base?' · base vie':'')+'</span><span class="e">barrière '+esc(x.barClock)+' · marge '+esc(x.marge)+'</span>'+(x.carry?'<span class="f">À emporter : '+esc(x.carry)+'</span>':'')+'</div>').join('')+'</div><p class="note">Temps de passage estimés au prorata des barrières horaires pour un objectif de '+hm(H*60)+'. ☾ = de nuit.</p></div>'}
     else h+='<div class="card"><span class="label">Tableau de marche</span><p class="note" style="margin-top:6px">Les points de contrôle de cette course seront ajoutés dès la publication du parcours officiel.</p></div>';
     document.getElementById('stBody').innerHTML=h;document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{cur=b.dataset.st;draw()})}
   draw()})();
@@ -301,6 +376,7 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
   const bag=dg.filter(x=>x.bag);
   document.getElementById('kit').innerHTML='<div class="card"><img src="img/tenue-entrainement.webp" width="370" height="860" alt="Mannequin en tenue d\'entraînement : casquette, t-shirt, sac, cuissard, chaussures de trail"><div><span class="label">À l\'entraînement</span><h3 style="margin-top:4px">Sortie trail</h3><ul>'+li(tr)+'</ul></div></div>'+
    '<div class="card"><img src="img/tenue-nuit.webp" width="370" height="860" alt="Mannequin en tenue de nuit : bonnet, frontale, manches longues, gants, sac, cuissard"><div><span class="label">La nuit sur la Diag</span><h3 style="margin-top:4px">Frontale allumée</h3><ul>'+li(nt)+'</ul>'+(bag.length?'<p class="label" style="margin:14px 0 0">Dans le sac</p><ul>'+li(bag.filter(x=>!night.includes(x.cat)))+'</ul>':'')+'</div></div>'})();
+(()=>{const L=[...document.querySelectorAll('.tabbar a')];const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)L.forEach(x=>x.classList.toggle('on',x.dataset.tab===e.target.id))})},{rootMargin:'-45% 0px -50% 0px'});L.forEach(x=>{const el=document.getElementById(x.dataset.tab);if(el)io.observe(el)})})();
 document.getElementById('upd').textContent='Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros';
 (()=>{const S=D.social||{};const L=[];if(S.ig)L.push(['Instagram','https://instagram.com/'+S.ig.replace('@','')]);if(S.tt)L.push(['TikTok','https://tiktok.com/@'+S.tt.replace('@','')]);document.getElementById('soc').innerHTML=L.map(([n,u])=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+n+'</a>').join('')})();
 </script>
