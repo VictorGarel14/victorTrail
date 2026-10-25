@@ -125,6 +125,46 @@ table.q td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowr
 .kit ul{list-style:none;margin:10px 0 0;padding:0;font-size:.88rem}
 .kit li{padding:6px 0;border-bottom:1px solid #E2DFD8}.kit li span{color:#6B7078;font-size:.78rem;display:block}
 .kit .label{color:#6B7078}
+
+/* plan */
+.phbar{display:flex;height:34px;border:1px solid var(--line);margin:4px 0 6px;position:relative;overflow:hidden}
+.phbar button{border:0;border-right:1px solid var(--bg);padding:0 6px;font:700 .62rem var(--f);letter-spacing:.08em;text-transform:uppercase;color:#fff;cursor:pointer;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;min-width:0}
+.phbar button[aria-pressed=true]{outline:2px solid var(--ink);outline-offset:-2px}
+.phbar .now{position:absolute;top:0;bottom:0;width:2px;background:var(--gold2);box-shadow:0 0 0 1px var(--night)}
+.phleg{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-bottom:18px}
+.weeks{display:grid;gap:8px}
+details.wk{background:var(--paper);border:1px solid var(--line)}
+details.wk>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:6px 1fr auto;gap:14px;align-items:center;padding:12px 16px 12px 0}
+details.wk>summary::-webkit-details-marker{display:none}
+details.wk>summary .bar{align-self:stretch;margin:-12px 0}
+details.wk>summary .w1{font-weight:700}details.wk>summary .w2{font-size:.8rem;color:var(--muted)}
+details.wk>summary .w3{font:600 .82rem var(--f);text-align:right;white-space:nowrap;color:var(--ink2)}
+details.wk[open]>summary{border-bottom:1px solid var(--line)}
+details.wk.cur{border-color:var(--gold)}
+.wkbody{padding:6px 16px 14px 20px}
+.wkbody .sess li{grid-template-columns:44px 1fr auto}
+.ds{font-size:.84rem;color:var(--ink2);margin-top:3px}
+.wo{list-style:none;margin:8px 0 2px;padding:0;font-size:.8rem;display:grid;gap:3px}
+.wo li{display:grid;grid-template-columns:112px 1fr auto;gap:8px;border:0;padding:0}
+.wo b{font-variant-numeric:tabular-nums}
+.seg{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--ink);width:max-content;max-width:100%;margin-bottom:18px}
+.seg button{background:none;border:0;border-right:1px solid var(--ink);padding:9px 14px;font:700 .72rem var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);cursor:pointer}
+.seg button:last-child{border-right:0}.seg button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+/* stratégie */
+.stg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:16px}
+.stg .card b{display:block;font:700 1.6rem/1.1 var(--f);margin-top:4px}
+.stg .card span.s{font-size:.8rem;color:var(--muted)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media (max-width:760px){.two{grid-template-columns:1fr}}
+.cues{margin:8px 0 0;padding-left:18px}.cues li{margin:4px 0}
+.rh{list-style:none;margin:8px 0 0;padding:0}.rh li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:.9rem}.rh li span{color:var(--muted);font-size:.8rem;display:block}
+.scroll{overflow-x:auto}
+table.tm{width:100%;border-collapse:collapse;font-size:.86rem;min-width:620px}
+table.tm th{font:700 .66rem var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px;border-bottom:1px solid var(--ink)}
+table.tm td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+table.tm td.n,table.tm th.n{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.tm tr.bv td{background:color-mix(in srgb,var(--gold) 12%,transparent)}
+table.tm .cy{font-size:.78rem;color:var(--muted)}
 footer{background:var(--night);color:#9AA0A8;margin-top:72px;padding:40px 0;font-size:.86rem}
 footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
 footer a{color:var(--gold2)}
@@ -134,7 +174,7 @@ footer a{color:var(--gold2)}
 </head>
 <body>
 <nav class="top"><div class="wrap"><a class="brand" href="#top" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="__BRAND_C__" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a>
-<ul><li><a href="#courses">Courses</a></li><li><a href="#semaine">Semaine</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
+<ul><li><a href="#courses">Courses</a></li><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#tenue">Matos</a></li></ul></div></nav>
 <header class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Saison 2026 – 2027 · Objectif Diagonale des Fous</div>
   <h1>VICTOR</h1>
@@ -148,6 +188,9 @@ footer a{color:var(--gold2)}
 <section class="blk wrap" id="semaine"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Cette semaine</span><h2 id="wkTitle"></h2><p id="wkGoal"></p></div><span class="label" id="wkDates"></span></div>
   <div class="week"><div class="card" id="wkList"></div><div><div class="tiles" id="wkTiles"></div><div class="card chart" style="margin-top:16px"><span class="label">Volume · 12 dernières semaines</span><div id="volChart" style="margin-top:12px"></div></div></div></div>
 </section>
+<section class="blk wrap" id="plan"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Plan d'entraînement</span><h2>Une saison, semaine par semaine</h2><p>Le plan complet jusqu'à la Diagonale. Les allures et les fréquences cardiaques se recalent sur mes résultats de test labo.</p></div></div>
+  <div id="phbar"></div><div class="weeks" id="weeks"></div>
+</section>
 <section class="blk wrap" id="progression"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Progression</span><h2>Où j'en suis</h2><p>Les indicateurs que je suis chaque semaine. L'écart compare aux 4 dernières semaines.</p></div></div>
   <div class="grid g4" id="kpis"></div>
 </section>
@@ -157,6 +200,9 @@ footer a{color:var(--gold2)}
 <section class="blk wrap" id="courses"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>La route</span><h2>Trois courses, une ligne d'arrivée</h2><p>Deux courses de préparation, puis la course A. La jauge indique où j'en suis des repères à atteindre avant chaque départ.</p></div></div>
   <div class="grid g3" id="races"></div>
   <div class="card" style="margin-top:16px"><span class="label">Qualification Diagonale</span><h3 style="margin:6px 0 4px">2 courses d'au moins 85 points</h3><p class="muted" style="margin:0 0 6px;font-size:.88rem">1 point par km et 1 point par tranche de 100 m de dénivelé positif.</p><table class="q" id="qual"></table></div>
+</section>
+<section class="blk wrap" id="strategie"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Stratégie de course</span><h2>Le plan de bataille</h2><p>Objectif chrono, nutrition heure par heure et temps de passage prévus à chaque point de contrôle.</p></div></div>
+  <div class="seg" id="stTabs"></div><div id="stBody"></div>
 </section>
 <section class="blk wrap" id="tenue"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Le matos</span><h2>Ce que je porte</h2><p>Mon équipement réel, habillé sur un mannequin 3D à partir des photos produits.</p></div></div>
   <div class="kit" id="kit"></div>
@@ -218,6 +264,34 @@ document.getElementById('bibs').innerHTML=D.races.map((r,i)=>{const n=diff(t,r.d
 // courses
 document.getElementById('races').innerHTML=D.races.map(r=>{const n=diff(t,r.date);return '<div class="card race '+r.role+'"><div class="rb"><span>Course '+r.role+' · '+fmtDY(r.date)+'</span><span>'+(n>=0?'J−'+n:'Courue')+'</span></div><h3>'+esc(r.name)+'</h3><div class="muted" style="font-size:.85rem">'+esc(r.place)+' · départ '+r.start.replace(':',' h ')+'</div><div class="nums"><div><b class="mono">'+r.km+'</b><span>km</span></div><div><b class="mono">'+fr(r.dp)+'</b><span>m D+</span></div><div><b class="mono">'+Math.round(r.km+r.dp/100)+'</b><span>km-effort</span></div></div><p>'+esc(r.info)+'</p><div class="ready"><span>Prêt à</span><i style="--p:'+r.ready+'%"></i><b>'+r.ready+' %</b></div></div>'}).join('');
 document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026','109 + 54',163,'Validée','var(--good)'],['MUT 60 · Afrique du Sud','29 mai 2027','58 + 30',88,'À courir','var(--gold)']].map(([n,d,c,p,s,col])=>'<tr><td><b>'+n+'</b><div class="muted" style="font-size:.8rem">'+d+'</div></td><td class="n muted">'+c+'</td><td class="n"><b>'+p+'</b> pts</td><td class="n"><span class="chip" style="color:'+col+'">'+s+'</span></td></tr>').join('');
+
+// plan
+(()=>{const PL=D.plan||[];if(!PL.length)return;const PH=D.phases;const PC={reprise:'#5B6B7A',fondation:'#2F7D5B',dev:'#3E7CB1',spe1:'#7A5BA6',spe2:'#C0392B',recup:'#6B7078',diag:'#B0443B',taper:'#A58D4E',post:'#45494F',pre:'#9AA0A8'};
+  const first=PL[0].ws,last=PL[PL.length-1].ws;const span=diff(first,last)+7;
+  const segs=[{key:'pre',short:'Pré-saison',from:first,to:'2026-11-08'}].concat(PH.map((p,i)=>Object.assign({key:['reprise','fondation','dev','spe1','spe2','recup','diag','taper','post'][i]},p)));
+  let sel=(PL.find(w=>w.ws<=t&&diff(w.ws,t)<7)||PL[0]).ph||'pre';if(t<D.planStart)sel='fondation';
+  const nowX=Math.max(0,Math.min(100,diff(first,t)/span*100));
+  function draw(){document.getElementById('phbar').innerHTML='<div class="phbar">'+segs.map(p=>{const w=(diff(p.from,p.to)+1)/span*100;return '<button style="width:'+w+'%;background:'+(PC[p.key]||'#888')+'" data-ph="'+p.key+'" aria-pressed="'+(p.key===sel)+'" title="'+esc(p.name||p.short)+'">'+esc(p.short)+'</button>'}).join('')+'<i class="now" style="left:'+nowX+'%" title="Aujourd\'hui"></i></div><div class="phleg"><span>'+fmtD(first)+' 2026</span><span>Clique sur une phase</span><span>'+fmtD(last)+' 2027</span></div>';
+    const W=PL.filter(w=>(w.ph||'pre')===sel||(sel==='pre'&&w.ws<D.planStart));
+    document.getElementById('weeks').innerHTML=(sel!=='pre'&&W.length?'<p class="note" style="margin:0 0 6px"><b>'+esc(W[0].phase)+'</b> · '+esc((PH.find(p=>p.name===W[0].phase)||{}).goal||'')+'</p>':'')+W.map(w=>{const cur=w.ws<=t&&diff(w.ws,t)<7;const end=new Date(pd(w.ws)+6*864e5).toISOString().slice(0,10);
+      return '<details class="wk'+(cur?' cur':'')+'"'+(cur?' open':'')+'><summary><i class="bar" style="background:'+(PC[w.ph]||'#888')+'"></i><span><span class="w1">'+esc(w.label)+(cur?' · <span style="color:var(--gold)">cette semaine</span>':'')+'</span><br><span class="w2">'+fmtD(w.ws)+' – '+fmtD(end)+'</span></span><span class="w3">'+(w.min?hm(w.min):'libre')+(w.km?'<br><span class="muted">'+w.km+' km · '+fr(w.dp)+' m</span>':'')+'</span></summary><div class="wkbody">'+(w.note?'<p class="note" style="margin-top:6px">'+esc(w.note)+'</p>':'')+
+       (w.s.length?'<ul class="sess">'+w.s.slice().sort((a,b)=>a.d-b.d).map(s=>'<li><span class="day">'+JOURS[s.d].slice(0,3)+'</span><span><span class="t">'+(s.done?'✓ ':'')+esc(s.t)+'</span>'+(s.z?'<span class="zchip" style="background:'+ZC[s.z]+'">'+s.z+'</span>':'')+(s.k?' <span class="chip" style="color:var(--gold);font-size:.58rem;padding:1px 5px">CLÉ</span>':'')+'<div class="ds">'+esc(s.ds.replace(/\s*Voir (la checklist dans )?(l\')?onglet [^.]+\.?/g,''))+'</div>'+(s.wo?'<ul class="wo">'+s.wo.map(b=>'<li><b>'+esc(b[0])+'</b><span>'+esc(b[1])+'</span><span class="muted">'+esc(b[3])+'</span></li>').join('')+'</ul>':'')+'</span><span class="m">'+hm(s.m)+(s.km?'<br><span class="muted">≈ '+String(s.km).replace('.',',')+' km</span>':'')+(s.dp?'<br><span class="muted">'+fr(s.dp)+' m</span>':'')+'</span></li>').join('')+'</ul>':'<p class="note">Pas de programme imposé : footings au feeling.</p>')+'</div></details>'}).join('');
+    document.querySelectorAll('[data-ph]').forEach(b=>b.onclick=()=>{sel=b.dataset.ph;draw()})}
+  draw()})();
+// stratégie
+(()=>{const S=D.strat||{};let cur='diag';const R=D.races;
+  function draw(){document.getElementById('stTabs').innerHTML=R.map(r=>'<button data-st="'+r.id+'" aria-pressed="'+(r.id===cur)+'">'+esc(SH[r.id]||r.name)+'</button>').join('');
+    const r=R.find(x=>x.id===cur),o=S[cur]||{};const H=o.goal;let h='';
+    h+='<div class="stg">'+[['Objectif',hm(H*60),'pour '+r.km+' km / '+fr(r.dp)+' m D+'],['Glucides',o.gh+' g/h',fr(H*o.gh)+' g sur la course'],['Eau',o.ml+' ml/h',String(Math.round(H*o.ml/100)/10).replace('.',',')+' L sur la course'],['Sodium',o.na+' mg/h',fr(H*o.na)+' mg sur la course']].map(([l,v,s])=>'<div class="card"><span class="label">'+l+'</span><b class="mono">'+v+'</b><span class="s">'+s+'</span></div>').join('')+'</div>';
+    if(o.rhythm||o.cues){h+='<div class="two">';
+      if(o.rhythm)h+='<div class="card"><span class="label">Mon rythme</span>'+(o.fl?'<p class="note" style="margin:6px 0 0">'+o.fl.n+' flasques de '+o.fl.vol+' ml : '+o.fl.water+' d\'eau'+(o.fl.iso&&o.fl.drink?', '+o.fl.iso+' de '+esc(o.fl.drink):'')+(o.fl.el&&o.fl.elec?', '+o.fl.el+' de '+esc(o.fl.elec):'')+'.</p>':'')+'<ul class="rh">'+o.rhythm.map(x=>'<li><div>'+esc(x.t)+'<span>'+esc(x.d)+'</span></div><b class="mono">'+esc(x.v)+'</b></li>').join('')+'</ul></div>';
+      if(o.cues)h+='<div class="card"><span class="label">À chaque bip de la montre (toutes les 20 min)</span><ul class="cues">'+o.cues.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul>'+(o.items?'<p class="label" style="margin:16px 0 0">À prévoir pour la course</p><ul class="rh">'+o.items.map(x=>'<li><div>'+esc(x.n)+'</div><b class="mono">'+x.q+'</b></li>').join('')+'</ul>':'')+'</div>';
+      h+='</div>'}
+    else h+='<div class="card" style="margin-bottom:16px"><span class="label">Toutes les 20 minutes</span><p class="note" style="margin-top:6px">'+fr(o.gh/3)+' g de glucides, '+fr(o.ml/3)+' ml d\'eau et '+fr(o.na/3)+' mg de sodium. Les produits exacts seront calés après mes sorties longues tests.</p></div>';
+    if(o.rows&&o.rows.length){h+='<div class="card"><span class="label">Tableau de marche · départ '+fmtDY(r.date)+' à '+r.start.replace(':',' h ')+'</span><div class="scroll" style="margin-top:10px"><table class="tm"><thead><tr><th>Point</th><th class="n">Km</th><th class="n">Passage prévu</th><th class="n">Barrière</th><th class="n">Marge</th>'+(o.rows.some(x=>x.carry)?'<th>À emporter pour ce tronçon</th>':'')+'</tr></thead><tbody>'+o.rows.map(x=>'<tr'+(x.base?' class="bv"':'')+'><td>'+(x.night?'☾ ':'☀ ')+esc(x.nm)+(x.base?' <span class="chip" style="font-size:.56rem;padding:1px 5px">BASE VIE</span>':'')+'</td><td class="n">'+(x.km!=null?String(x.km).replace('.',','):'–')+'</td><td class="n"><b>'+esc(x.clock)+'</b><div class="cy">'+esc(x.t)+' de course</div></td><td class="n">'+esc(x.barClock)+'<div class="cy">'+esc(x.bar)+'</div></td><td class="n">'+esc(x.marge)+'</td>'+(o.rows.some(y=>y.carry)?'<td class="cy">'+esc(x.carry||'')+'</td>':'')+'</tr>').join('')+'</tbody></table></div><p class="note">Temps de passage estimés au prorata des barrières horaires pour un objectif de '+hm(H*60)+'. ☾ = de nuit.</p></div>'}
+    else h+='<div class="card"><span class="label">Tableau de marche</span><p class="note" style="margin-top:6px">Les points de contrôle de cette course seront ajoutés dès la publication du parcours officiel.</p></div>';
+    document.getElementById('stBody').innerHTML=h;document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{cur=b.dataset.st;draw()})}
+  draw()})();
 // tenue
 (()=>{const CL={casquette:'Casquette',bonnet:'Bonnet',frontale:'Frontale',tshirt:'T-shirt',secpeau:'Manches longues',coupevent:'Coupe-vent',veste:'Veste',gants:'Gants',batons:'Bâtons',cuissard:'Cuissard',short:'Short',chaussettes:'Chaussettes',chaussures:'Chaussures',sac:'Sac d\'hydratation',couv:'Couverture de survie',creme:'Crème',tel:'Téléphone',sifflet:'Sifflet',gobelet:'Gobelet'};
   const li=L=>L.map(x=>'<li>'+esc((x.brand?x.brand+' ':'')+x.name)+'<span>'+esc(CL[x.cat]||x.cat)+'</span></li>').join('');
