@@ -340,7 +340,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const hm=m=>{m=Math.round(m);const h=Math.floor(m/60),r=m%60;return h?h+'h'+String(r).padStart(2,'0'):r+"'"};
 const fr=n=>Math.round(n).toLocaleString('fr-FR');
 const ZC={Z1:'#5B8DB8',Z2:'#2F7D5B',Z3:'#C9A227',Z4:'#D9752B',Z5:'#B0443B'};
-const SH={mb42:'MUT 60',rt100:'Restonica',diag:'Diagonale'};
+const SH={mb42:'MUT 60',rt100:'Restonica 100K',diag:'Diagonale'};
 const t=D.today;
 // ligne de saison
 (()=>{const el=document.getElementById('line');el.innerHTML='<svg viewBox="0 -12 568 115" role="img" aria-label="Progression de la saison"><path class="base" d="'+BRAND_D+'"/><path class="tower" d="'+BRAND_T+'"/><path class="done" d="'+BRAND_D+'"/><circle class="goal" cx="262" cy="2" r="6"/><circle class="dot" r="7" cx="0" cy="92"/></svg>';
