@@ -187,6 +187,33 @@ dialog.gymd::backdrop{background:rgba(8,10,12,.6)}
 .gymd ol li{counter-increment:ex;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line)}
 .gymd ol li::before{content:counter(ex);font:700 .8rem var(--f);color:var(--muted)}
 .gymd ol li b{font:700 .95rem var(--f);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* séance du jour */
+.td{display:grid;gap:14px}
+.tdc{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--zc,var(--line));padding:18px 20px}
+.tdc .top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.tdc .g{font:700 .66rem var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tdc h3{margin:4px 0 0;font-size:1.35rem;line-height:1.2}
+.tdc .big{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0 4px}
+.tdc .big div{display:flex;flex-direction:column}
+.tdc .big b{font:800 1.6rem var(--f);font-variant-numeric:tabular-nums;line-height:1.1}
+.tdc .big span{font-size:.72rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.tdc .ds{margin:10px 0 0;color:var(--ink2);line-height:1.55}
+.tdc .tag{font:700 .64rem var(--f);letter-spacing:.1em;padding:3px 8px;border:1px solid var(--line);color:var(--muted);text-transform:uppercase}
+.tdc .tag.k{color:var(--gold);border-color:var(--gold)}
+.tdc .done{color:#2F7D5B;font-weight:700;font-size:.85rem}
+.tdc ol.ex{list-style:none;margin:12px 0 0;padding:0;counter-reset:e}
+.tdc ol.ex li{counter-increment:e;display:grid;grid-template-columns:24px 1fr auto;gap:10px;padding:8px 0;border-top:1px solid var(--line);align-items:baseline}
+.tdc ol.ex li::before{content:counter(e);font:700 .78rem var(--f);color:var(--muted)}
+.tdc ol.ex li b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.tdrest{background:var(--paper);border:1px dashed var(--line);padding:22px 20px;text-align:center}
+.tdrest b{display:block;font-size:1.4rem;margin-bottom:4px}
+.tdnext{margin-top:18px}
+.asrc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}.asrc .card p{margin:8px 0 0;font-size:.9rem;line-height:1.55;color:var(--ink2)}.asrc .btn[hidden]{display:none}.asrc .btn{display:inline-block;margin-top:12px;padding:10px 16px;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:700}
+@media (max-width:760px){.asrc{grid-template-columns:1fr}}
+.tdnext ul{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px}
+.tdnext li{display:flex;justify-content:space-between;gap:12px;padding:10px 14px;background:var(--paper);border:1px solid var(--line);font-size:.92rem}
+.tdnext li>span:last-child{color:var(--muted);white-space:nowrap}
 /* ===== iPhone ===== */
 section.blk{scroll-margin-top:64px}
 .tabbar{display:none}
@@ -295,7 +322,7 @@ footer a{color:var(--gold2)}
 </head>
 <body>
 <nav class="top"><div class="wrap"><a class="brand" href="#top" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="__BRAND_C__" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a>
-<ul><li><a href="#semaine">Semaine</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#assistance">Assistance</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#courses">Courses</a></li></ul></div></nav>
+<ul><li><a href="#aujourdhui">Aujourd'hui</a></li><li><a href="#semaine">Tableau de bord</a></li><li><a href="#plan">Plan</a></li><li><a href="#strategie">Stratégie</a></li><li><a href="#assistance">Assistance</a></li><li><a href="#progression">Progression</a></li><li><a href="#seances">Séances</a></li><li><a href="#courses">Courses</a></li></ul></div></nav>
 <div class="live" id="live" role="status" aria-live="polite"><div class="wrap"><b><i></i>EN DIRECT</b><span id="liveT"></span><a id="liveA" href="#" target="_blank" rel="noopener">Suivre ma trace</a></div></div>
 <header class="hero" id="top"><div class="wrap">
   <div class="eyebrow">Saison 2026 – 2027 · Objectif Diagonale des Fous</div>
@@ -307,7 +334,8 @@ footer a{color:var(--gold2)}
   <div class="bibs" id="bibs"></div>
 </div></header>
 <main>
-<section class="blk wrap" id="semaine"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Cette semaine</span><h2 id="wkTitle"></h2><p id="wkGoal"></p></div><span class="label" id="wkDates"></span></div>
+<section class="blk wrap" id="aujourdhui"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Séance du jour</span><h2 id="tdTitle"></h2><p id="tdSub"></p></div><span class="label" id="tdDate"></span></div><div id="tdBody"></div></section>
+<section class="blk wrap" id="semaine"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Tableau de bord · cette semaine</span><h2 id="wkTitle"></h2><p id="wkGoal"></p></div><span class="label" id="wkDates"></span></div>
   <div class="week"><div class="card" id="wkList"></div><div><div class="tiles" id="wkTiles"></div><div class="card chart" style="margin-top:16px"><span class="label">Volume · 12 dernières semaines</span><div id="volChart" style="margin-top:12px"></div></div></div></div>
 </section>
 <section class="blk wrap" id="plan"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Plan d'entraînement</span><h2>Une saison, semaine par semaine</h2><p>Le plan complet jusqu'à la Diagonale. Les allures et les fréquences cardiaques se recalent sur mes résultats de test labo.</p></div></div>
@@ -317,6 +345,8 @@ footer a{color:var(--gold2)}
   <div class="seg" id="stTabs"></div><div id="stBody"></div>
 </section>
 <section class="blk wrap" id="assistance"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Pour mon assistance</span><h2>Où et quand me retrouver</h2><p>Heures d'arrivée estimées à chaque point, recalculées dès que vous indiquez mon dernier passage (visible sur le suivi officiel ou sur mon lien Coros). Ce que vous devez me donner est listé à chaque point.</p></div></div>
+  <div class="asrc"><div class="card"><span class="label">📍 Ma position en direct</span><p id="asLiveP">Le jour de la course, le lien vers ma position GPS en temps réel apparaîtra ici : carte, tracé et position, envoyés par ma montre Coros via mon téléphone. Dans les zones sans réseau, la position se fige : fiez-vous alors aux heures estimées ci-dessous.</p><a class="btn" id="asLiveA" href="#" target="_blank" rel="noopener" hidden>Voir ma position sur la carte</a></div>
+  <div class="card"><span class="label">⏱️ D'où viennent les heures</span><p>Les heures de passage officielles sont relevées aux points de contrôle par le chronométrage de la course : <a href="https://www.grandraid-reunion.com/fr/suivi-courses-et-coureurs/" target="_blank" rel="noopener">LiveTrail</a> pour la Diagonale, UTMB Live pour le MUT 60 et l'UTC 100M. Indiquez ci-dessous mon dernier passage : toutes les heures suivantes sont recalculées d'après mon plan de course.</p></div></div>
   <div class="seg" id="asTabs"></div><div id="asBody"></div>
 </section>
 <section class="blk wrap" id="progression"><div class="shead"><div><span class="label"><span class="balise"><i></i><i></i></span>Progression</span><h2>Où j'en suis</h2><p>Les indicateurs que je suis chaque semaine. L'écart compare aux 4 dernières semaines.</p></div></div>
@@ -332,8 +362,8 @@ footer a{color:var(--gold2)}
 </main>
 <footer><div class="wrap"><div><div style="color:#EDEDED;font-weight:300;letter-spacing:.3em">VICTOR <span class="kr" style="color:var(--gold2);letter-spacing:.2em">빅토르</span></div><div id="upd" style="margin-top:6px"></div></div><div class="soc" id="soc"></div></div></footer>
 <nav class="tabbar" aria-label="Sections">
- <a href="#semaine" data-tab="semaine"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Semaine</a>
- <a href="#plan" data-tab="plan"><svg viewBox="0 0 24 24"><path d="M4 18l5-6 4 3 7-9"/><path d="M15 6h5v5"/></svg>Plan</a>
+ <a href="#aujourdhui" data-tab="aujourdhui"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7.5"/><path d="M12 9v4l2.5 2M9.5 2.5h5M12 2.5v3"/></svg>Aujourd'hui</a>
+ <a href="#semaine" data-tab="semaine" data-also="plan"><svg viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="9" rx="1"/><rect x="13.5" y="3.5" width="7" height="5" rx="1"/><rect x="13.5" y="11.5" width="7" height="9" rx="1"/><rect x="3.5" y="15.5" width="7" height="5" rx="1"/></svg>Tableau</a>
  <a href="#strategie" data-tab="strategie"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Stratégie</a>
  <a href="#assistance" data-tab="assistance"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Assistance</a>
  <a href="#progression" data-tab="progression"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Progrès</a>
@@ -422,9 +452,43 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
     document.getElementById('stBody').innerHTML=h;document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{cur=b.dataset.st;draw()})}
   draw()})();
 
+
+// séance du jour (calculée avec la date du jour, heure de Paris)
+(()=>{const PL=D.plan||[];const q=new URLSearchParams(location.search).get('d');
+  let T;try{T=/^\d{4}-\d{2}-\d{2}$/.test(q||'')?q:new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris'}).format(new Date())}catch(e){T=new Date().toISOString().slice(0,10)}
+  const add=(s,n)=>new Date(pd(s)+n*864e5).toISOString().slice(0,10);
+  const day=d=>{const w=PL.find(w=>{const k=diff(w.ws,d);return k>=0&&k<7});return w?w.s.filter(s=>s.d===diff(w.ws,d)).sort((a,b)=>({m:0,'':1,e:2}[a.sl||'']-{m:0,'':1,e:2}[b.sl||''])):[]};
+  const wd=d=>JOURS[(new Date(pd(d)).getUTCDay()+6)%7];
+  const ZK={Z1:'#5B8DB8',Z2:'#2F7D5B',Z3:'#C9A227',Z4:'#D9752B',Z5:'#B0443B'};
+  const card=s=>{const zc=s.c==='gym'?'#6B7078':s.c==='race'?'var(--gold)':ZK[s.z]||'#6B7078';
+    const big=['<div><b>'+hm(s.m)+'</b><span>durée</span></div>'];if(s.km)big.push('<div><b>'+String(s.km).replace('.',',')+'</b><span>km env.</span></div>');if(s.dp)big.push('<div><b>'+fr(s.dp)+'</b><span>m D+</span></div>');if(s.zt)big.push('<div><b style="color:'+zc+'">'+esc(s.zt.replace(/^Z\d\s*/,''))+'</b><span>zone '+esc(s.z[1])+'</span></div>');
+    let h='<article class="tdc" style="--zc:'+zc+'"><div class="top"><div><div class="g">'+esc(s.g)+'</div><h3>'+esc(s.t)+'</h3></div><div style="display:flex;gap:6px;align-items:center">'+(s.done?'<span class="done">✓ Faite</span>':'')+(s.k?'<span class="tag k">Séance clé</span>':'')+(s.sl?'<span class="tag">'+(s.sl==='m'?'Midi':'Soir')+'</span>':'')+'</div></div>';
+    h+='<div class="big">'+big.join('')+'</div>'+(s.pc?'<div class="muted" style="font-size:.82rem">Allure indicative '+esc(s.pc)+'</div>':'');
+    {let ds=String(s.ds||'').replace(/\s*Voir (la checklist dans )?(l')?onglet [^.]+\.?/g,'').replace(/^(\d+h\d*|\d+')\s*(Z\d[^,.]*?bpm)?(–Z\d[^,.]*?bpm)?[\s,.]*/,'').trim();if(ds)h+='<p class="ds">'+esc(ds.charAt(0).toUpperCase()+ds.slice(1))+'</p>'}
+    if(s.wo)h+='<ul class="wo">'+s.wo.map(b=>'<li><b>'+esc(b[0])+'</b><span>'+esc(b[1])+(b[2]?'<span class="zchip" style="background:'+(ZK[b[2]]||'#888')+'">'+esc(b[2])+'</span>':'')+'</span><span class="muted">'+esc(b[3])+'</span></li>').join('')+'</ul>';
+    const g=s.gk&&D.gym&&D.gym[s.gk];if(g)h+='<p class="ds" style="font-size:.88rem">'+esc(g.intro)+'</p><ol class="ex">'+g.ex.map(e=>'<li><span>'+esc(e[0])+'</span><b>'+esc(e[1])+'</b></li>').join('')+'</ol>';
+    return h+'</article>'};
+  const today=day(T);
+  const cap=x=>x.charAt(0).toUpperCase()+x.slice(1);document.getElementById('tdDate').textContent='';
+  const races=(D.races||[]).find(r=>r.date===T);
+  let h='';
+  if(today.length){const tot=today.reduce((a,s)=>a+s.m,0);
+    document.getElementById('tdTitle').textContent=cap(wd(T))+' '+fmtD(T).replace(/\.$/,'');
+    document.getElementById('tdSub').textContent=(races?'Jour de course 🏁 · ':'')+(today.length>1?today.length+' séances, ':'')+hm(tot)+' au total'+(today.some(s=>s.k)?', dont une séance clé':'')+'.';
+    h+='<div class="td">'+today.map(card).join('')+'</div>'}
+  else{const pre=T<D.planStart;
+    document.getElementById('tdTitle').textContent=cap(wd(T))+' '+fmtD(T).replace(/\.$/,'')+' · '+(pre?'pré-saison libre':'repos 😴');
+    document.getElementById('tdSub').textContent=pre?'Pas de programme imposé avant le '+fmtD(D.planStart).replace(/\.$/,'')+' : footing au feeling, en aisance, si l\'envie est là.':'Aucune séance prévue aujourd\'hui : les jambes récupèrent, c\'est là que la forme se construit.';
+    h+='<div class="tdrest"><b>'+(pre?'🏃 Au feeling':'🛋️ Jour off')+'</b><span class="muted">'+(pre?'Uniquement en aisance : je dois pouvoir parler en courant.':'Sommeil, hydratation, un peu de mobilité si besoin.')+'</span></div>'}
+  // prochaines séances
+  let nx=[],d=T;for(let i=1;i<=21&&nx.length<1;i++){d=add(T,i);const L=day(d);if(L.length)nx.push([d,L])}
+  if(nx.length){const[d1,L]=nx[0];const lab=diff(T,d1)===1?'Demain':wd(d1).replace(/^./,c=>c.toUpperCase())+' '+fmtD(d1);
+    h+='<div class="tdnext"><span class="label">'+esc(lab)+'</span><ul>'+L.map(s=>'<li><span>'+esc(s.t)+(s.z?'<span class="zchip" style="background:'+(ZK[s.z]||'#888')+'">'+s.z+'</span>':'')+'</span><span>'+hm(s.m)+(s.dp?' · '+fr(s.dp)+' m D+':'')+'</span></li>').join('')+'</ul></div>'}
+  document.getElementById('tdBody').innerHTML=h;
+})();
 // suivi en direct (live.json, modifiable sans reconstruire le site)
 (()=>{const box=document.getElementById('live');async function chk(){try{const r=await fetch('live.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const L=await r.json();const now=Date.now();const ok=L&&L.url&&/^https:\/\//.test(L.url)&&(!L.from||Date.parse(L.from)<=now)&&(!L.until||Date.parse(L.until)>now);
-  box.classList.toggle('on',!!ok);if(ok){document.getElementById('liveA').href=L.url;document.getElementById('liveT').textContent=L.title||'Je suis en sortie : suis ma position en temps réel.'}}catch(e){box.classList.remove('on')}}
+  box.classList.toggle('on',!!ok);{const A=document.getElementById('asLiveA'),Pp=document.getElementById('asLiveP');if(A){A.hidden=!ok;if(ok){A.href=L.url;Pp.textContent=(L.title||'Je suis en course ou en sortie')+' : ma position GPS se met à jour en temps réel tant que mon téléphone capte. Sans réseau, fiez-vous aux heures estimées ci-dessous.'}}}if(ok){document.getElementById('liveA').href=L.url;document.getElementById('liveT').textContent=L.title||'Je suis en sortie : suis ma position en temps réel.'}}catch(e){box.classList.remove('on')}}
   chk();setInterval(chk,60000)})();
 
 // assistance : ETA aux points de passage
@@ -474,7 +538,7 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
   fetch('live.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(L=>{LIVE=L;if(L&&L.race)cur=L.race;draw()}).catch(()=>draw());
   setInterval(draw,120000);draw()})();
 
-(()=>{const L=[...document.querySelectorAll('.tabbar a')];const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)L.forEach(x=>x.classList.toggle('on',x.dataset.tab===e.target.id))})},{rootMargin:'-45% 0px -50% 0px'});L.forEach(x=>{const el=document.getElementById(x.dataset.tab);if(el)io.observe(el)})})();
+(()=>{const L=[...document.querySelectorAll('.tabbar a')];const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)L.forEach(x=>x.classList.toggle('on',x.dataset.tab===e.target.id||(x.dataset.also||'').split(',').includes(e.target.id)))})},{rootMargin:'-45% 0px -50% 0px'});L.forEach(x=>[x.dataset.tab].concat((x.dataset.also||'').split(',').filter(Boolean)).forEach(id=>{const el=document.getElementById(id);if(el)io.observe(el)}))})();
 document.getElementById('upd').textContent='Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros';
 (()=>{const S=D.social||{};const L=[];if(S.ig)L.push(['Instagram','https://instagram.com/'+S.ig.replace('@','')]);if(S.tt)L.push(['TikTok','https://tiktok.com/@'+S.tt.replace('@','')]);document.getElementById('soc').innerHTML=L.map(([n,u])=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+n+'</a>').join('')})();
 </script>
