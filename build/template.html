@@ -171,6 +171,22 @@ table.tm td.n,table.tm th.n{text-align:right;white-space:nowrap;font-variant-num
 table.tm tr.bv td{background:color-mix(in srgb,var(--gold) 12%,transparent)}
 table.tm .cy{font-size:.78rem;color:var(--muted)}
 
+
+.sess li.gym{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.sess li.gym:hover .t,.sess li.gym:focus-visible .t{text-decoration:underline;text-underline-offset:3px}
+.sess li.gym:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.sess .go{font:600 .72rem var(--f);color:var(--gold);white-space:nowrap;text-decoration:none!important;display:inline-block}
+dialog.gymd{border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:0;width:min(560px,calc(100% - 32px));max-height:calc(100% - 32px)}
+dialog.gymd::backdrop{background:rgba(8,10,12,.6)}
+.gymd .gh{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;padding:18px 20px 10px;position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--line)}
+.gymd h3{margin:0;font-size:1.25rem}
+.gymd .gx{border:1px solid var(--line);background:transparent;color:var(--ink);min-width:40px;min-height:40px;font-size:1rem;cursor:pointer}
+.gymd .gb{padding:12px 20px 20px}
+.gymd .gb p{margin:0 0 12px;color:var(--ink2);font-size:.92rem;line-height:1.5}
+.gymd ol{list-style:none;margin:0;padding:0;counter-reset:ex}
+.gymd ol li{counter-increment:ex;display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line)}
+.gymd ol li::before{content:counter(ex);font:700 .8rem var(--f);color:var(--muted)}
+.gymd ol li b{font:700 .95rem var(--f);font-variant-numeric:tabular-nums;white-space:nowrap}
 /* ===== iPhone ===== */
 section.blk{scroll-margin-top:64px}
 .tabbar{display:none}
@@ -350,7 +366,7 @@ document.getElementById('bibs').innerHTML=D.races.map((r,i)=>{const n=diff(t,r.d
   document.getElementById('wkGoal').textContent=pre?'La prépa démarre le lundi '+fmtD(D.planStart)+', juste après mon test d\'effort en labo. D\'ici là : footings au feeling, en aisance.':D.phaseGoal;
   const show=(!W||!W.sessions.length)&&D.next&&D.next.sessions.length?D.next:W;
   let h='';if(show&&show.sessions.length){if(show!==W)h+='<span class="label">Au programme la semaine prochaine</span>';
-    h+='<ul class="sess">'+show.sessions.slice().sort((a,b)=>a.d-b.d).map(s=>'<li><span class="day">'+JOURS[s.d].slice(0,3)+'</span><span class="ck'+(s.done?' ok':'')+'">'+(s.done?'✓':'')+'</span><span><span class="t">'+esc(s.title)+'</span>'+(s.z?'<span class="zchip" style="background:'+ZC[s.z]+'">'+s.z+'</span>':'')+'<div class="g">'+esc(s.goal)+'</div></span><span class="m">'+hm(s.min)+(s.km?'<br><span class="muted">≈ '+String(s.km).replace('.',',')+' km</span>':'')+(s.dp?'<br><span class="muted">'+fr(s.dp)+' m D+</span>':'')+'</span></li>').join('')+'</ul>'}
+    h+='<ul class="sess">'+show.sessions.slice().sort((a,b)=>a.d-b.d).map(s=>'<li'+(s.gk?' class="gym" data-gk="'+s.gk+'" tabindex="0" role="button" aria-label="Voir la séance : '+esc(s.title)+'"':'')+'><span class="day">'+JOURS[s.d].slice(0,3)+'</span><span class="ck'+(s.done?' ok':'')+'">'+(s.done?'✓':'')+'</span><span><span class="t">'+esc(s.title)+(s.gk?' <span class="go">Voir les exercices ›</span>':'')+'</span>'+(s.z?'<span class="zchip" style="background:'+ZC[s.z]+'">'+s.z+'</span>':'')+'<div class="g">'+esc(s.goal)+'</div></span><span class="m">'+hm(s.min)+(s.km?'<br><span class="muted">≈ '+String(s.km).replace('.',',')+' km</span>':'')+(s.dp?'<br><span class="muted">'+fr(s.dp)+' m D+</span>':'')+'</span></li>').join('')+'</ul>'}
   else h+='<span class="label">Programme</span><p class="note">Pas de programme imposé avant le '+fmtD(D.planStart).replace(/\.$/,'')+' : je cours au feeling, uniquement en aisance.</p>';
   if(W&&W.note&&!pre)h+='<p class="note">'+esc(W.note)+'</p>';
   document.getElementById('wkList').innerHTML=h;
@@ -388,7 +404,7 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
     const W=PL.filter(w=>(w.ph||'pre')===sel||(sel==='pre'&&w.ws<D.planStart));
     document.getElementById('weeks').innerHTML=(sel!=='pre'&&W.length?'<p class="note" style="margin:0 0 6px"><b>'+esc(W[0].phase)+'</b> · '+esc((PH.find(p=>p.name===W[0].phase)||{}).goal||'')+'</p>':'')+W.map(w=>{const cur=w.ws<=t&&diff(w.ws,t)<7;const end=new Date(pd(w.ws)+6*864e5).toISOString().slice(0,10);
       return '<details class="wk'+(cur?' cur':'')+'"'+(cur?' open':'')+'><summary><i class="bar" style="background:'+(PC[w.ph]||'#888')+'"></i><span><span class="w1">'+esc(w.label)+(cur?' · <span style="color:var(--gold)">cette semaine</span>':'')+'</span><br><span class="w2">'+fmtD(w.ws)+' – '+fmtD(end)+'</span></span><span class="w3">'+(w.min?hm(w.min):'libre')+(w.km?'<br><span class="muted">'+w.km+' km · '+fr(w.dp)+' m</span>':'')+'</span></summary><div class="wkbody">'+(w.note?'<p class="note" style="margin-top:6px">'+esc(w.note)+'</p>':'')+
-       (w.s.length?'<ul class="sess">'+w.s.slice().sort((a,b)=>a.d-b.d).map(s=>'<li><span class="day">'+JOURS[s.d].slice(0,3)+'</span><span><span class="t">'+(s.done?'✓ ':'')+esc(s.t)+'</span>'+(s.z?'<span class="zchip" style="background:'+ZC[s.z]+'">'+s.z+'</span>':'')+(s.k?' <span class="chip" style="color:var(--gold);font-size:.58rem;padding:1px 5px">CLÉ</span>':'')+'<div class="ds">'+esc(s.ds.replace(/\s*Voir (la checklist dans )?(l\')?onglet [^.]+\.?/g,''))+'</div>'+(s.wo?'<ul class="wo">'+s.wo.map(b=>'<li><b>'+esc(b[0])+'</b><span>'+esc(b[1])+'</span><span class="muted">'+esc(b[3])+'</span></li>').join('')+'</ul>':'')+'</span><span class="m">'+hm(s.m)+(s.km?'<br><span class="muted">≈ '+String(s.km).replace('.',',')+' km</span>':'')+(s.dp?'<br><span class="muted">'+fr(s.dp)+' m</span>':'')+'</span></li>').join('')+'</ul>':'<p class="note">Pas de programme imposé : footings au feeling.</p>')+'</div></details>'}).join('');
+       (w.s.length?'<ul class="sess">'+w.s.slice().sort((a,b)=>a.d-b.d).map(s=>'<li'+(s.gk?' class="gym" data-gk="'+s.gk+'" tabindex="0" role="button" aria-label="Voir la séance : '+esc(s.t)+'"':'')+'><span class="day">'+JOURS[s.d].slice(0,3)+'</span><span><span class="t">'+(s.done?'✓ ':'')+esc(s.t)+(s.gk?' <span class="go">Voir les exercices ›</span>':'')+'</span>'+(s.z?'<span class="zchip" style="background:'+ZC[s.z]+'">'+s.z+'</span>':'')+(s.k?' <span class="chip" style="color:var(--gold);font-size:.58rem;padding:1px 5px">CLÉ</span>':'')+'<div class="ds">'+esc(s.ds.replace(/\s*Voir (la checklist dans )?(l\')?onglet [^.]+\.?/g,''))+'</div>'+(s.wo?'<ul class="wo">'+s.wo.map(b=>'<li><b>'+esc(b[0])+'</b><span>'+esc(b[1])+'</span><span class="muted">'+esc(b[3])+'</span></li>').join('')+'</ul>':'')+'</span><span class="m">'+hm(s.m)+(s.km?'<br><span class="muted">≈ '+String(s.km).replace('.',',')+' km</span>':'')+(s.dp?'<br><span class="muted">'+fr(s.dp)+' m</span>':'')+'</span></li>').join('')+'</ul>':'<p class="note">Pas de programme imposé : footings au feeling.</p>')+'</div></details>'}).join('');
     document.querySelectorAll('[data-ph]').forEach(b=>b.onclick=()=>{sel=b.dataset.ph;draw()});const c=document.querySelector('.phchips [aria-pressed=true]');if(c){c.parentElement.scrollLeft=c.offsetLeft-16}}
   draw()})();
 // stratégie
@@ -461,6 +477,16 @@ document.getElementById('qual').innerHTML=[['Nice by UTMB 100K','26 sept. 2026',
 (()=>{const L=[...document.querySelectorAll('.tabbar a')];const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)L.forEach(x=>x.classList.toggle('on',x.dataset.tab===e.target.id))})},{rootMargin:'-45% 0px -50% 0px'});L.forEach(x=>{const el=document.getElementById(x.dataset.tab);if(el)io.observe(el)})})();
 document.getElementById('upd').textContent='Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros';
 (()=>{const S=D.social||{};const L=[];if(S.ig)L.push(['Instagram','https://instagram.com/'+S.ig.replace('@','')]);if(S.tt)L.push(['TikTok','https://tiktok.com/@'+S.tt.replace('@','')]);document.getElementById('soc').innerHTML=L.map(([n,u])=>'<a href="'+esc(u)+'" target="_blank" rel="noopener">'+n+'</a>').join('')})();
+</script>
+<dialog class="gymd" id="gymd" aria-labelledby="gymdT"><div class="gh"><div><span class="label" id="gymdW"></span><h3 id="gymdT"></h3></div><button class="gx" id="gymdX" aria-label="Fermer">✕</button></div><div class="gb" id="gymdB"></div></dialog>
+<script>
+(()=>{const D=JSON.parse(document.getElementById('data').textContent),G=D.gym||{},d=document.getElementById('gymd');
+const esc=x=>String(x??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));let last=null;
+function open(k,el){const g=G[k];if(!g||!d.showModal)return;last=el;document.getElementById('gymdT').textContent=g.n;document.getElementById('gymdW').textContent='Renforcement · '+g.dur+' min · '+g.w;
+ document.getElementById('gymdB').innerHTML='<p>'+esc(g.intro)+'</p><ol>'+g.ex.map(e=>'<li><span>'+esc(e[0])+'</span><b>'+esc(e[1])+'</b></li>').join('')+'</ol>';d.showModal()}
+document.addEventListener('click',e=>{const li=e.target.closest('[data-gk]');if(li)open(li.dataset.gk,li)});
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-gk]')){e.preventDefault();open(e.target.dataset.gk,e.target)}});
+document.getElementById('gymdX').onclick=()=>d.close();d.addEventListener('click',e=>{if(e.target===d)d.close()});d.addEventListener('close',()=>{if(last&&last.isConnected)last.focus()});})();
 </script>
 </body>
 </html>
