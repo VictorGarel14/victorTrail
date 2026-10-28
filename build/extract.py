@@ -28,11 +28,12 @@ const strat={};RACES.forEach(r=>{const st=stratState(r.id),C=CPS[r.id],H=+st.goa
     o.assist=pts.map((p,i)=>{const on=i===0||isA(p.nm);if(!on)return{nm:p.nm,on:false};const nx=nextA(i);const t1=nx?nx.th:H;const L=(t1-p.th)*st.ml;const fills=Math.max(1,Math.ceil(L/FL.cap));
       const cc=nCarry(NR,p.th,t1).filter(c=>!(c.x.kind==='drink'||(c.x.kind==='elec'&&c.x.p.ml&&FL.el)));
       NR.L.forEach(x=>{const k=x.kind==='drink'?FL.iso:(x.kind==='elec'&&x.p.ml&&FL.el)?FL.el:0;if(k)cc.unshift({x,n:Math.ceil(fills*k*FL.vol/(x.p.ml||500)-1e-9)})});
-      return{nm:p.nm,on:true,give:cc.map(lab),solid:NR.solid>1?r0(NR.solid*(t1-p.th)):0,until:nx?nx.nm:'arrivée',dur:fmtH(t1-p.th),liters:+(L/1000).toFixed(1),fills:fills-1,flasks:{water:FL.water,iso:FL.iso,el:FL.el,drink:NR.R.d?nShort(NR.R.d):''}}})}
+      return{nm:p.nm,on:true,stop:i===0?null:p.base?RAVITO.stop.base:RAVITO.stop.assist,give:cc.map(lab),solid:NR.solid>1?r0(NR.solid*(t1-p.th)):0,until:nx?nx.nm:'arrivée',dur:fmtH(t1-p.th),liters:+(L/1000).toFixed(1),fills:fills-1,flasks:{water:FL.water,iso:FL.iso,el:FL.el,drink:NR.R.d?nShort(NR.R.d):''}}})}
+  {const B=ravitoBudget(r.id);if(B)o.stopTot=B.tot}
   strat[r.id]=o});
 const tr=trajectory();
 return {plan,strat,today:t,prog:seasonProg(),phase:phaseOf(t).name,phaseGoal:phaseOf(t).goal,planStart:PLAN_START,week:wk(ws),next:wk(addD(ws,7)),weekReal:{h:+(st.min/60).toFixed(1),km:+st.km.toFixed(1),dp:r0(st.dp),n:st.n},
- weeks:F.weeks,acts:F.acts,gym:Object.fromEntries(Object.entries(GYM).map(([k,g])=>[k,{n:g.name,w:g.when,dur:g.dur,intro:g.intro,ex:g.ex.map(e=>[e[1],e[2]])}])),kpis:K,races:R,index:(state.index||[]).slice(-1)[0]||null,
+ weeks:F.weeks,acts:F.acts,ravito:{ref:RAVITO.ref.txt,types:RAVITO.types,order:RAVITO.order,rules:RAVITO.rules,crew:RAVITO.crew,before:RAVITO.before},ixgoal:(()=>{const L=(state.index||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));const sc=state.raceScore||{};return{target:IXGOAL.target,start:IXGOAL.start,cur:(L[L.length-1]||{}).utmb||IXGOAL.start.v,nice:IXGOAL.nice,steps:IXGOAL.steps.map(x=>({lab:x.lab,date:RACES.find(r=>r.id===x.race).date,txt:x.txt,lo:x.lo,score:+sc[x.race]||null}))}})(),gym:Object.fromEntries(Object.entries(GYM).map(([k,g])=>[k,{n:g.name,w:g.when,dur:g.dur,intro:g.intro,ex:g.ex.map(e=>[e[1],e[2]])}])),kpis:K,races:R,index:(state.index||[]).slice(-1)[0]||null,
  traj:{real:tr.pts.filter((_,i)=>i%3===0).map(p=>[p.d,+p.real.toFixed(1)]),plan:tr.plan.filter((_,i)=>i%3===0).map(p=>[p.d,+p.v.toFixed(1)])},
  fits:Object.fromEntries(['train','diag','rt100','mb42'].map(f=>[f,fitItems(f).map(x=>({cat:x.cat,name:x.name,brand:x.brand,bag:x.bag,eid:x.eid}))])),
  phases:PHASES.map(p=>({short:p.short,name:p.name,from:p.from,to:p.to,goal:p.goal}))}})()
