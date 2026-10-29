@@ -4,6 +4,11 @@ DATA,STATE,OUT=sys.argv[1],sys.argv[2],sys.argv[3].rstrip('/')+'/'
 HERE=os.path.dirname(os.path.abspath(__file__))+'/'
 d=json.load(open(DATA))
 st=json.load(open(STATE))
+d['crew']=json.load(open(HERE+'crew.json')) if os.path.exists(HERE+'crew.json') else {}
+d['courses']=sorted(os.path.basename(f)[:-5] for f in __import__('glob').glob(OUT+'courses/*.json'))
+# animations des exercices produites par extract.py à côté de data.json
+_an=os.path.join(os.path.dirname(os.path.abspath(DATA)),'anim.js')
+if os.path.exists(_an) and os.path.abspath(_an)!=os.path.abspath(OUT+'anim.js'): shutil.copy(_an,OUT+'anim.js')
 d['social']={k:(st.get('social') or {}).get(k,'') for k in ('ig','tt')}
 BD='M0 92 H52 C60 88 66 80 70 70 L76 50 L80 30 L83 14 L86 30 L90 50 L96 70 C100 80 106 88 114 92 H150 L196 52 L214 64 L262 2 L286 34 L304 22 L360 92 H568'
 BT='M67 70 H99 M74 50 H92 M64 92 C70 80 96 80 102 92'

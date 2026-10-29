@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Victor Trail">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <title>Victor · De Paris au sommet</title>
 <meta name="description" content="Consultant le jour, traileur entre midi et deux : ma prépa en direct jusqu'aux 180 km de la Diagonale des Fous 2027.">
 <meta property="og:title" content="Victor · De Paris au sommet">
@@ -215,6 +216,49 @@ dialog.sheet::backdrop{background:rgba(8,10,12,.55)}
 .about .line .done{fill:none;stroke:var(--blaze);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
 .about .line .goal{fill:var(--gold2)}.about .line .dot{fill:var(--blaze);stroke:var(--paper);stroke-width:3}
 .kr{font-family:var(--kr)}
+/* réalisé, météo */
+.res{margin-top:10px;font-size:.84rem;color:var(--ink2);display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.res .v{font:800 .74rem var(--f);padding:3px 8px;border-radius:99px}
+.res .v.ok{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.res .v.warn{background:color-mix(in srgb,var(--z4) 20%,transparent);color:var(--z4)}
+.wx{display:block;margin-top:8px;font-size:.82rem;color:var(--muted)}
+.wx:empty{display:none}
+.did2{margin-top:14px;padding:12px 14px;border-radius:12px;background:color-mix(in srgb,var(--good) 10%,var(--paper));border:1px solid color-mix(in srgb,var(--good) 28%,transparent)}
+.did2.warn{background:color-mix(in srgb,var(--z4) 10%,var(--paper));border-color:color-mix(in srgb,var(--z4) 30%,transparent)}
+.did2 b{display:block;margin-bottom:2px}
+/* mode salle */
+dialog.gm{border:0;padding:0;margin:0;width:100%;height:100%;max-width:none;max-height:none;background:var(--bg);color:var(--ink)}
+dialog.gm::backdrop{background:var(--bg)}
+.gm .in{max-width:620px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding:calc(12px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom))}
+.gm .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.gm .top .x{width:42px;height:42px;border-radius:50%;border:0;background:var(--soft);font-size:1rem;cursor:pointer}
+.gm .prog{display:flex;gap:4px;margin:10px 0 12px}.gm .prog i{flex:1;height:5px;border-radius:99px;background:var(--soft)}.gm .prog i.on{background:var(--ink)}.gm .prog i.dn{background:var(--good)}
+.gm canvas{width:100%;height:auto;aspect-ratio:17/12;background:var(--paper);border:1px solid var(--line);border-radius:var(--r)}
+.gm .ph{font-size:.84rem;color:var(--muted);text-align:center;min-height:1.3em;margin-top:6px}
+.gm h2{font-size:1.35rem;margin-top:8px}
+.gm .sr{font:800 2rem/1.1 var(--f);font-variant-numeric:tabular-nums;margin-top:4px}
+.gm .cues{color:var(--ink2);font-size:.92rem}
+.gm .sets{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.gm .sets button{min-width:58px;height:52px;border-radius:12px;border:2px solid var(--line);background:var(--paper);font:800 1rem var(--f);cursor:pointer}
+.gm .sets button[aria-pressed=true]{background:var(--good);border-color:var(--good);color:#fff}
+.gm .timer{margin-top:14px;background:var(--night);color:#fff;border-radius:var(--r);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.gm .timer b{font:800 2.2rem var(--f);font-variant-numeric:tabular-nums}
+.gm .timer button{border:0;border-radius:10px;background:#2A2F37;color:#fff;min-width:48px;min-height:44px;font:700 .9rem var(--f);cursor:pointer}
+.gm .timer.go{background:var(--blaze)}
+.gm .nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;padding-top:16px}
+/* carte */
+.map{position:relative;z-index:0;isolation:isolate;height:340px;border-radius:var(--r);border:1px solid var(--line);overflow:hidden;margin-top:12px;background:var(--soft)}
+.map .leaflet-control-attribution{font-size:9px}
+.me-ic{width:22px;height:22px;border-radius:50%;background:var(--blaze);border:3px solid #fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--blaze) 30%,transparent)}
+.maplg{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted);margin-top:6px}
+.maplg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.crw{display:grid;gap:10px}
+.crw .box b{font-size:1.02rem}
+.crw .eta2{font:800 1.3rem var(--f);font-variant-numeric:tabular-nums}
+.crw .go2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.crw .go2 a{display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:10px;border:1px solid var(--line);text-decoration:none;font:700 .9rem var(--f)}
+.crw .drv{margin-top:8px;font-size:.88rem}
+.crw .drv .ok{color:var(--good);font-weight:700}.crw .drv .ko{color:var(--bad);font-weight:700}
 /* onglets */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--night) 96%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-bottom:env(safe-area-inset-bottom)}
 .tabs .in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--tab)}
@@ -243,6 +287,8 @@ dialog.sheet::backdrop{background:rgba(8,10,12,.55)}
  <a href="#/plus" data-t="plus"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18.5" cy="12" r="1.6"/></svg>Plus</a>
 </div></nav>
 <dialog class="sheet" id="sheet" aria-labelledby="shT"><div class="sh-h"><div><div class="muted" id="shW" style="font:600 .82rem var(--f)"></div><h2 id="shT"></h2></div><button class="x" id="shX" aria-label="Fermer">✕</button></div><div class="sh-b" id="shB"></div></dialog>
+<dialog class="gm" id="gm" aria-label="Séance de renfo"><div class="in" id="gmIn"></div></dialog>
+<script src="anim.js" onerror="this.remove()"></script>
 <script id="data" type="application/json">__DATA__</script>
 <script>
 const D=JSON.parse(document.getElementById('data').textContent);
@@ -277,8 +323,17 @@ const KL={trail:'Trail',run:'Course',gym:'Renfo',bike:'Vélo',hike:'Rando',other
 function sessCard(s,big){const zc=zcol(s);const n=['<div><b>'+hm(s.m)+'</b><span>durée</span></div>'];
   if(s.km)n.push('<div><b>'+km(s.km)+'</b><span>km env.</span></div>');if(s.dp)n.push('<div><b>'+fr(s.dp)+'</b><span>m D+</span></div>');
   if(big&&s.zt)n.push('<div><b style="color:'+zc+'">'+esc(s.zt.replace(/^Z\d\s*/,''))+'</b><span>zone '+esc(s.z[1])+'</span></div>');
-  const tags=(s.done?'<span class="tag ok">✓ Faite</span>':'')+(s.k?'<span class="tag k">Clé</span>':'')+(s.sl?'<span class="tag">'+(s.sl==='m'?'Midi':'Soir')+'</span>':'');
-  return '<button class="sc" style="--zc:'+zc+'" data-s="'+s._ws+'|'+s._i+'"><div class="top"><div><div class="goal">'+esc(s.g)+'</div><h3>'+esc(s.t)+'</h3></div><div class="tags">'+tags+'</div></div><div class="nums">'+n.join('')+'</div>'+(big?'<span class="more">'+(s.gk?'Voir les exercices':s.wo?'Voir le détail de la séance':'Voir la séance')+'</span>':'')+'</button>'}
+  const tags=(s.done||s.r?'<span class="tag ok">✓ Faite</span>':'')+(s.k?'<span class="tag k">Clé</span>':'')+(s.sl?'<span class="tag">'+(s.sl==='m'?'Midi':'Soir')+'</span>':'');
+  const date=add(s._ws,s.d);
+  return '<button class="sc" style="--zc:'+zc+'" data-s="'+s._ws+'|'+s._i+'"><div class="top"><div><div class="goal">'+esc(s.g)+'</div><h3>'+esc(s.t)+'</h3></div><div class="tags">'+tags+'</div></div><div class="nums">'+n.join('')+'</div>'+resLine(s)+(s.c!=='gym'&&!s.r?'<span class="wx" data-wx="'+date+'|'+(s.sl||'')+'|'+s.m+'"></span>':'')+(big?'<span class="more">'+(s.gk?'Voir les exercices et démarrer':s.wo?'Voir le détail de la séance':'Voir la séance')+'</span>':'')+'</button>'}
+const VWARN={fast:1,short:1,long:1};
+function resLine(s){const r=s.r;if(!r)return '';const bits=[hm(r.min)];if(r.km)bits.push(km(r.km)+' km');if(r.dp)bits.push(fr(r.dp)+' m');if(r.inz!=null)bits.push(r.inz+' % en '+r.zl);
+  return '<div class="res"><span class="v '+(VWARN[r.v]?'warn':'ok')+'">'+esc(r.vt)+'</span><span>'+bits.join(' · ')+'</span></div>'}
+function resText(s){const r=s.r;if(!r)return '';const pl=s.m;let t='';
+  if(r.v==='short')t='Faite en '+hm(r.min)+' au lieu de '+hm(pl)+'.';else if(r.v==='long')t='Faite en '+hm(r.min)+', plus longue que les '+hm(pl)+' prévues.';
+  else if(r.v==='fast')t=r.above+' % du temps au-dessus de la '+r.zl+' : à ralentir la prochaine fois, l\'endurance se construit en zone basse.';
+  else t=s.c==='gym'?'Séance de renfo enregistrée par la montre.':'Durée respectée'+(r.inz!=null?', '+r.inz+' % du temps en '+r.zl:'')+'.';
+  return t}
 const dlg=document.getElementById('sheet');let lastFocus=null;
 function openSess(ws,i,trigger){const w=PL.find(x=>x.ws===ws);if(!w)return;const s=w.s[i];if(!s)return;const date=add(ws,s.d);lastFocus=trigger||null;
   document.getElementById('shW').textContent=cap(wd(date))+' '+fmtD(date)+(s.sl?' · '+(s.sl==='m'?'midi':'soir'):'');
@@ -288,10 +343,13 @@ function openSess(ws,i,trigger){const w=PL.find(x=>x.ws===ws);if(!w)return;const
   const ds=cleanDs(s);if(ds)h+='<p class="ds">'+esc(ds)+'</p>';
   if(s.wo)h+='<ol class="steps">'+s.wo.map(b=>'<li><b>'+esc(b[0])+'</b><span>'+esc(b[1])+(b[2]?'<span class="zc" style="background:'+(ZC[b[2]]||'#888')+'">'+esc(b[2])+'</span>':'')+'</span>'+(b[3]?'<small>'+esc(b[3])+'</small>':'')+'</li>').join('')+'</ol>';
   const g=s.gk&&D.gym&&D.gym[s.gk];if(g)h+='<p class="ds">'+esc(g.intro)+'</p><ol class="exs">'+g.ex.map(e=>'<li><span>'+esc(e[0])+'</span><b>'+esc(e[1])+'</b></li>').join('')+'</ol>';
+  if(s.r)h+='<div class="did2'+(VWARN[s.r.v]?' warn':'')+'"><b>Ce que j\'ai fait · '+esc(s.r.vt)+'</b>'+hm(s.r.min)+(s.r.km?' · '+km(s.r.km)+' km':'')+(s.r.dp?' · '+fr(s.r.dp)+' m D+':'')+(s.r.hr?' · FC moy. '+s.r.hr:'')+'<div class="muted" style="margin-top:4px;font-size:.88rem">'+esc(resText(s))+'</div></div>';
+  else if(s.c!=='gym')h+='<span class="wx" data-wx="'+date+'|'+(s.sl||'')+'|'+s.m+'" style="font-size:.9rem"></span>';
+  if(s.gk&&g&&typeof ANIM!=='undefined')h+='<button class="btn" data-gym="'+s.gk+'|'+date+'">▶ Démarrer la séance</button>';
   if(s.k)h+='<p class="note">Séance clé de la semaine : c\'est celle à ne pas sauter.</p>';
-  document.getElementById('shB').innerHTML=h;dlg.showModal?dlg.showModal():dlg.setAttribute('open','')}
+  document.getElementById('shB').innerHTML=h;dlg.showModal?dlg.showModal():dlg.setAttribute('open','');wxFill(document.getElementById('shB'))}
 document.getElementById('shX').onclick=()=>dlg.close();dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});dlg.addEventListener('close',()=>{if(lastFocus&&lastFocus.isConnected)lastFocus.focus()});
-document.addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(b){const[ws,i]=b.dataset.s.split('|');openSess(ws,+i,b)}});
+document.addEventListener('click',e=>{const g=e.target.closest('[data-gym]');if(g){const[k,d]=g.dataset.gym.split('|');dlg.close();startGym(k,d);return}const b=e.target.closest('[data-s]');if(b){const[ws,i]=b.dataset.s.split('|');openSess(ws,+i,b)}});
 
 /* ---------- haut de page ---------- */
 (()=>{const r=D.races.find(x=>diff(T,x.date)>=0);const el=document.getElementById('cd');if(r){const n=diff(T,r.date);el.innerHTML=esc(SH[r.id]||r.name)+' <b>'+(n?'J−'+n:'Jour J')+'</b>'}})();
@@ -319,7 +377,7 @@ function vToday(){const el=document.getElementById('s-aujourdhui');const ws=mond
   // prochaine course
   const r=D.races.find(x=>diff(T,x.date)>=0);if(r){const n=diff(T,r.date);h+='<div class="sub"><span>Prochaine course</span></div><a class="box race1" href="#/plus/courses"><div><b>'+esc(r.name)+'</b><div class="muted" style="font-size:.86rem">'+fmtDY(r.date)+' · '+r.km+' km · '+fr(r.dp)+' m D+</div></div><span class="j"><small>J−</small>'+n+'</span></a>'}
   el.innerHTML=h;
-  el.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selDay=b.dataset.day;vToday()})}
+  el.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selDay=b.dataset.day;vToday()});wxFill(el)}
 
 /* ---------- séances (plan semaine par semaine) ---------- */
 const PC={reprise:'#5B6B7A',fondation:'#2F7D5B',dev:'#3E7CB1',spe1:'#7A5BA6',spe2:'#C0392B',recup:'#6B7078',diag:'#B0443B',taper:'#A58D4E',post:'#45494F',pre:'#9AA0A8'};
@@ -341,7 +399,7 @@ function vPlan(){const el=document.getElementById('s-seances');if(!PL.length){el
   el.querySelector('#wPrev').onclick=()=>go(wIdx-1);el.querySelector('#wNext').onclick=()=>go(wIdx+1);
   const wt=el.querySelector('#wToday');if(wt)wt.onclick=()=>go(Math.max(0,PL.findIndex(x=>{const k=diff(x.ws,T);return k>=0&&k<7})));
   el.querySelectorAll('[data-ph]').forEach(b=>b.onclick=()=>go(+b.dataset.ph));
-  const a=el.querySelector('.phase [aria-pressed=true]');if(a)a.parentElement.scrollLeft=a.offsetLeft-16}
+  const a=el.querySelector('.phase [aria-pressed=true]');if(a)a.parentElement.scrollLeft=a.offsetLeft-16;wxFill(el)}
 
 /* ---------- assistance ---------- */
 let LIVE=null,formOpen=false;
@@ -358,35 +416,57 @@ const AS=(()=>{const S=D.strat||{};const TZ={diag:4,rt100:2,mb42:2};const TZN={d
     if(!P){try{P=JSON.parse(localStorage.getItem(key(id))||'null')}catch(e){}}
     if(LIVE&&LIVE.race===id&&LIVE.pass&&LIVE.pass.length){const L=LIVE.pass[LIVE.pass.length-1];const i=(S[id].rows||[]).findIndex(x=>x.nm===L.nm);const at=Date.parse(L.at+'Z');if(i>=0&&isFinite(at)&&(!P||P.i<i))P={i,at,src:'live'}}
     return P}
+  const GEN='<ul><li>Flasques pleines prêtes à échanger (eau et boisson)</li><li>Le sachet du tronçon suivant : gels, barres, sel</li><li>Frontale chargée si j\'arrive en fin de journée</li></ul><div style="margin-top:6px;font-size:.86rem;opacity:.85">Les quantités exactes s\'afficheront dès que la nutrition de cette course sera choisie dans mon carnet.</div>';
   function giveHTML(a){if(!a||!a.on)return '';return '<ul>'+a.give.map(g=>'<li>'+esc(g)+'</li>').join('')+(a.solid?'<li>≈ '+a.solid+' g de solide (salé et sucré)</li>':'')+'</ul><div style="margin-top:6px;font-size:.86rem;opacity:.85">Remplir '+a.flasks.water+' flasque'+(a.flasks.water>1?'s':'')+' d\'eau'+(a.flasks.iso&&a.flasks.drink?' et '+a.flasks.iso+' de '+esc(a.flasks.drink):'')+'. De quoi tenir jusqu\'à '+esc(a.until)+' ('+a.dur+').</div>'}
-  function draw(){const el=document.getElementById('s-assistance');const r=R.find(x=>x.id===cur),o=S[cur]||{};
+  function draw(){const el=document.getElementById('s-assistance');const r=R.find(x=>x.id===cur),o=S[cur]||{};let MP=null,crewPlan=null;
     let h='<div class="hd"><h1>Assistance</h1><p>Où je suis, quand j\'arrive, et ce qu\'il faut me donner.</p></div>';
     h+='<div class="seg" role="group" aria-label="Course">'+R.map(x=>'<button data-as="'+x.id+'" aria-pressed="'+(x.id===cur)+'">'+esc(SH[x.id]||x.name)+'</button>').join('')+'</div>';
     const liveOn=LIVE&&LIVE.url&&/^https:\/\//.test(LIVE.url)&&(!LIVE.from||Date.parse(LIVE.from)<=Date.now())&&(!LIVE.until||Date.parse(LIVE.until)>Date.now());
-    const liveBtn=liveOn?'<a class="btn red" href="'+esc(LIVE.url)+'" target="_blank" rel="noopener">📍 Voir ma position en direct</a>':'';
+    const CR=(D.crew||{})[cur]||{};const off=(LIVE&&LIVE.race===cur&&LIVE.official)||CR.live||(cur==='diag'?'https://www.grandraid-reunion.com/fr/suivi-courses-et-coureurs/':'');
+    const liveBtn=(liveOn?'<a class="btn red" href="'+esc(LIVE.url)+'" target="_blank" rel="noopener">📍 Ma position GPS en direct (Coros)</a>':'')+(off?'<a class="btn ghost" href="'+esc(off)+'" target="_blank" rel="noopener">⏱ Pointages officiels ('+esc(CR.liveName||(cur==='diag'?'LiveTrail':'UTMB Live'))+')</a>':'');
     if(!o.rows||!o.rows.length){h+='<div class="where"><div class="k">'+esc(r.name)+'</div><div class="nm">Départ le '+fmtD(r.date).replace(/\.$/,'')+' à '+r.start.replace(':',' h ')+'</div><div class="win">'+TZN[cur]+'. Les points de passage seront ajoutés dès la publication du parcours officiel.</div>'+liveBtn+'</div>'}
     else{const st=startMs(r),rows=o.rows,P=getPass(cur),now=nowLocal(cur);
       let f=1,done=-1,lastAt=st,info='';
       if(P&&P.i>=0&&P.i<rows.length){done=P.i;lastAt=P.at;const fg=((P.at-st)/36e5)/rows[P.i].th;f=Math.max(.6,Math.min(1.8,fg));const pct=Math.round((f-1)*100);
         info='Dernier passage : <b>'+esc(rows[P.i].nm)+'</b> à <b>'+hhmm(P.at)+'</b>. '+(pct>2?'Je vais '+pct+' % moins vite que prévu.':pct<-2?'Je vais '+(-pct)+' % plus vite que prévu.':'Je suis dans les temps.')}
       const eta=rows.map((x,i)=>{if(i<=done)return null;const dh=(x.th-(done>=0?rows[done].th:0))*f;const ms=lastAt+dh*36e5;const w=Math.max(10/60,dh*.12);return{ms,lo:ms-w*36e5,hi:ms+w*36e5,risk:(ms-st)/36e5>x.bh}});
-      const nx=rows.findIndex((x,i)=>i>done);const A={};(o.assist||[]).forEach(a=>A[a.nm]=a);
+      let nx=rows.findIndex((x,i)=>i>done&&eta[i].hi>now);if(nx<0&&now<st)nx=rows.findIndex((x,i)=>i>done);const A={};(o.assist||[]).forEach(a=>A[a.nm]=a);
+      // position estimée : temps de plan écoulé -> km
+      let hPlan=now<st?0:(done>=0?rows[done].th+((now-lastAt)/36e5)/f:(now-st)/36e5);const marks=[{th:0,km:0}].concat(rows.map(x=>({th:x.th,km:x.km||0})));let estKm=marks[marks.length-1].km;
+      for(let j=1;j<marks.length;j++)if(hPlan<=marks[j].th){const u=(hPlan-marks[j-1].th)/Math.max(1e-6,marks[j].th-marks[j-1].th);estKm=marks[j-1].km+(marks[j].km-marks[j-1].km)*u;break}
+      MP={rows,eta,done,km:estKm,hhmm,why:now<st?'Pas encore parti : départ '+clk(st)+'.':done>=0?'D\'après mon passage à '+rows[done].nm+' ('+hhmm(lastAt)+') et mon rythme.':'D\'après mon plan de course, sans pointage saisi.'};
       if(nx>=0){const x=rows[nx],e=eta[nx],left=(e.ms-now)/36e5,before=now<st&&!P,a=A[x.nm];
         h+='<div class="where"><div class="k">'+(before?'Départ '+clk(st)+' · premier point':'Prochain point')+'</div><div class="nm">'+esc(x.nm)+'</div><div class="k">'+(x.km!=null?'km '+km(x.km):'')+(x.base?' · base vie':'')+'</div><div class="eta">'+hhmm(e.ms)+'</div><div class="win">'+WD[new Date(e.ms).getUTCDay()].replace('.','')+'. entre '+hhmm(e.lo)+' et '+hhmm(e.hi)+' · '+(left>48?'dans '+Math.round(left/24)+' jours':left>0?'dans '+dur(left):'d\'un instant à l\'autre')+'<br>'+TZN[cur]+(e.risk?' · <span class="risk">proche de la barrière ('+esc(x.barClock)+')</span>':'')+'</div>'+
           (info?'<div class="win" style="margin-top:10px">'+info+'</div>':'')+
-          (a&&a.on?'<div class="give"><div class="k">À me donner'+(a.stop?' · arrêt visé '+a.stop+' min':'')+'</div>'+giveHTML(a)+'</div>':'<div class="give"><div class="k">Pas d\'assistance prévue ici : ravito de l\'organisation.</div></div>')+liveBtn+
+          (a&&a.on?'<div class="give"><div class="k">À me donner'+(a.stop?' · arrêt visé '+a.stop+' min':'')+'</div>'+giveHTML(a)+'</div>':x.as?'<div class="give"><div class="k">Point d\'assistance · arrêt visé '+(x.stop||3)+' min</div>'+GEN+'</div>':'<div class="give"><div class="k">Pas d\'assistance prévue ici : ravito de l\'organisation.</div></div>')+liveBtn+
           '<button class="btn ghost" id="asOpen">'+(P?'Corriger mon dernier passage':'J\'ai vu Victor passer')+'</button></div>'}
       else h+='<div class="where"><div class="k">'+esc(r.name)+'</div><div class="nm">Arrivé ! 🏁</div>'+liveBtn+'</div>';
+      // carte
+      if((D.courses||[]).includes(cur))h+='<div class="sub"><span>Carte · position estimée</span></div><div class="map" id="map" role="img" aria-label="Carte du parcours avec ma position estimée"></div><div class="maplg"><span><i style="background:var(--blaze)"></i>moi (estimé)</span><span><i style="background:var(--gold)"></i>assistance</span><span><i style="background:#6B7078"></i>ravito</span><span><i style="background:var(--good)"></i>passé</span></div><p class="note" style="margin-top:4px">Position calculée entre deux pointages d\'après mon rythme. Ma vraie position GPS est sur le lien Coros quand il est actif.</p>';
+      // planning de route de l'équipe
+      const crewPts=rows.map((x,i)=>({x,i})).filter(q=>q.x.as&&q.i>done&&(nx<0||q.i>=nx));
+      if(crewPts.length){h+='<div class="sub"><span>Planning de route de l\'équipe</span></div><div class="crw">'+crewPts.map((q,k)=>{const x=q.x,e=eta[q.i],cp=(CR.pts||{})[x.nm]||{};const ll=cp.ll;
+        return '<div class="box"><div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><b>'+esc(x.nm)+'</b><span class="eta2">'+hhmm(e.ms)+'</span></div><div class="muted" style="font-size:.84rem">km '+km(x.km)+' · j\'arrive entre '+hhmm(e.lo)+' et '+hhmm(e.hi)+' · arrêt visé '+(x.stop||3)+' min</div>'+(cp.note?'<p class="note" style="color:var(--ink2)">'+esc(cp.note)+'</p>':'')+
+          (ll?'<div class="go2"><a href="https://waze.com/ul?ll='+ll[0]+','+ll[1]+'&navigate=yes" target="_blank" rel="noopener">Waze</a><a href="https://www.google.com/maps/dir/?api=1&destination='+ll[0]+','+ll[1]+'&travelmode=driving" target="_blank" rel="noopener">Google Maps</a></div><div class="drv" data-drv="'+q.i+'">Temps de route : calcul…</div>':'<p class="note">Coordonnées du point à venir.</p>')+'</div>'}).join('')+'</div>'+(CR.src?'<p class="note">'+esc(CR.src)+'</p>':'')}
+      crewPlan=()=>{crewPts.forEach((q,k)=>{const cell=el.querySelector('[data-drv="'+q.i+'"]');const ll=((CR.pts||{})[q.x.nm]||{}).ll;if(!cell||!ll)return;
+        let from,leave,fromNm;if(k>0){const p=crewPts[k-1];from=((CR.pts||{})[p.x.nm]||{}).ll;fromNm=p.x.nm;leave=eta[p.i].ms+((p.x.stop||3)+10)*6e4}
+        else if(done>=0&&rows[done].as){from=((CR.pts||{})[rows[done].nm]||{}).ll;fromNm=rows[done].nm;leave=lastAt+((rows[done].stop||3)+10)*6e4}
+        else{from=CR.start&&CR.start.ll;fromNm='le départ';leave=Math.max(st,now)+15*6e4}
+        if(!from){cell.textContent='';return}
+        drive(from,ll).then(sec=>{if(!sec){cell.textContent='Temps de route indisponible (hors ligne) : prévois large.';return}const arr=leave+sec*1e3,mg=(eta[q.i].ms-arr)/6e4,latest=eta[q.i].lo-sec*1e3-15*6e4;
+          cell.innerHTML='Route depuis '+esc(fromNm)+' : <b>'+dur(sec/3600)+'</b>. Partir au plus tard à <b>'+hhmm(latest)+'</b>. '+(mg>=20?'<span class="ok">✓ '+dur(mg/60)+' de marge</span>':mg>=0?'<span class="ko">Juste : '+Math.round(mg)+' min de marge</span>':'<span class="ko">✗ Trop juste : il manque '+dur(-mg/60)+'</span>')})})};
       // formulaire passage
       const opts=rows.map((x,i)=>'<option value="'+i+'"'+(i===Math.max(0,P?P.i:(nx>=0?nx:0))?' selected':'')+'>'+esc(x.nm)+'</option>').join('');
       h+='<div class="box" id="asForm"'+(formOpen?'':' hidden')+' style="margin-top:12px"><b>Mon dernier passage</b><p class="note" style="margin-top:4px">L\'heure se lit sur le suivi officiel ('+(cur==='diag'?'LiveTrail':'UTMB Live')+') ou sur ma carte en direct. Toutes les heures suivantes sont recalculées.</p><div class="form2"><label>Point<select id="asPt">'+opts+'</select></label><label>Heure<input id="asTm" type="time" value="'+(P?hhmm(P.at):'')+'"></label></div><div class="row2"><button class="btn" id="asOk">Recalculer</button><button class="btn ghost" id="asShare">Partager</button></div>'+(P?'<button class="btn ghost" id="asReset" style="min-height:42px">Effacer</button>':'')+'</div>';
       // liste des points
       h+='<div class="sub"><span>Tous les points · '+TZN[cur]+'</span></div><div class="pts">'+rows.map((x,i)=>{const e=eta[i],isDone=i<=done,a=A[x.nm];
-        return '<details class="pt'+(isDone?' done':'')+(i===nx?' next':'')+(x.base?' bv':'')+'"><summary><span class="dot"></span><span class="a">'+esc(x.nm)+'<small>'+(x.km!=null?'km '+km(x.km):'')+(a&&a.on?' · assistance':'')+'</small></span><span class="b">'+(isDone?(i===done?'✓ '+hhmm(P.at):'✓'):hhmm(e.ms))+(isDone?'':'<small>'+WD[new Date(e.ms).getUTCDay()]+' · barrière '+esc(x.barClock.slice(5))+'</small>')+'</span></summary><div class="body">'+(isDone?'Passé.':(a&&a.on?'<b>À me donner'+(a.stop?' · arrêt visé '+a.stop+' min':'')+'</b>'+giveHTML(a):'<span class="noas">Ravito de l\'organisation, pas d\'assistance prévue.</span>')+'<div style="margin-top:6px" class="muted">Entre '+hhmm(e.lo)+' et '+hhmm(e.hi)+(e.risk?' · proche de la barrière':'')+'</div>')+'</div></details>'}).join('')+'</div>';
+        return '<details class="pt'+(isDone?' done':'')+(i===nx?' next':'')+(x.base?' bv':'')+'"><summary><span class="dot"></span><span class="a">'+esc(x.nm)+'<small>'+(x.km!=null?'km '+km(x.km):'')+(x.as?' · assistance':'')+'</small></span><span class="b">'+(isDone?(i===done?'✓ '+hhmm(P.at):'✓'):hhmm(e.ms))+(isDone?'':'<small>'+(nx>=0&&i<nx?'probablement passé':WD[new Date(e.ms).getUTCDay()]+' · '+(x.barClock?'barrière '+esc(x.barClock.slice(5)):'pas de barrière'))+'</small>')+'</span></summary><div class="body">'+(isDone?'Passé.':(a&&a.on?'<b>À me donner'+(a.stop?' · arrêt visé '+a.stop+' min':'')+'</b>'+giveHTML(a):x.as?'<b>Point d\'assistance · arrêt visé '+(x.stop||3)+' min</b>'+GEN:'<span class="noas">Ravito de l\'organisation, pas d\'assistance prévue.</span>')+'<div style="margin-top:6px" class="muted">Entre '+hhmm(e.lo)+' et '+hhmm(e.hi)+(e.risk?' · proche de la barrière':'')+'</div>')+'</div></details>'}).join('')+'</div>';
       h+='<p class="note">Fourchette de ±12 % sur le temps restant. Vérifiez dans le règlement où l\'assistance est autorisée.</p>'}
     if(D.ravito)h+='<div class="sub"><span>Pour l\'équipe</span></div><details class="box crew"><summary>Comment m\'aider à repartir vite</summary><ul>'+D.ravito.crew.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></details>';
     el.innerHTML=h;
     el.querySelectorAll('[data-as]').forEach(b=>b.onclick=()=>{cur=b.dataset.as;draw()});
+    if(MP)drawMap(cur,MP);
+    if(crewPlan)crewPlan();
     const op=el.querySelector('#asOpen');if(op)op.onclick=()=>{formOpen=true;const f=el.querySelector('#asForm');f.hidden=false;f.scrollIntoView({block:'center'});el.querySelector('#asTm').focus()};
     const ok=el.querySelector('#asOk');if(ok){const rows=o.rows,st=startMs(r);
       const pick=()=>{const i=+el.querySelector('#asPt').value,v=el.querySelector('#asTm').value;if(!v)return null;const[hh,mm]=v.split(':').map(Number);const plan=st+rows[i].th*36e5;let best=null;for(let dd=-1;dd<=4;dd++){const c=pd(r.date)+dd*864e5+hh*36e5+mm*6e4;if(best==null||Math.abs(c-plan)<Math.abs(best-plan))best=c}return{i,at:best}};
@@ -437,6 +517,75 @@ function stratHTML(){const S=D.strat||{},R=D.races,r=R.find(x=>x.id===stCur),o=S
   return h}
 function bindStrat(){document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{stCur=b.dataset.st;vPlus('strategie')})}
 
+
+/* ---------- météo (Open-Meteo, Nice) ---------- */
+const WX={lat:43.70,lon:7.27,key:'wx-nice'};let wxData=null,wxP=null;
+function wxLoad(){if(wxData)return Promise.resolve(wxData);if(wxP)return wxP;
+  try{const c=JSON.parse(localStorage.getItem(WX.key)||'null');if(c&&Date.now()-c.at<3*36e5){wxData=c.d;return Promise.resolve(wxData)}if(c)wxData=c.d}catch(e){}
+  wxP=fetch('https://api.open-meteo.com/v1/forecast?latitude='+WX.lat+'&longitude='+WX.lon+'&hourly=temperature_2m,precipitation_probability,weather_code,wind_speed_10m&daily=sunset&timezone=Europe%2FParis&forecast_days=16').then(r=>r.ok?r.json():null).then(j=>{if(j&&j.hourly){wxData=j;try{localStorage.setItem(WX.key,JSON.stringify({at:Date.now(),d:j}))}catch(e){}}return wxData}).catch(()=>wxData);return wxP}
+const WXI=c=>c===0?'☀️':c<=2?'🌤️':c===3?'☁️':c<=48?'🌫️':c<=57?'🌦️':c<=67?'🌧️':c<=77?'🌨️':c<=82?'🌧️':c<=86?'🌨️':'⛈️';
+function wxAt(date,sl,min){const j=wxData;if(!j)return null;const we=[5,6].includes((new Date(pd(date)).getUTCDay()+6)%7);
+  const st=sl==='e'?18.5:sl==='m'?12.25:we?8:12.25;const mid=st+min/120;const hh=Math.min(23,Math.round(mid));const k=j.hourly.time.indexOf(date+'T'+String(hh).padStart(2,'0')+':00');if(k<0)return null;
+  const di=j.daily.time.indexOf(date);const ss=di>=0?j.daily.sunset[di].slice(11,16):null;const end=st+min/60;const ssH=ss?(+ss.slice(0,2))+(+ss.slice(3))/60:null;
+  return{t:Math.round(j.hourly.temperature_2m[k]),pp:j.hourly.precipitation_probability[k],c:j.hourly.weather_code[k],w:Math.round(j.hourly.wind_speed_10m[k]),ss,night:ssH!=null&&end>ssH-.1}}
+function wxFill(root){const L=root.querySelectorAll('[data-wx]');if(!L.length)return;wxLoad().then(()=>{L.forEach(el=>{const[d,sl,m]=el.dataset.wx.split('|');const x=wxAt(d,sl,+m);if(!x){el.textContent='';return}
+  el.textContent=WXI(x.c)+' '+x.t+'°'+(x.pp>=30?' · pluie '+x.pp+' %':'')+(x.w>=25?' · vent '+x.w+' km/h':'')+(x.night?' · 🔦 frontale, nuit à '+x.ss.replace(':',' h '):'')+' · à Nice'})})}
+
+/* ---------- mode salle ---------- */
+const GMD=document.getElementById('gm');let GS=null,gmRAF=null,gmTimer=null,wake=null;
+function gmColors(){const v=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();return{ink:v('--ink'),far:v('--muted'),muted:v('--muted'),line:v('--line'),surf:v('--soft'),acc:v('--gold')}}
+function gmRest(g){const m=String(g.intro).match(/r[ée]cup[^\d]{0,14}(\d+)\s*(['"’″])(\d{1,2})?/i);if(!m)return 90;return m[2]==='"'||m[2]==='″'?+m[1]:(+m[1])*60+(+(m[3]||0))}
+function gmSets(sr){const m=String(sr).match(/^(\d+)\s*[×x]/);return m?+m[1]:1}
+function gmKey(){return 'gym-'+GS.date+'-'+GS.k}
+function gmSave(){try{localStorage.setItem(gmKey(),JSON.stringify(GS.done))}catch(e){}}
+function startGym(k,date){const g=D.gym[k];if(!g)return;GS={k,date,g,i:0,rest:gmRest(g),done:{}};try{GS.done=JSON.parse(localStorage.getItem(gmKey())||'{}')}catch(e){}
+  const first=g.ex.findIndex((e,i)=>(GS.done[i]||[]).filter(Boolean).length<gmSets(e[1]));GS.i=first<0?0:first;
+  GMD.showModal?GMD.showModal():GMD.setAttribute('open','');try{navigator.wakeLock&&navigator.wakeLock.request('screen').then(w=>wake=w).catch(()=>{})}catch(e){}gmDraw()}
+function gmStop(){cancelAnimationFrame(gmRAF);clearInterval(gmTimer);gmTimer=null;try{wake&&wake.release()}catch(e){}wake=null}
+GMD.addEventListener('close',gmStop);
+let actx=null;function beep(n){try{actx=actx||new (window.AudioContext||window.webkitAudioContext)();for(let i=0;i<n;i++){const o=actx.createOscillator(),gn=actx.createGain();o.frequency.value=880;o.connect(gn);gn.connect(actx.destination);const t0=actx.currentTime+i*.3;gn.gain.setValueAtTime(.25,t0);gn.gain.exponentialRampToValueAtTime(.001,t0+.22);o.start(t0);o.stop(t0+.24)}}catch(e){}try{navigator.vibrate&&navigator.vibrate([200,100,200])}catch(e){}}
+function gmDraw(){const g=GS.g,e=g.ex[GS.i],n=gmSets(e[1]),dn=GS.done[GS.i]||[];const info=typeof EX!=='undefined'&&EX[e[2]];const cues=info?info[1]:[];
+  const tot=g.ex.length;const allDone=g.ex.every((x,i)=>(GS.done[i]||[]).filter(Boolean).length>=gmSets(x[1]));
+  let h='<div class="top"><span class="muted" style="font:700 .86rem var(--f)">'+esc(g.n)+' · '+(GS.i+1)+'/'+tot+'</span><button class="x" id="gmX" aria-label="Fermer">✕</button></div>';
+  h+='<div class="prog">'+g.ex.map((x,i)=>'<i class="'+(i===GS.i?'on':(GS.done[i]||[]).filter(Boolean).length>=gmSets(x[1])?'dn':'')+'"></i>').join('')+'</div>';
+  h+=info?'<canvas id="gmCv" width="680" height="480" role="img" aria-label="Animation du mouvement : '+esc(e[0])+'"></canvas><div class="ph" id="gmPh" aria-live="polite"></div>':'';
+  h+='<h2>'+esc(e[0])+'</h2><div class="sr">'+esc(e[1])+'</div>'+(cues.length?'<ul class="cues">'+cues.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul>':'');
+  h+='<div class="sets" role="group" aria-label="Séries">'+[...Array(n)].map((_,j)=>'<button data-set="'+j+'" aria-pressed="'+(!!dn[j])+'">'+(dn[j]?'✓':'Série '+(j+1))+'</button>').join('')+'</div>';
+  h+='<div class="timer" id="gmT"><span>Récup</span><b id="gmTv">'+mmss(GS.rest)+'</b><span style="display:flex;gap:6px"><button id="gmM">−15</button><button id="gmP">+15</button><button id="gmGo">Lancer</button></span></div>';
+  if(allDone)h+='<div class="did2" style="margin-top:14px"><b>Séance terminée 💪</b>Toutes les séries sont cochées. Pense à noter tes charges dans le carnet.</div>';
+  h+='<div class="nav"><button class="btn ghost" id="gmPrev"'+(GS.i?'':' disabled')+'>‹ Précédent</button><button class="btn" id="gmNext">'+(GS.i<tot-1?'Suivant ›':'Terminer')+'</button></div>';
+  document.getElementById('gmIn').innerHTML=h;
+  const $=id=>document.getElementById(id);
+  $('gmX').onclick=()=>GMD.close();$('gmPrev').onclick=()=>{GS.i--;gmDraw()};$('gmNext').onclick=()=>{if(GS.i<tot-1){GS.i++;gmDraw()}else GMD.close()};
+  document.querySelectorAll('[data-set]').forEach(b=>b.onclick=()=>{const j=+b.dataset.set;const d=GS.done[GS.i]=GS.done[GS.i]||[];d[j]=!d[j];gmSave();const left=gmSets(e[1])-d.filter(Boolean).length;const run=d[j]&&(left>0||GS.i<tot-1);gmDraw();if(run)gmGo()});
+  $('gmM').onclick=()=>{GS.rest=Math.max(15,GS.rest-15);if(!gmTimer)$('gmTv').textContent=mmss(GS.rest)};$('gmP').onclick=()=>{GS.rest+=15;if(!gmTimer)$('gmTv').textContent=mmss(GS.rest)};$('gmGo').onclick=()=>gmTimer?gmHalt():gmGo();
+  if(gmTimer){$('gmT').classList.add('go');$('gmGo').textContent='Stop'}
+  cancelAnimationFrame(gmRAF);if(info&&typeof ANIM!=='undefined'){const a=normAnim(ANIM[info[0]]||ANIM.plank);const C=gmColors();const cv=$('gmCv');const t0=performance.now();const red=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const tick=now=>{const lab=drawAnim(cv,a,red?a._k[0].d*.99:now-t0,C);const ph=document.getElementById('gmPh');if(ph&&lab&&ph.textContent!==lab)ph.textContent=lab;if(!red)gmRAF=requestAnimationFrame(tick)};gmRAF=requestAnimationFrame(tick)}}
+const mmss=s=>Math.floor(s/60)+':'+String(Math.max(0,s%60)).padStart(2,'0');
+function gmGo(){clearInterval(gmTimer);let left=GS.rest;const end=Date.now()+left*1000;const el=()=>document.getElementById('gmTv');const T=document.getElementById('gmT');if(T)T.classList.add('go');const b=document.getElementById('gmGo');if(b)b.textContent='Stop';
+  gmTimer=setInterval(()=>{left=Math.round((end-Date.now())/1000);if(el())el().textContent=mmss(Math.max(0,left));if(left<=0){gmHalt();beep(3)}},250)}
+function gmHalt(){clearInterval(gmTimer);gmTimer=null;const T=document.getElementById('gmT');if(T)T.classList.remove('go');const b=document.getElementById('gmGo');if(b)b.textContent='Lancer';const v=document.getElementById('gmTv');if(v)v.textContent=mmss(GS.rest)}
+
+/* ---------- carte de course ---------- */
+const COURSE={};let leafP=null;
+function loadLeaflet(){if(window.L)return Promise.resolve();if(leafP)return leafP;leafP=new Promise((res,rej)=>{const c=document.createElement('link');c.rel='stylesheet';c.href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';document.head.appendChild(c);const sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';sc.onload=res;sc.onerror=rej;document.head.appendChild(sc)});return leafP}
+function loadCourse(id){if(COURSE[id])return Promise.resolve(COURSE[id]);if(!(D.courses||[]).includes(id))return Promise.resolve(null);return fetch('courses/'+id+'.json').then(r=>r.ok?r.json():null).then(j=>COURSE[id]=j).catch(()=>null)}
+function llAtKm(c,k){const P=c.pts;if(k<=0)return[P[0][0],P[0][1]];for(let i=1;i<P.length;i++)if(P[i][2]>=k){const a=P[i-1],b=P[i],u=(k-a[2])/Math.max(1e-6,b[2]-a[2]);return[a[0]+(b[0]-a[0])*u,a[1]+(b[1]-a[1])*u]}const z=P[P.length-1];return[z[0],z[1]]}
+let MAP=null;
+function drawMap(id,M){const el=document.getElementById('map');if(!el)return;Promise.all([loadCourse(id),loadLeaflet()]).then(([c])=>{if(!c||!window.L||!document.getElementById('map')){if(el)el.outerHTML='<p class="note">Carte indisponible (hors ligne ou tracé manquant).</p>';return}
+  if(MAP){try{MAP.remove()}catch(e){}}MAP=L.map('map',{zoomControl:true,attributionControl:true,scrollWheelZoom:false});
+  L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:16,subdomains:'abc',attribution:'© OpenStreetMap, SRTM · OpenTopoMap'}).addTo(MAP);
+  const line=L.polyline(c.pts.map(p=>[p[0],p[1]]),{color:'#C0392B',weight:4,opacity:.9}).addTo(MAP);
+  const cr=(D.crew||{})[id]||{};
+  (M.rows||[]).forEach((x,i)=>{const ll=(cr.pts&&cr.pts[x.nm]&&cr.pts[x.nm].ll)||(c.cps.find(q=>q.nm===x.nm)||{}).ll||llAtKm(c,x.km||0);const e=M.eta[i];
+    L.circleMarker(ll,{radius:x.as?8:6,color:'#fff',weight:2,fillColor:i<=M.done?'#2F7D5B':x.as?'#A58D4E':'#6B7078',fillOpacity:1}).addTo(MAP).bindTooltip(x.nm+(e?' · '+M.hhmm(e.ms):i<=M.done?' · passé':''),{direction:'top'})});
+  const me=llAtKm(c,M.km);L.marker(me,{icon:L.divIcon({className:'',html:'<div class="me-ic"></div>',iconSize:[22,22],iconAnchor:[11,11]}),zIndexOffset:1000}).addTo(MAP).bindPopup('<b>Position estimée</b><br>km '+km(Math.round(M.km*10)/10)+'<br>'+esc(M.why));
+  MAP.fitBounds(line.getBounds(),{padding:[16,16]})})}
+/* temps de route (OSRM, mis en cache) */
+function drive(a,b){const k='osrm-'+a.map(v=>v.toFixed(4)).join(',')+';'+b.map(v=>v.toFixed(4)).join(',');try{const c=localStorage.getItem(k);if(c)return Promise.resolve(+c)}catch(e){}
+  return fetch('https://router.project-osrm.org/route/v1/driving/'+a[1]+','+a[0]+';'+b[1]+','+b[0]+'?overview=false').then(r=>r.ok?r.json():null).then(j=>{const d=j&&j.routes&&j.routes[0]?j.routes[0].duration:null;if(d){try{localStorage.setItem(k,String(Math.round(d)))}catch(e){}}return d}).catch(()=>null)}
+
 /* ---------- navigation ---------- */
 function route(){const hsh=location.hash||'';let m=hsh.match(/^#\/([a-z]+)(?:\/([a-z]+))?/);let t=m?m[1]:'';const sub=m?m[2]:'';
   if(!t&&/p=/.test(hsh))t='assistance';
@@ -454,6 +603,7 @@ async function chkLive(){try{const r=await fetch('live.json?t='+Date.now(),{cach
   if(L&&L.race&&!chkLive.set){chkLive.set=1;AS.setRace(L.race)}
   if(document.getElementById('s-assistance').classList.contains('on'))AS.draw()}catch(e){document.getElementById('livepill').classList.remove('on')}}
 chkLive();setInterval(chkLive,60000);
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 setInterval(()=>{if(document.getElementById('s-assistance').classList.contains('on')&&!document.activeElement.closest('#asForm'))AS.draw()},120000);
 </script>
 </body>

@@ -1,0 +1,16 @@
+{
+ "name":"Victor Trail",
+ "short_name":"Victor Trail",
+ "description":"Ma prépa Diagonale des Fous 2027 : séance du jour, plan et assistance de course.",
+ "lang":"fr",
+ "start_url":"./#/aujourdhui",
+ "scope":"./",
+ "display":"standalone",
+ "background_color":"#14171C",
+ "theme_color":"#14171C",
+ "icons":[
+  {"src":"img/apple-touch-icon.png","sizes":"180x180","type":"image/png"},
+  {"src":"img/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"},
+  {"src":"img/icon.svg","sizes":"any","type":"image/svg+xml"}
+ ]
+}
