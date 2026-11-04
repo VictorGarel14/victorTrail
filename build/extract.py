@@ -7,6 +7,7 @@ acts={}
 import glob
 for f in glob.glob(D+'acts-*.json'): acts.update(json.load(open(f)).get('items',{}))
 kv=json.load(open(D+'kitviz.json'))['items']
+cpush=json.load(open(D+'corospush.json')).get('items',{}) if __import__('os').path.exists(D+'corospush.json') else {}
 # activités Coros récentes déposées par la tâche quotidienne (facultatif) : <dossier>/records.txt, <labelId>.fit, detail-<labelId>.txt
 import os,base64
 CO=sys.argv[4].rstrip('/')+'/' if len(sys.argv)>4 else None
@@ -45,7 +46,7 @@ const F=buildFollow();
 const R=RACES.map(r=>({id:r.id,name:r.name,date:r.date,start:r.start,place:r.place,km:r.km,dp:r.dp,role:r.role,info:r.info,ready:readiness2(r).score}));
 
 const ztxt=x=>String(x||'').replace(/\{(Z[1-5])\}/g,(m,z)=>zoneTxt(z)+' bpm');
-const plan=P.map(w=>({ws:w.ws,label:w.label,ph:w.phase.key,phase:w.phase.name,min:w.totMin,km:w.km,dp:w.dp,note:w.note||'',s:w.sessions.filter(s=>!/optionnel/i.test(s.title)||true).map(s=>({d:s.d,t:s.title,c:s.cat,m:s.min,z:s.z,dp:s.dp||0,km:s.cat==='run'?kmOf(s):null,k:!!s.key,ds:ztxt(s.desc),g:goalOf(s),gk:s.gym||null,sl:s.slot||'',r:actRes(s,w.ws),zt:s.z?zoneTxt(s.z)+' bpm':null,pc:s.z&&s.cat==='run'&&!(s.dp&&s.dp/(s.min/60)>180)?zPace(s.z):null,wo:s.blocks?s.blocks.map(b=>{const fl=v=>Math.round(v*10)/10;const tt=b.reps?b.reps+' × '+(b.dist?b.dist+' m':(b.on<1?Math.round(b.on*60)+'"':fl(b.on)+"'"))+(b.off?' / '+(b.off<1?Math.round(b.off*60)+'"':fl(b.off)+"'"):''):fl(b.min)+"'";return [tt,b.l,b.z,b.z==='VMA'?zPace('VMA'):(s.hill||b.hill)&&b.z!=='Z1'&&b.z!=='Z2'?'en côte : FC':zPace(b.z)]}):null,done:w.ws<=ws?!!sessionDone(s,w.ws):null}))}));
+const plan=P.map(w=>({ws:w.ws,label:w.label,ph:w.phase.key,phase:w.phase.name,min:w.totMin,km:w.km,dp:w.dp,note:w.note||'',s:w.sessions.filter(s=>!/optionnel/i.test(s.title)||true).map(s=>({d:s.d,t:s.title,c:s.cat,m:s.min,z:s.z,dp:s.dp||0,km:s.cat==='run'?kmOf(s):null,k:!!s.key,ds:ztxt(s.desc),g:goalOf(s),gk:s.gym||null,sl:s.slot||'',r:actRes(s,w.ws),cp:typeof pushedOn==='function'?pushedOn(s.id):null,zt:s.z?zoneTxt(s.z)+' bpm':null,pc:s.z&&s.cat==='run'&&!(s.dp&&s.dp/(s.min/60)>180)?zPace(s.z):null,wo:s.blocks?s.blocks.map(b=>{const fl=v=>Math.round(v*10)/10;const tt=b.reps?b.reps+' × '+(b.dist?b.dist+' m':(b.on<1?Math.round(b.on*60)+'"':fl(b.on)+"'"))+(b.off?' / '+(b.off<1?Math.round(b.off*60)+'"':fl(b.off)+"'"):''):fl(b.min)+"'";return [tt,b.l,b.z,b.z==='VMA'?zPace('VMA'):(s.hill||b.hill)&&b.z!=='Z1'&&b.z!=='Z2'?'en côte : FC':zPace(b.z)]}):null,done:w.ws<=ws?!!sessionDone(s,w.ws):null}))}));
 const strat={};RACES.forEach(r=>{const st=stratState(r.id),C=CPS[r.id],H=+st.goal||1;const NR=nRates(r.id);const o={goal:H,gh:st.gh,ml:st.ml,na:st.na};
   if(NR){const FL=NR.fl;o.fl={n:FL.n,vol:FL.vol,water:FL.water,iso:FL.iso,el:FL.el,drink:NR.R.d?nShort(NR.R.d):'',elec:NR.R.e?nShort(NR.R.e):''};o.rhythm=nRhythm(NR);o.items=NR.R.items.map(it=>({n:nShort(it.p),q:it.q}));o.tot={c:r0(NR.R.tot.c),na:r0(NR.R.tot.na),caf:r0(NR.R.tot.caf||0)};
     const L20=[];NR.L.forEach(x=>{if(x.kind==='drink')L20.push(fr(NR.drinkMl/3)+' ml de '+nShort(x.p));else if(x.kind==='elec'&&x.p.ml&&NR.fl.el)L20.push(fr(x.per*x.p.ml/3)+' ml de '+nShort(x.p));else{const k=x.per/3,nb=Math.round(1/k);L20.push(k>=1.5?fr(k)+' '+nShort(x.p):nb<=1?'1 '+nShort(x.p):'1 '+nShort(x.p)+' tous les '+nb+' bips (toutes les '+nEvery(x.per)+')')}});if(NR.water>5)L20.push(fr(NR.water/3)+" ml d'eau");o.cues=L20}
@@ -74,6 +75,7 @@ async def main():
         await pg.set_content('<!doctype html><html><head><meta charset=utf8></head><body>'+html+'</body></html>');await pg.wait_for_timeout(400)
         await pg.evaluate("([s,a,k])=>{Object.assign(state,s);state.acts=a;KITVIZ=k;PLAN=null}",[st,acts,kv])
         await pg.evaluate("()=>{if(typeof migrateState==='function')migrateState()}")
+        await pg.evaluate("(c)=>{if(typeof CPUSH!=='undefined')CPUSH=c}",cpush)
         nm=await pg.evaluate(MERGE,[crec,cfit,cdet])
         if crec: print('coros : +',nm,'activité(s)')
         out=await pg.evaluate(JS)
