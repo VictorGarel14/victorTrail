@@ -50,7 +50,7 @@ const plan=P.map(w=>({ws:w.ws,label:w.label,ph:w.phase.key,phase:w.phase.name,mi
 const strat={};RACES.forEach(r=>{const st=stratState(r.id),C=CPS[r.id],H=+st.goal||1;const NR=nRates(r.id);const o={goal:H,gh:st.gh,ml:st.ml,na:st.na};
   if(NR){const FL=NR.fl;o.fl={n:FL.n,vol:FL.vol,water:FL.water,iso:FL.iso,el:FL.el,drink:NR.R.d?nShort(NR.R.d):'',elec:NR.R.e?nShort(NR.R.e):''};o.rhythm=nRhythm(NR);o.items=NR.R.items.map(it=>({n:nShort(it.p),q:it.q}));o.tot={c:r0(NR.R.tot.c),na:r0(NR.R.tot.na),caf:r0(NR.R.tot.caf||0)};
     const L20=[];NR.L.forEach(x=>{if(x.kind==='drink')L20.push(fr(NR.drinkMl/3)+' ml de '+nShort(x.p));else if(x.kind==='elec'&&x.p.ml&&NR.fl.el)L20.push(fr(x.per*x.p.ml/3)+' ml de '+nShort(x.p));else{const k=x.per/3,nb=Math.round(1/k);L20.push(k>=1.5?fr(k)+' '+nShort(x.p):nb<=1?'1 '+nShort(x.p):'1 '+nShort(x.p)+' tous les '+nb+' bips (toutes les '+nEvery(x.per)+')')}});if(NR.water>5)L20.push(fr(NR.water/3)+" ml d'eau");o.cues=L20}
-  if(C&&C.pts.length){let prev=0;o.rows=C.pts.map(([nm,km,bar,po])=>{const t=C.limit?H*bar/C.limit:null;const c=clockAt(r,t),cb=clockAt(r,bar);const row={nm,km,t:fmtH(t),th:+t.toFixed(3),bh:bar,clock:c.txt,night:c.night,bar:fmtH(bar),barClock:cb.txt,marge:fmtH(bar-t),base:C.base.includes(nm),nb:!!(po&&po.nb),as:isAssist(r.id,nm)};row.stop=row.base?RAVITO.stop.base:row.as?RAVITO.stop.assist:RAVITO.stop.solo;if(row.nb){row.barClock='';row.marge=''}
+  if(C&&C.pts.length){let prev=0;const MT=marchT(r.id,H);if(MT&&MT.M)o.model={tot:+MT.M.tot.toFixed(3),opt:+MT.M.opt.toFixed(3),pess:+MT.M.pess.toFixed(3),stops:+MT.M.stops.toFixed(3)};o.rows=C.pts.map(([nm,km,bar,po],ix)=>{const t=MT.t[ix];const c=clockAt(r,t),cb=clockAt(r,bar);const row={nm,km,t:fmtH(t),th:+t.toFixed(3),bh:bar,clock:c.txt,night:c.night,bar:fmtH(bar),barClock:cb.txt,marge:fmtH(bar-t),base:C.base.includes(nm),nb:!!(po&&po.nb),as:isAssist(r.id,nm)};row.stop=row.base?RAVITO.stop.base:row.as?RAVITO.stop.assist:RAVITO.stop.solo;if(row.nb){row.barClock='';row.marge=''}
     if(NR){const ca=nCarry(NR,prev,t);row.carry=ca.map(z=>z.n+' '+nShort(z.x.p)).join(' · ')}prev=t;return row})}
   if(NR&&o.rows){const isA=nm=>isAssist(r.id,nm);const FL=NR.fl;const pts=[{nm:'Départ',th:0}].concat(o.rows.slice(0,-1));
     const nextA=i=>{for(let j=i+1;j<pts.length;j++)if(isA(pts[j].nm))return pts[j];return null};
@@ -63,7 +63,7 @@ const strat={};RACES.forEach(r=>{const st=stratState(r.id),C=CPS[r.id],H=+st.goa
   strat[r.id]=o});
 const tr=trajectory();
 return {plan,strat,today:t,prog:seasonProg(),phase:phaseOf(t).name,phaseGoal:phaseOf(t).goal,planStart:PLAN_START,week:wk(ws),next:wk(addD(ws,7)),weekReal:{h:+(st.min/60).toFixed(1),km:+st.km.toFixed(1),dp:r0(st.dp),n:st.n},
- weeks:F.weeks,acts:F.acts,ravito:{ref:RAVITO.ref.txt,types:RAVITO.types,order:RAVITO.order,rules:RAVITO.rules,crew:RAVITO.crew,before:RAVITO.before},ixgoal:(()=>{const L=(state.index||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));const sc=state.raceScore||{};return{target:IXGOAL.target,start:IXGOAL.start,cur:(L[L.length-1]||{}).utmb||IXGOAL.start.v,nice:IXGOAL.nice,steps:IXGOAL.steps.map(x=>({lab:x.lab,date:RACES.find(r=>r.id===x.race).date,txt:x.txt,lo:x.lo,score:+sc[x.race]||null}))}})(),gym:Object.fromEntries(Object.entries(GYM).map(([k,g])=>[k,{n:g.name,w:g.when,dur:g.dur,intro:g.intro,ex:g.ex.map(e=>[e[1],e[2],e[0]])}])),kpis:K,races:R,index:(state.index||[]).slice(-1)[0]||null,
+ weeks:F.weeks,acts:F.acts,physio:(()=>{const p=physio();return{pace:p.pace,vam:Math.round(p.vam),desc:p.desc,drift:p.drift,src:p.src}})(),ravito:{ref:RAVITO.ref.txt,types:RAVITO.types,order:RAVITO.order,rules:RAVITO.rules,crew:RAVITO.crew,before:RAVITO.before},ixgoal:(()=>{const L=(state.index||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));const sc=state.raceScore||{};return{target:IXGOAL.target,start:IXGOAL.start,cur:(L[L.length-1]||{}).utmb||IXGOAL.start.v,nice:IXGOAL.nice,steps:IXGOAL.steps.map(x=>({lab:x.lab,date:RACES.find(r=>r.id===x.race).date,txt:x.txt,lo:x.lo,score:+sc[x.race]||null}))}})(),gym:Object.fromEntries(Object.entries(GYM).map(([k,g])=>[k,{n:g.name,w:g.when,dur:g.dur,intro:g.intro,ex:g.ex.map(e=>[e[1],e[2],e[0]])}])),kpis:K,races:R,index:(state.index||[]).slice(-1)[0]||null,
  traj:{real:tr.pts.filter((_,i)=>i%3===0).map(p=>[p.d,+p.real.toFixed(1)]),plan:tr.plan.filter((_,i)=>i%3===0).map(p=>[p.d,+p.v.toFixed(1)])},
  fits:Object.fromEntries(['train','diag','rt100','mb42'].map(f=>[f,fitItems(f).map(x=>({cat:x.cat,name:x.name,brand:x.brand,bag:x.bag,eid:x.eid}))])),
  phases:PHASES.map(p=>({short:p.short,name:p.name,from:p.from,to:p.to,goal:p.goal}))}})()
@@ -74,7 +74,7 @@ async def main():
         html=open(CARNET).read()
         await pg.set_content('<!doctype html><html><head><meta charset=utf8></head><body>'+html+'</body></html>');await pg.wait_for_timeout(400)
         await pg.evaluate("([s,a,k])=>{Object.assign(state,s);state.acts=a;KITVIZ=k;PLAN=null}",[st,acts,kv])
-        await pg.evaluate("()=>{if(typeof migrateState==='function')migrateState()}")
+        await pg.evaluate("()=>{if(typeof migrateState==='function')migrateState();if(typeof physioRecal==='function')physioRecal()}")
         await pg.evaluate("(c)=>{if(typeof CPUSH!=='undefined')CPUSH=c}",cpush)
         nm=await pg.evaluate(MERGE,[crec,cfit,cdet])
         if crec: print('coros : +',nm,'activité(s)')

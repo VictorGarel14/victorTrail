@@ -259,6 +259,12 @@ dialog.gm::backdrop{background:var(--bg)}
 .crw .go2 a{display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:10px;border:1px solid var(--line);text-decoration:none;font:700 .9rem var(--f)}
 .crw .drv{margin-top:8px;font-size:.88rem}
 .crw .drv .ok{color:var(--good);font-weight:700}.crw .drv .ko{color:var(--bad);font-weight:700}
+.prof{position:relative;margin-top:12px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:8px 6px 4px;touch-action:pan-y}
+.prof svg{display:block;width:100%;height:auto}.prof text{font:600 10px var(--f);fill:var(--muted)}.prof .lb{fill:var(--ink);font-weight:700}
+.prof .tip{position:absolute;top:6px;pointer-events:none;background:var(--night);color:#fff;border-radius:8px;padding:6px 9px;font:600 .76rem var(--f);white-space:nowrap;display:none;z-index:2}
+.prof .tip b{color:var(--gold2)}
+.slg{display:flex;gap:10px;flex-wrap:wrap;font-size:.74rem;color:var(--muted);margin:6px 4px 2px}.slg i{display:inline-block;width:12px;height:4px;border-radius:2px;margin-right:4px;vertical-align:2px}
+.mdl{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--soft);font-size:.9rem;color:var(--ink2)}.mdl b{color:var(--ink)}
 /* onglets */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:40;background:color-mix(in srgb,var(--night) 96%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding-bottom:env(safe-area-inset-bottom)}
 .tabs .in{max-width:680px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);height:var(--tab)}
@@ -439,7 +445,7 @@ const AS=(()=>{const S=D.strat||{};const TZ={diag:4,rt100:2,mb42:2};const TZN={d
       // position estimée : temps de plan écoulé -> km
       let hPlan=now<st?0:(done>=0?rows[done].th+((now-lastAt)/36e5)/f:(now-st)/36e5);const marks=[{th:0,km:0}].concat(rows.map(x=>({th:x.th,km:x.km||0})));let estKm=marks[marks.length-1].km;
       for(let j=1;j<marks.length;j++)if(hPlan<=marks[j].th){const u=(hPlan-marks[j-1].th)/Math.max(1e-6,marks[j].th-marks[j-1].th);estKm=marks[j-1].km+(marks[j].km-marks[j-1].km)*u;break}
-      MP={rows,eta,done,km:estKm,hhmm,why:now<st?'Pas encore parti : départ '+clk(st)+'.':done>=0?'D\'après mon passage à '+rows[done].nm+' ('+hhmm(lastAt)+') et mon rythme.':'D\'après mon plan de course, sans pointage saisi.'};
+      MP={rows,eta,done,km:estKm,hhmm,lastAt,started:now>=st,why:now<st?'Pas encore parti : départ '+clk(st)+'.':done>=0?'D\'après mon passage à '+rows[done].nm+' ('+hhmm(lastAt)+') et mon rythme.':'D\'après mon plan de course, sans pointage saisi.'};
       if(nx>=0){const x=rows[nx],e=eta[nx],left=(e.ms-now)/36e5,before=now<st&&!P,a=A[x.nm];
         h+='<div class="where"><div class="k">'+(before?'Départ '+clk(st)+' · premier point':'Prochain point')+'</div><div class="nm">'+esc(x.nm)+'</div><div class="k">'+(x.km!=null?'km '+km(x.km):'')+(x.base?' · base vie':'')+'</div><div class="eta">'+hhmm(e.ms)+'</div><div class="win">'+WD[new Date(e.ms).getUTCDay()].replace('.','')+'. entre '+hhmm(e.lo)+' et '+hhmm(e.hi)+' · '+(left>48?'dans '+Math.round(left/24)+' jours':left>0?'dans '+dur(left):'d\'un instant à l\'autre')+'<br>'+TZN[cur]+(e.risk?' · <span class="risk">proche de la barrière ('+esc(x.barClock)+')</span>':'')+'</div>'+
           (info?'<div class="win" style="margin-top:10px">'+info+'</div>':'')+
@@ -447,6 +453,7 @@ const AS=(()=>{const S=D.strat||{};const TZ={diag:4,rt100:2,mb42:2};const TZN={d
           '<button class="btn ghost" id="asOpen">'+(P?'Corriger mon dernier passage':'J\'ai vu Victor passer')+'</button></div>'}
       else h+='<div class="where"><div class="k">'+esc(r.name)+'</div><div class="nm">Arrivé ! 🏁</div>'+liveBtn+'</div>';
       // carte
+      if((D.courses||[]).includes(cur))h+='<div class="sub"><span>Profil · où j\'en suis</span></div><div class="prof" id="asProf"></div>';
       if((D.courses||[]).includes(cur))h+='<div class="sub"><span>Carte · position estimée</span></div><div class="map" id="map" role="img" aria-label="Carte du parcours avec ma position estimée"></div><div class="maplg"><span><i style="background:var(--blaze)"></i>moi (estimé)</span><span><i style="background:var(--gold)"></i>assistance</span><span><i style="background:#6B7078"></i>ravito</span><span><i style="background:var(--good)"></i>passé</span></div><p class="note" style="margin-top:4px">Position calculée entre deux pointages d\'après mon rythme. Ma vraie position GPS est sur le lien Coros quand il est actif.</p>';
       // planning de route de l'équipe
       const crewPts=rows.map((x,i)=>({x,i})).filter(q=>q.x.as&&q.i>done&&(nx<0||q.i>=nx));
@@ -470,7 +477,7 @@ const AS=(()=>{const S=D.strat||{};const TZ={diag:4,rt100:2,mb42:2};const TZN={d
     if(D.ravito)h+='<div class="sub"><span>Pour l\'équipe</span></div><details class="box crew"><summary>Comment m\'aider à repartir vite</summary><ul>'+D.ravito.crew.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></details>';
     el.innerHTML=h;
     el.querySelectorAll('[data-as]').forEach(b=>b.onclick=()=>{cur=b.dataset.as;draw()});
-    if(MP)drawMap(cur,MP);
+    if(MP){drawMap(cur,MP);const pe=el.querySelector('#asProf');if(pe){const st0=startMs(r);drawProf(pe,cur,[{km:0,ms:st0}].concat(MP.rows.map((x,i)=>({km:x.km,ms:i<=MP.done?(i===MP.done?MP.lastAt:null):MP.eta[i].ms,done:i<=MP.done,lab:x.nm.split(' ')[0]+(i>MP.done?' '+MP.hhmm(MP.eta[i].ms):' ✓')}))),MP.started?MP.km:null)}}
     if(crewPlan)crewPlan();
     const op=el.querySelector('#asOpen');if(op)op.onclick=()=>{formOpen=true;const f=el.querySelector('#asForm');f.hidden=false;f.scrollIntoView({block:'center'});el.querySelector('#asTm').focus()};
     const ok=el.querySelector('#asOk');if(ok){const rows=o.rows,st=startMs(r);
@@ -514,13 +521,16 @@ let stCur='diag';
 function stratHTML(){const S=D.strat||{},R=D.races,r=R.find(x=>x.id===stCur),o=S[stCur]||{},H=o.goal;
   let h='<div class="seg" role="group" aria-label="Course">'+R.map(x=>'<button data-st="'+x.id+'" aria-pressed="'+(x.id===stCur)+'">'+esc(SH[x.id]||x.name)+'</button>').join('')+'</div>';
   h+='<div class="stg" style="margin-top:12px">'+[['Objectif',hm(H*60),r.km+' km · '+fr(r.dp)+' m D+'],['Glucides',o.gh+' g/h',fr(H*o.gh)+' g au total'],['Eau',o.ml+' ml/h',km(Math.round(H*o.ml/100)/10)+' L au total'],['Sodium',o.na+' mg/h',fr(H*o.na)+' mg au total']].map(([l,v,s])=>'<div class="box"><span>'+l+'</span><b>'+v+'</b><span>'+s+'</span></div>').join('')+'</div>';
+  if(o.model){const d=(H/o.model.tot-1)*100;h+='<div class="mdl">Avec mon niveau actuel, le modèle prévoit <b>'+hm(o.model.tot*60)+'</b> (entre '+hm(o.model.opt*60)+' et '+hm(o.model.pess*60)+'). '+(Math.abs(d)<3?'C\'est mon objectif.':d<0?'Mon objectif demande d\'aller '+Math.round(-d)+' % plus vite : la progression à construire.':'Mon objectif laisse '+Math.round(d)+' % de marge.')+'</div>'}
+  if((D.courses||[]).includes(stCur))h+='<div class="prof" id="stProf"></div>';
   if(o.cues)h+='<div class="sub"><span>À chaque bip de la montre (toutes les 20 min)</span></div><div class="box"><ul class="cues" style="margin:0">'+o.cues.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul></div>';
   else h+='<div class="sub"><span>Toutes les 20 minutes</span></div><div class="box">'+fr(o.gh/3)+' g de glucides, '+fr(o.ml/3)+' ml d\'eau, '+fr(o.na/3)+' mg de sodium.</div>';
   if(o.rows&&o.rows.length)h+='<div class="sub"><span>Tableau de marche · départ '+fmtD(r.date).replace(/\.$/,'')+' à '+r.start.replace(':',' h ')+'</span></div><div class="box" style="padding-top:4px;padding-bottom:4px">'+o.rows.map((x,i)=>'<div class="tmrow'+(x.base?' bv':'')+'" style="'+(i?'':'border-top:0')+'"><span class="a"><b>'+(x.night?'☾ ':'')+esc(x.nm)+'</b></span><span class="b">'+esc(x.clock)+'</span><small>'+(x.km!=null?'km '+km(x.km)+' · ':'')+esc(x.t)+' de course</small><small>barrière '+esc(x.barClock)+'</small>'+(x.carry?'<span class="f">À emporter : '+esc(x.carry)+'</span>':'')+'</div>').join('')+'</div><p class="note">☾ = de nuit. Temps calés sur les barrières horaires pour un objectif de '+hm(H*60)+'.</p>';
   else h+='<div class="sub"><span>Tableau de marche</span></div><div class="box muted">Les points de passage seront ajoutés dès la publication du parcours officiel.</div>';
   const V=D.ravito;if(V)h+='<div class="sub"><span>Protocole ravito'+(o.stopTot?' · '+hm(o.stopTot)+' d\'arrêt au total':'')+'</span></div><div class="box"><ul class="list">'+V.types.map(x=>'<li><span>'+esc(x[0])+'<br><small class="muted">'+esc(x[2])+'</small></span><b>'+esc(x[1])+'</b></li>').join('')+'</ul><p style="margin:12px 0 0;font-weight:700">Sur place, toujours dans cet ordre</p><ol class="cues">'+V.order.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol><p class="note">À Nice en 2026, j\'ai passé 2 h 31 à l\'arrêt sur les 90 premiers km. C\'est mon plus gros gisement de temps.</p></div>';
   return h}
-function bindStrat(){document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{stCur=b.dataset.st;vPlus('strategie')})}
+function bindStrat(){document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{stCur=b.dataset.st;vPlus('strategie')});
+  const el=document.getElementById('stProf');if(el){const r=D.races.find(x=>x.id===stCur),o=(D.strat||{})[stCur]||{},st=rStart(r);drawProf(el,stCur,[{km:0,ms:st}].concat((o.rows||[]).map(x=>({km:x.km,ms:st+x.th*36e5,lab:x.nm.split(' ')[0]+' '+String(x.clock||'').slice(5)}))),null)}}
 
 
 /* ---------- météo (Open-Meteo, Nice) ---------- */
@@ -590,6 +600,37 @@ function drawMap(id,M){const el=document.getElementById('map');if(!el)return;Pro
 /* temps de route (OSRM, mis en cache) */
 function drive(a,b){const k='osrm-'+a.map(v=>v.toFixed(4)).join(',')+';'+b.map(v=>v.toFixed(4)).join(',');try{const c=localStorage.getItem(k);if(c)return Promise.resolve(+c)}catch(e){}
   return fetch('https://router.project-osrm.org/route/v1/driving/'+a[1]+','+a[0]+';'+b[1]+','+b[0]+'?overview=false').then(r=>r.ok?r.json():null).then(j=>{const d=j&&j.routes&&j.routes[0]?j.routes[0].duration:null;if(d){try{localStorage.setItem(k,String(Math.round(d)))}catch(e){}}return d}).catch(()=>null)}
+
+
+/* ---------- profil d'altitude ---------- */
+const SLC=[[18,'#B0443B'],[8,'#D9752B'],[3,'#C9A227'],[-3,'#9AA0A8'],[-10,'#5B8DB8'],[-18,'#3E6FA0'],[-1e9,'#7A5BA6']];
+const WDg=['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'];
+const clkG=ms=>{const d=new Date(ms);return WDg[d.getUTCDay()]+' '+String(d.getUTCHours()).padStart(2,'0')+':'+String(d.getUTCMinutes()).padStart(2,'0')};
+const rStart=r=>pd(r.date)+(+r.start.slice(0,2))*36e5+(+r.start.slice(3,5))*6e4;
+function drawProf(el,id,marks,me){if(!el)return;loadCourse(id).then(c=>{if(!c||!el.isConnected){if(el.isConnected)el.remove();return}
+  const P=c.pts,KM=c.km,W=Math.max(320,el.clientWidth-12),L=34,Rr=8,B=20;
+  // étiquettes sur plusieurs lignes sans chevauchement
+  const xx=k=>L+k/KM*(W-L-Rr);const ends=[-1e9,-1e9,-1e9,-1e9];marks.forEach(m=>{if(!m.lab||m.km==null)return;const X=xx(Math.min(m.km,KM)),tw=m.lab.length*5.9+6;const bx=Math.max(2,Math.min(W-tw-2,X-tw/2));let r=ends.findIndex(e=>bx>e+3);if(r<0)r=ends.indexOf(Math.min(...ends));ends[r]=bx+tw;m._r=r;m._bx=bx;m._tw=tw});
+  const nr=Math.max(1,ends.filter(e=>e>-1e9).length),T=10+nr*13,H=(W<500?165:195)+nr*13;
+  const es=P.map(p=>p[3]);const lo=Math.floor(Math.min(...es)/100)*100,hi=Math.ceil(Math.max(...es)/100)*100;
+  const x=k=>L+k/KM*(W-L-Rr),y=e=>T+(hi-e)/(hi-lo)*(H-T-B);
+  let g='';const stp=Math.max(100,Math.round((hi-lo)/3/100)*100);for(let v=lo;v<=hi;v+=stp)g+='<line x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="var(--line)" stroke-dasharray="3 4"/><text x="'+(L-4)+'" y="'+(y(v)+3)+'" text-anchor="end">'+v+'</text>';
+  let ar='M'+x(0)+','+(H-B);P.forEach(p=>ar+='L'+x(p[2]).toFixed(1)+','+y(p[3]).toFixed(1));ar+='L'+x(KM)+','+(H-B)+'Z';g+='<path d="'+ar+'" fill="var(--soft)"/>';
+  const grd=[];for(let i=1;i<P.length;i++){const dk=(P[i][2]-P[i-1][2])*1000;grd.push(dk>5?(P[i][3]-P[i-1][3])/dk*100:0)}
+  for(let i=1;i<P.length;i++){const c2=SLC.find(q=>grd[i-1]>=q[0])[1];g+='<line x1="'+x(P[i-1][2]).toFixed(1)+'" y1="'+y(P[i-1][3]).toFixed(1)+'" x2="'+x(P[i][2]).toFixed(1)+'" y2="'+y(P[i][3]).toFixed(1)+'" stroke="'+c2+'" stroke-width="3" stroke-linecap="round"/>'}
+  const eAt=k=>{for(let i=1;i<P.length;i++)if(P[i][2]>=k){const a=P[i-1],b=P[i],u=(k-a[2])/Math.max(1e-6,b[2]-a[2]);return a[3]+(b[3]-a[3])*u}return P[P.length-1][3]};
+  const gAt=k=>{for(let i=1;i<P.length;i++)if(P[i][2]>=k)return grd[i-1];return 0};
+  marks.forEach((m,j)=>{if(m.km==null)return;const X=x(Math.min(m.km,KM)),Y=y(eAt(m.km));const anc=X>W-70?'end':X<L+50?'start':'middle';g+='<line x1="'+X+'" x2="'+X+'" y1="'+(m.lab?14+(m._r||0)*13:T)+'" y2="'+Y+'" stroke="var(--muted)" stroke-dasharray="2 3"/><circle cx="'+X+'" cy="'+Y+'" r="4.5" fill="'+(m.done?'#2F7D5B':'var(--paper)')+'" stroke="var(--ink)" stroke-width="1.8"/>'+(m.lab?'<text class="lb" x="'+(m._bx+m._tw/2)+'" y="'+(11+m._r*13)+'" text-anchor="middle">'+esc(m.lab)+'</text>':'')});
+  for(let k=0;k<=KM;k+=KM>80?20:10)g+='<text x="'+x(k)+'" y="'+(H-5)+'" text-anchor="middle">'+k+' km</text>';
+  if(me!=null)g+='<circle cx="'+x(me)+'" cy="'+y(eAt(me))+'" r="8" fill="var(--blaze)" stroke="#fff" stroke-width="3"/>';
+  g+='<line id="pl" y1="'+T+'" y2="'+(H-B)+'" stroke="var(--ink)" stroke-opacity=".5" style="display:none"/>';
+  el.innerHTML='<div class="tip"></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Profil d\'altitude du parcours, avec les ravitos et les heures de passage">'+g+'<rect x="'+L+'" y="0" width="'+(W-L-Rr)+'" height="'+H+'" fill="transparent"/></svg><div class="slg">'+[['#B0443B','> 18 %'],['#D9752B','8–18 %'],['#C9A227','3–8 %'],['#9AA0A8','plat'],['#5B8DB8','descente'],['#7A5BA6','> 18 % ↓']].map(([c2,l])=>'<span><i style="background:'+c2+'"></i>'+l+'</span>').join('')+'</div>';
+  const sv=el.querySelector('svg'),tip=el.querySelector('.tip'),pl=el.querySelector('#pl');
+  const tAt=k=>{const M=marks.filter(m=>m.ms!=null&&m.km!=null).sort((a,b)=>a.km-b.km);if(M.length<2)return null;for(let i=1;i<M.length;i++)if(M[i].km>=k){const a=M[i-1],b=M[i],u=(k-a.km)/Math.max(1e-6,b.km-a.km);return a.ms+(b.ms-a.ms)*u}return null};
+  const mv=ev=>{const r=sv.getBoundingClientRect();const px=(ev.clientX-r.left)*W/r.width;const k=Math.max(0,Math.min(KM,(px-L)/(W-L-Rr)*KM));const t=tAt(k);
+    pl.style.display='';pl.setAttribute('x1',x(k));pl.setAttribute('x2',x(k));tip.style.display='block';tip.innerHTML='km <b>'+km(Math.round(k*10)/10)+'</b> · '+Math.round(eAt(k))+' m · pente '+Math.round(gAt(k))+' %'+(t?'<br>passage <b>'+clkG(t)+'</b>':'');
+    const tx=x(k)*r.width/W;tip.style.left=Math.max(4,Math.min(r.width-tip.offsetWidth-4,tx-tip.offsetWidth/2))+'px'};
+  sv.addEventListener('pointermove',mv);sv.addEventListener('pointerdown',mv);sv.addEventListener('pointerleave',()=>{tip.style.display='none';pl.style.display='none'})})}
 
 /* ---------- navigation ---------- */
 function route(){const hsh=location.hash||'';let m=hsh.match(/^#\/([a-z]+)(?:\/([a-z]+))?/);let t=m?m[1]:'';const sub=m?m[2]:'';
