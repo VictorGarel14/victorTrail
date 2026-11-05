@@ -169,6 +169,33 @@ dialog.sheet::backdrop{background:rgba(8,10,12,.55)}
 .crew{margin-top:4px}.crew summary{cursor:pointer;font-weight:700;padding:4px 0}
 .crew ul{margin:8px 0 0;padding-left:18px;color:var(--ink2)}.crew li{margin:5px 0}
 /* progrès */
+.tw-hero{display:flex;gap:14px;align-items:center;background:var(--night);color:#EDEDED;border-radius:var(--r);padding:16px 18px;margin-top:14px}
+.tw-hero b{white-space:nowrap;font:800 2.4rem/1 var(--f);color:var(--gold2);font-variant-numeric:tabular-nums}
+.tw-hero span{font-size:.9rem;line-height:1.4}
+.tw-hero small{display:block;color:#9AA0A8;font-size:.78rem;margin-top:4px}
+.tw-prof{margin-top:12px;padding:10px 10px 6px}
+.tw-prof svg{width:100%;height:auto;display:block}
+.tw-prof text{font:600 10px var(--f);fill:var(--muted)}
+.tw-leg{display:flex;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--muted);margin-top:6px}
+.tw-leg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tw-list{display:grid;gap:8px}
+.tw-c{background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--tc);border-radius:var(--r)}
+.tw-c summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:12px 14px;align-items:center}
+.tw-c summary::-webkit-details-marker{display:none}
+.tw-c .k{font:700 .76rem var(--f);color:var(--muted)}
+.tw-c h3{font:800 1rem/1.3 var(--f);margin:2px 0 0}
+.tw-c .p{font:800 1.2rem var(--f);color:var(--tc);font-variant-numeric:tabular-nums;text-align:right}
+.tw-c .p small{display:block;font:600 .68rem var(--f);color:var(--muted)}
+.tw-c .body{padding:0 14px 14px;font-size:.9rem;color:var(--ink2)}
+.tw-ov{width:100%;height:auto;display:block;background:var(--soft);border-radius:10px;margin:2px 0 8px}
+.tw-ov text{font:600 10px var(--f);fill:var(--muted)}
+.tw-alt{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tw-alt button{border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:6px 11px;font:700 .78rem var(--f);color:var(--ink2);cursor:pointer;min-height:34px}
+.tw-alt button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.tw-act{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px}
+.tw-act .btn{min-height:44px;font-size:.84rem}
+.tw-map{height:240px;border-radius:12px;margin-top:10px;isolation:isolate;z-index:0;position:relative}
+.tw-rv{display:inline-block;font:700 .7rem var(--f);padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--blaze) 15%,transparent);color:var(--blaze);margin-left:4px}
 .kgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 .kpi .l{font:600 .8rem var(--f);color:var(--muted)}
@@ -510,13 +537,15 @@ function vProg(){const el=document.getElementById('s-progres');let h='<div class
 /* ---------- plus ---------- */
 function vPlus(sub){const el=document.getElementById('s-plus');let h='';const back='<a class="back" href="#/plus">‹ Plus</a>';
   if(sub==='strategie'){h+=back+'<div class="hd"><h1>Stratégie de course</h1><p>Objectif, nutrition et temps de passage prévus.</p></div>';h+=stratHTML()}
+  else if(sub==='jumeau'){h+=back+'<div class="hd"><h1>Jumeau local</h1><p>Les portions de mes sorties autour de Nice qui reproduisent le profil de chaque morceau de mes courses. De quoi répéter la course sans y aller.</p></div><div id="tw"><p class="note">Analyse en cours…</p></div>'}
   else if(sub==='courses'){h+=back+'<div class="hd"><h1>Mes courses</h1></div><div class="sess">'+D.races.map(r=>{const n=diff(T,r.date);return '<div class="rc '+r.role+'"><div class="band"><span>Course '+r.role+' · '+fmtDY(r.date)+'</span><span>'+(n>=0?'J−'+n:'Courue')+'</span></div><div class="in"><h2>'+esc(r.name)+'</h2><div class="muted" style="font-size:.86rem">'+esc(r.place)+' · départ '+r.start.replace(':',' h ')+'</div><div class="nums"><div><b>'+r.km+'</b><span>km</span></div><div><b>'+fr(r.dp)+'</b><span>m D+</span></div></div><p class="note" style="color:var(--ink2)">'+esc(r.info)+'</p></div></div>'}).join('')+'</div>';
     h+='<div class="sub"><span>Qualification Diagonale · 2 courses d\'au moins 85 points</span></div><div class="box"><ul class="list"><li><span>Nice by UTMB 100K · 26 sept. 2026</span><b style="color:var(--good)">163 pts ✓</b></li><li><span>MUT 60 · 29 mai 2027</span><b>88 pts à courir</b></li></ul></div>'}
   else if(sub==='journal'){h+=back+'<div class="hd"><h1>Journal</h1><p>Mes dernières séances, depuis ma montre Coros.</p></div><ul class="acts">'+((D.acts||[]).map(a=>{const d=new Date(pd(a.date));return '<li><div class="dt"><b>'+d.getUTCDate()+'</b><span>'+MOIS[d.getUTCMonth()]+'</span></div><div><b>'+esc(a.name||KL[a.k]||'Séance')+'</b><div class="muted" style="font-size:.82rem">'+esc(KL[a.k]||'')+(a.z?' · zone '+a.z.slice(1):'')+'</div></div><div class="st">'+(a.km?km(a.km)+' km<br>':'')+hm(a.dur/60)+(a.dp?' · '+fr(a.dp)+' m':'')+'</div></li>'}).join('')||'<li>Pas encore de séance publiée.</li>')+'</ul>'}
   else if(sub==='apropos'){h+=back+'<div class="about"><div class="hd"><h1>Victor <span class="kr" style="color:var(--gold);font-weight:500;font-size:1.1rem">빅토르</span></h1><p class="kr" style="color:var(--muted)">파리에서 정상까지</p></div><div class="box"><p style="margin:0">💼 Consultant le jour, 🏃 traileur entre midi et deux, et le week-end ⛰️ je vais vérifier que les montagnes sont toujours là. <b>40 h de boulot par semaine</b>, une vie à côté, et un objectif un peu fou : les <b>180 km de la Diagonale des Fous</b> 🌋, le 14 octobre 2027. Ici, je montre tout : les séances ⏱️, les jambes lourdes 🥵 et les progrès 📈. Rendez-vous sur la ligne d\'arrivée, à La Redoute 🏁</p></div><div class="box line" style="margin-top:12px" id="line"></div><p class="note" id="soc"></p><p class="note">Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros.</p></div>'}
-  else{h+='<div class="hd"><h1>Plus</h1></div><nav class="menu"><a href="#/plus/strategie"><div><span>Stratégie de course</span><small>Objectif, nutrition, tableau de marche</small></div></a><a href="#/plus/courses"><div><span>Mes courses</span><small>MUT 60, UTC 100M, Diagonale</small></div></a><a href="#/plus/journal"><div><span>Journal</span><small>Mes dernières séances</small></div></a><a href="#/plus/apropos"><div><span>Présentation</span><small>Qui je suis, la saison en un trait</small></div></a></nav>'}
+  else{h+='<div class="hd"><h1>Plus</h1></div><nav class="menu"><a href="#/plus/jumeau"><div><span>Jumeau local</span><small>Mes courses reproduites autour de Nice</small></div></a><a href="#/plus/strategie"><div><span>Stratégie de course</span><small>Objectif, nutrition, tableau de marche</small></div></a><a href="#/plus/courses"><div><span>Mes courses</span><small>MUT 60, UTC 100M, Diagonale</small></div></a><a href="#/plus/journal"><div><span>Journal</span><small>Mes dernières séances</small></div></a><a href="#/plus/apropos"><div><span>Présentation</span><small>Qui je suis, la saison en un trait</small></div></a></nav>'}
   el.innerHTML=h;
   if(sub==='strategie')bindStrat();
+  if(sub==='jumeau')twDraw();
   if(sub==='apropos'){const L=document.getElementById('line');L.innerHTML='<svg viewBox="0 -12 568 115" role="img" aria-label="Progression de la saison"><path class="base" d="'+BRAND_D+'"/><path class="tower" d="'+BRAND_T+'"/><path class="done" d="'+BRAND_D+'"/><circle class="goal" cx="262" cy="2" r="6"/><circle class="dot" r="7" cx="0" cy="92"/></svg><p class="note" style="text-align:center;margin:4px 0 0">'+Math.round(D.prog*100)+' % de la saison</p>';
     const p=L.querySelector('.done'),len=p.getTotalLength(),pt=p.getPointAtLength(len*D.prog);p.style.strokeDasharray=(len*D.prog)+' '+len;const dt=L.querySelector('.dot');dt.setAttribute('cx',pt.x);dt.setAttribute('cy',pt.y);
     const S=D.social||{};const ls=[];if(S.ig)ls.push('<a href="https://instagram.com/'+esc(S.ig.replace('@',''))+'" target="_blank" rel="noopener">Instagram</a>');if(S.tt)ls.push('<a href="https://tiktok.com/@'+esc(S.tt.replace('@',''))+'" target="_blank" rel="noopener">TikTok</a>');document.getElementById('soc').innerHTML=ls.join(' · ')}}
@@ -525,7 +554,7 @@ function stratHTML(){const S=D.strat||{},R=D.races,r=R.find(x=>x.id===stCur),o=S
   let h='<div class="seg" role="group" aria-label="Course">'+R.map(x=>'<button data-st="'+x.id+'" aria-pressed="'+(x.id===stCur)+'">'+esc(SH[x.id]||x.name)+'</button>').join('')+'</div>';
   h+='<div class="stg" style="margin-top:12px">'+[['Objectif',hm(H*60),r.km+' km · '+fr(r.dp)+' m D+'],['Glucides',o.gh+' g/h',fr(H*o.gh)+' g au total'],['Eau',o.ml+' ml/h',km(Math.round(H*o.ml/100)/10)+' L au total'],['Sodium',o.na+' mg/h',fr(H*o.na)+' mg au total']].map(([l,v,s])=>'<div class="box"><span>'+l+'</span><b>'+v+'</b><span>'+s+'</span></div>').join('')+'</div>';
   if(o.model){const d=(H/o.model.tot-1)*100;h+='<div class="mdl">Avec mon niveau actuel, le modèle prévoit <b>'+hm(o.model.tot*60)+'</b> (entre '+hm(o.model.opt*60)+' et '+hm(o.model.pess*60)+'). '+(Math.abs(d)<3?'C\'est mon objectif.':d<0?'Mon objectif demande d\'aller '+Math.round(-d)+' % plus vite : la progression à construire.':'Mon objectif laisse '+Math.round(d)+' % de marge.')+'</div>'}
-  if((D.courses||[]).includes(stCur))h+='<div class="prof" id="stProf"></div>';
+  if((D.courses||[]).includes(stCur))h+='<div class="prof" id="stProf"></div><p class="note" style="margin-top:6px"><a href="#/plus/jumeau" onclick="twCur=stCur" style="color:var(--gold);font-weight:700;text-decoration:none">Où m\'entraîner sur ce profil autour de Nice ›</a></p>';
   if(o.cues)h+='<div class="sub"><span>À chaque bip de la montre (toutes les 20 min)</span></div><div class="box"><ul class="cues" style="margin:0">'+o.cues.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul></div>';
   else h+='<div class="sub"><span>Toutes les 20 minutes</span></div><div class="box">'+fr(o.gh/3)+' g de glucides, '+fr(o.ml/3)+' ml d\'eau, '+fr(o.na/3)+' mg de sodium.</div>';
   if(o.rows&&o.rows.length)h+='<div class="sub"><span>Tableau de marche · départ '+fmtD(r.date).replace(/\.$/,'')+' à '+r.start.replace(':',' h ')+'</span></div><div class="box" style="padding-top:4px;padding-bottom:4px">'+o.rows.map((x,i)=>'<div class="tmrow'+(x.base?' bv':'')+'" style="'+(i?'':'border-top:0')+'"><span class="a"><b>'+(x.night?'☾ ':'')+esc(x.nm)+'</b></span><span class="b">'+esc(x.clock)+'</span><small>'+(x.km!=null?'km '+km(x.km)+' · ':'')+esc(x.t)+' de course</small><small>barrière '+esc(x.barClock)+'</small>'+(x.carry?'<span class="f">À emporter : '+esc(x.carry)+'</span>':'')+'</div>').join('')+'</div><p class="note">☾ = de nuit. Temps calés sur les barrières horaires pour un objectif de '+hm(H*60)+'.</p>';
@@ -660,6 +689,71 @@ function drawProf(el,id,marks,me){if(!el)return;loadCourse(id).then(c=>{if(!c||!
     sv.addEventListener('dblclick',e=>zoom(0.5,kOf(e.clientX)))}
   el.querySelectorAll('[data-z]').forEach(b=>b.onclick=()=>{const z=b.dataset.z;if(z==='in')zoom(0.5,me!=null&&me>=k0&&me<=k1?me:null);else if(z==='out')zoom(2);else if(z==='all'){k0=0;k1=KM;draw()}else if(z==='me'){const span=Math.min(KM,10);k0=Math.max(0,Math.min(KM-span,me-span/2));k1=k0+span;draw()}});
   draw()})}
+
+
+/* ---------- jumeau local ---------- */
+let TW=null,twCur=null,twAll=false,TWMAP=null;const twSel={};
+function loadTwin(){if(TW)return Promise.resolve(TW);return fetch('twin.json').then(r=>r.ok?r.json():null).then(j=>TW=j).catch(()=>null)}
+const TWK={montee:'Montée',descente:'Descente',roulant:'Roulant'};
+const twCol=p=>p>=85?'var(--good)':p>=70?'var(--gold)':'var(--muted)';
+const kmf=v=>km(Math.round(v*10)/10);
+const twDz=(u,d)=>[u>=10?'+'+fr(u)+' m':'',d>=10?'−'+fr(d)+' m':''].filter(Boolean).join(' · ');
+function twGpx(m,name){const x='<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="VictorTrail" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>'+esc(name)+'</name><trkseg>'+m.pts.map(p=>'<trkpt lat="'+p[0]+'" lon="'+p[1]+'"><ele>'+p[2]+'</ele></trkpt>').join('')+'</trkseg></trk></gpx>';
+  const b=new Blob([x],{type:'application/gpx+xml'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name.replace(/[^\w\-]+/g,'_')+'.gpx';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},800)}
+function twOv(prof,m){const w=320,h=96,p=6;const N=prof.length,P=m.pts,tw=[];for(let i=0;i<N;i++){const k=Math.round(i*(P.length-1)/(N-1));tw.push(P[k][2]-P[0][2])}
+  const all=prof.concat(tw),lo=Math.min(...all),hi=Math.max(...all),rg=Math.max(20,hi-lo);const X=i=>p+i*(w-2*p)/(N-1),Y=v=>p+(1-(v-lo)/rg)*(h-2*p-12);
+  const ln=a=>a.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+' '+Y(v).toFixed(1)).join('');
+  return '<svg class="tw-ov" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Profil de la course et de ma sortie superposés"><path d="'+ln(prof)+'" fill="none" stroke="var(--blaze)" stroke-width="2.4"/><path d="'+ln(tw)+'" fill="none" stroke="var(--ink)" stroke-width="2" stroke-dasharray="5 4"/><text x="'+p+'" y="'+(h-3)+'">— course</text><text x="70" y="'+(h-3)+'" style="fill:var(--ink)">- - ma sortie</text></svg>'}
+function twMatchHTML(s,m,id){const nm=(TWK[s.kind]||'')+' km '+kmf(s.k0)+'-'+kmf(s.k1);
+  return twOv(s.prof,m)+'<div><b>Sortie du '+esc(fmtDY(m.date))+'</b>, du km '+kmf(m.k0)+' au km '+kmf(m.k1)+(m.rev?'<span class="tw-rv">à faire dans l\'autre sens</span>':'')+'</div>'
+   +'<div class="muted" style="margin-top:3px">'+kmf(m.L)+' km · '+twDz(m.up,m.dn)+' · écart moyen '+m.err+' m · à '+kmf(m.from)+' km de Nice'+(m.min?' · ce jour-là en '+m.min+' min':'')+'</div>'
+   +'<div class="tw-act"><button class="btn ghost" data-twmap="'+id+'">Carte</button><a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+m.pts[0][0]+','+m.pts[0][1]+'">Y aller</a><button class="btn ghost" data-twgpx="'+id+'">GPX</button></div><div id="twm-'+id+'"></div>'}
+function twDraw(){const box=document.getElementById('tw');if(!box)return;
+  const rs=D.races.slice().sort((a,b)=>a.date<b.date?-1:1);
+  Promise.all([loadTwin(),twCur?loadCourse(twCur):Promise.resolve(null)]).then(([T])=>{if(!T){box.innerHTML='<p class="note">Analyse indisponible pour le moment (hors ligne ?).</p>';return}
+   if(!twCur){twCur=(rs.find(r=>T.courses[r.id])||rs[0]).id;return twDraw()}
+   loadCourse(twCur).then(c=>{if(!document.getElementById('tw'))return;const C=T.courses[twCur];
+    let h='<div class="seg" role="group" aria-label="Course">'+rs.map(r=>'<button data-twc="'+r.id+'" aria-pressed="'+(r.id===twCur)+'">'+esc(SH[r.id]||r.name)+'</button>').join('')+'</div>';
+    if(!C||!c){h+='<div class="box" style="margin-top:14px"><b>Parcours pas encore chargé</b><p class="note">Dès que le GPX officiel est ajouté, je retrouve automatiquement les portions de mes sorties qui lui ressemblent.</p></div>';box.innerHTML=h;twBind();return}
+    h+='<div class="tw-hero"><b>'+C.cov.km+' %</b><span>du parcours a un jumeau à 75 % ou plus autour de Nice, soit '+C.cov.dp+' % du D+.<small>Analyse de '+T.n+' sorties avec du relief · mise à jour chaque soir</small></span></div>';
+    // profil coloré par qualité
+    const P=c.pts,KM=c.km,w=560,hh=130,pl=30,pb=18,pt=6;const E=P.map(p=>p[3]),lo=Math.min(...E),hi=Math.max(...E);const X=k=>pl+k/KM*(w-pl-4),Y=v=>pt+(1-(v-lo)/Math.max(1,hi-lo))*(hh-pt-pb);
+    const at=k=>{for(let i=1;i<P.length;i++)if(P[i][2]>=k){const a=P[i-1],b=P[i],u=(k-a[2])/Math.max(1e-6,b[2]-a[2]);return a[3]+(b[3]-a[3])*u}return P[P.length-1][3]};
+    let g='';C.secs.forEach((s,i)=>{const pc=s.m[0]?s.m[0].pct:0,st=Math.max(.05,(s.k1-s.k0)/40);let d='M'+X(s.k0)+' '+Y(lo);for(let k=s.k0;k<=s.k1+1e-9;k+=st)d+=' L'+X(k).toFixed(1)+' '+Y(at(k)).toFixed(1);d+=' L'+X(s.k1)+' '+Y(at(s.k1)).toFixed(1)+' L'+X(s.k1)+' '+Y(lo)+'Z';
+      g+='<path d="'+d+'" fill="'+twCol(pc)+'" fill-opacity=".55" data-tws="'+i+'" style="cursor:pointer"/>'});
+    g+='<path d="'+P.map((p,i)=>(i?'L':'M')+X(p[2]).toFixed(1)+' '+Y(p[3]).toFixed(1)).join('')+'" fill="none" stroke="var(--ink)" stroke-width="1.4"/>';
+    for(let k=0;k<=KM;k+=10)g+='<text x="'+X(k)+'" y="'+(hh-4)+'" text-anchor="middle">'+k+'</text>';
+    g+='<text x="'+(pl-4)+'" y="'+(Y(hi)+8)+'" text-anchor="end">'+Math.round(hi)+'</text><text x="'+(pl-4)+'" y="'+Y(lo)+'" text-anchor="end">'+Math.round(lo)+'</text>';
+    h+='<div class="box tw-prof"><svg viewBox="0 0 '+w+' '+hh+'" role="img" aria-label="Profil de la course coloré selon la ressemblance avec mes sorties">'+g+'</svg><div class="tw-leg"><span><i style="background:var(--good)"></i>jumeau à 85 % et plus</span><span><i style="background:var(--gold)"></i>70 à 85 %</span><span><i style="background:var(--muted)"></i>moins de 70 %</span></div></div>';
+    // sections
+    const key=s=>s.up>=150||s.dn>=150;const nKey=C.secs.filter(key).length;
+    h+='<div class="sub"><span>'+(twAll?'Toutes les sections · '+C.secs.length:'Sections clés · '+nKey+' (150 m de dénivelé ou plus)')+'</span><button data-twall>'+(twAll?'Clés seulement':'Tout afficher')+'</button></div><div class="tw-list">';
+    C.secs.forEach((s,i)=>{if(!twAll&&!key(s))return;const j=twSel[twCur+i]||0,m=s.m[j],pc=m?m.pct:0;
+      h+='<details class="tw-c" id="tws-'+i+'" style="--tc:'+twCol(pc)+'"><summary><div><div class="k">km '+kmf(s.k0)+' → '+kmf(s.k1)+' · '+(TWK[s.kind]||'')+' · '+(s.gr>0?'+':'')+km(s.gr)+' %</div><h3>'+kmf(s.L)+' km · '+twDz(s.up,s.dn)+'</h3></div><div class="p">'+(m?pc+' %':'—')+'<small>'+(m?'ressemblance':'pas de jumeau')+'</small></div></summary><div class="body">'
+        +(m?twMatchHTML(s,m,'s'+i)+(s.m.length>1?'<div class="tw-alt" aria-label="Autres jumeaux">'+s.m.map((x,k)=>'<button data-twalt="'+i+'-'+k+'" aria-pressed="'+(k===j)+'">'+x.pct+' % · '+esc(fmtD(x.date).replace(/\.$/,''))+' · à '+Math.round(x.from)+' km</button>').join('')+'</div>':''):'<p class="note">Aucune de mes sorties ne reproduit ce morceau. À chercher : une '+(s.kind==='montee'?'montée':'descente')+' de '+kmf(s.L)+' km à '+km(Math.abs(s.gr))+' %.</p>')+'</div></details>'});
+    h+='</div>';
+    // tronçons
+    if(C.blocks&&C.blocks.length){h+='<div class="sub"><span>Répétition générale · tronçon par tronçon</span></div><div class="tw-list">';
+      C.blocks.forEach((b,i)=>{const m=b.m[0],ok=m&&m.pct>=50;
+        h+='<details class="tw-c" style="--tc:'+(ok?twCol(m.pct):'var(--line)')+'"><summary><div><div class="k">km '+kmf(b.k0)+' → '+kmf(b.k1)+'</div><h3>'+esc(b.from)+' → '+esc(b.to)+'</h3><div class="muted" style="font-size:.82rem">'+kmf(b.L)+' km · '+twDz(b.up,b.dn)+'</div></div><div class="p">'+(ok?m.pct+' %':'—')+'<small>'+(ok?'une seule sortie':'à composer')+'</small></div></summary><div class="body">'
+          +(ok?twMatchHTML(b,m,'b'+i):'<p class="note" style="margin-top:0">Aucune sortie ne reproduit ce tronçon d\'un seul tenant. Enchaîne les jumeaux des sections clés entre le km '+kmf(b.k0)+' et le km '+kmf(b.k1)+'.</p>')+'</div></details>'});
+      h+='</div>'}
+    h+='<p class="note">Ressemblance = forme du profil (altitude point par point) et longueur. Les départs et arrivées de mes sorties sont masqués sur 1 km. Les jumeaux proches de Nice passent devant.</p>';
+    box.innerHTML=h;twBind();
+    const mOf=id=>{const t=id[0],i=+id.slice(1);if(t==='b')return[C.blocks[i],C.blocks[i].m[0]];const s=C.secs[i];return[s,s.m[twSel[twCur+i]||0]]};
+    box.querySelectorAll('[data-twgpx]').forEach(b=>b.onclick=()=>{const[s,m]=mOf(b.dataset.twgpx);twGpx(m,'Jumeau '+(SH[twCur]||twCur)+' km '+kmf(s.k0)+'-'+kmf(s.k1))});
+    box.querySelectorAll('[data-twmap]').forEach(b=>b.onclick=()=>{const id=b.dataset.twmap,[,m]=mOf(id),hold=document.getElementById('twm-'+id);if(hold.firstChild){hold.innerHTML='';return}
+      document.querySelectorAll('[id^="twm-"]').forEach(x=>x.innerHTML='');hold.innerHTML='<div class="tw-map" id="twmap"></div>';
+      loadLeaflet().then(()=>{if(!document.getElementById('twmap'))return;if(TWMAP){try{TWMAP.remove()}catch(e){}}TWMAP=L.map('twmap',{scrollWheelZoom:false});
+        L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:16,subdomains:'abc',attribution:'© OpenStreetMap, SRTM · OpenTopoMap'}).addTo(TWMAP);
+        const ln=L.polyline(m.pts.map(p=>[p[0],p[1]]),{color:'#C0392B',weight:4}).addTo(TWMAP);
+        L.circleMarker([m.pts[0][0],m.pts[0][1]],{radius:7,color:'#fff',weight:2,fillColor:'#2F7D5B',fillOpacity:1}).addTo(TWMAP).bindTooltip('Début');
+        const z=m.pts[m.pts.length-1];L.circleMarker([z[0],z[1]],{radius:7,color:'#fff',weight:2,fillColor:'#14171C',fillOpacity:1}).addTo(TWMAP).bindTooltip('Fin');
+        TWMAP.fitBounds(ln.getBounds(),{padding:[18,18]})}).catch(()=>{hold.innerHTML='<p class="note">Carte indisponible hors ligne.</p>'})});
+    box.querySelectorAll('[data-twalt]').forEach(b=>b.onclick=()=>{const[i,k]=b.dataset.twalt.split('-').map(Number);twSel[twCur+i]=k;twDraw();setTimeout(()=>{const d=document.getElementById('tws-'+i);if(d){d.open=true;d.scrollIntoView({block:'nearest'})}},60)});
+    box.querySelectorAll('[data-tws]').forEach(p=>p.onclick=()=>{const i=+p.dataset.tws,s=C.secs[i];if(!twAll&&!(s.up>=150||s.dn>=150)){twAll=true;twDraw()}setTimeout(()=>{const d=document.getElementById('tws-'+i);if(d){d.open=true;d.scrollIntoView({behavior:'smooth',block:'center'})}},60)});
+   })})}
+function twBind(){const box=document.getElementById('tw');box.querySelectorAll('[data-twc]').forEach(b=>b.onclick=()=>{twCur=b.dataset.twc;twDraw()});const a=box.querySelector('[data-twall]');if(a)a.onclick=()=>{twAll=!twAll;twDraw()}}
 
 /* ---------- navigation ---------- */
 function route(){const hsh=location.hash||'';let m=hsh.match(/^#\/([a-z]+)(?:\/([a-z]+))?/);let t=m?m[1]:'';const sub=m?m[2]:'';
