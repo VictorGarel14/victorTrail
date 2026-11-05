@@ -2,7 +2,8 @@
 # Simplifie le tracé (≈ 700 points), calcule km cumulés et altitude, place les points de passage au km officiel (mise à l'échelle).
 import sys,re,math,json
 src,KM,OUT=sys.argv[1],float(sys.argv[2]),sys.argv[3]
-cps=[(a.rsplit(':',1)[0],float(a.rsplit(':',1)[1])) for a in sys.argv[4:]]
+DPOFF=next((float(a[5:]) for a in sys.argv[4:] if a.startswith('--dp=')),None)
+cps=[(a.rsplit(':',1)[0],float(a.rsplit(':',1)[1])) for a in sys.argv[4:] if not a.startswith('--')]
 s=open(src).read()
 P=[(float(a),float(b),float(e) if e else None) for a,b,e in re.findall(r'<(?:trkpt|rtept) lat="([-\d.]+)" lon="([-\d.]+)"[^>]*>\s*(?:<ele>([-\d.]+)</ele>)?',s)]
 if not P: P=[(float(b),float(a),None) for a,b in re.findall(r'<(?:trkpt|rtept) lon="([-\d.]+)" lat="([-\d.]+)"',s)]
@@ -39,7 +40,16 @@ if E:
   for e in E:
     if e-ref>3: up+=e-ref;ref=e
     elif e<ref: ref=e
-pts=[[round(P[i][0],5),round(P[i][1],5),round(cum[i]*f/1000,2),round(P[i][2]) if P[i][2] is not None else None] for i in K]
+# D+ / D- cumulés (hystérésis 5 m, à la façon ITRA), ramenés au D+ officiel si donné
+cu=[0.0]*len(P);cd=[0.0]*len(P);ref=P[0][2] or 0;U=D=0.0
+for i in range(1,len(P)):
+  e=P[i][2]
+  if e is not None:
+    if e-ref>=5: U+=e-ref;ref=e
+    elif ref-e>=5: D+=ref-e;ref=e
+  cu[i]=U;cd[i]=D
+sc=(DPOFF/U) if DPOFF and U else 1
+pts=[[round(P[i][0],5),round(P[i][1],5),round(cum[i]*f/1000,2),round(P[i][2]) if P[i][2] is not None else None,round(cu[i]*sc),round(cd[i]*sc)] for i in K]
 def at(km):
   m=km*1000/f
   for i in range(1,len(cum)):
@@ -47,6 +57,6 @@ def at(km):
       u=(m-cum[i-1])/max(1e-9,cum[i]-cum[i-1]);a,b=P[i-1],P[i]
       return [round(a[0]+(b[0]-a[0])*u,5),round(a[1]+(b[1]-a[1])*u,5)]
   return [P[-1][0],P[-1][1]]
-out={'km':KM,'gpxKm':round(tot/1000,2),'dp':round(up),'pts':pts,'cps':[{'nm':n,'km':k,'ll':at(k)} for n,k in cps]}
+out={'km':KM,'up':round(U*sc),'dn':round(D*sc),'gpxKm':round(tot/1000,2),'dp':round(up),'pts':pts,'cps':[{'nm':n,'km':k,'ll':at(k)} for n,k in cps]}
 json.dump(out,open(OUT,'w'),separators=(',',':'))
 print('ok',len(pts),'points',round(tot/1000,1),'km gpx ->',KM,'· D+',round(up),'·',[ (c['nm'],c['ll']) for c in out['cps']])

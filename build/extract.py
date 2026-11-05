@@ -74,7 +74,7 @@ async def main():
         html=open(CARNET).read()
         await pg.set_content('<!doctype html><html><head><meta charset=utf8></head><body>'+html+'</body></html>');await pg.wait_for_timeout(400)
         await pg.evaluate("([s,a,k])=>{Object.assign(state,s);state.acts=a;KITVIZ=k;PLAN=null}",[st,acts,kv])
-        await pg.evaluate("()=>{if(typeof migrateState==='function')migrateState();if(typeof physioRecal==='function')physioRecal()}")
+        await pg.evaluate("()=>{if(typeof fixActs==='function')fixActs();if(typeof migrateState==='function')migrateState();if(typeof physioRecal==='function')physioRecal()}")
         await pg.evaluate("(c)=>{if(typeof CPUSH!=='undefined')CPUSH=c}",cpush)
         nm=await pg.evaluate(MERGE,[crec,cfit,cdet])
         if crec: print('coros : +',nm,'activité(s)')
