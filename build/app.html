@@ -361,7 +361,7 @@ const KL={trail:'Trail',run:'Course',gym:'Renfo',bike:'Vélo',hike:'Rando',other
 function sessCard(s,big){const zc=zcol(s);const n=['<div><b>'+hm(s.m)+'</b><span>durée</span></div>'];
   if(s.km)n.push('<div><b>'+km(s.km)+'</b><span>km env.</span></div>');if(s.dp)n.push('<div><b>'+fr(s.dp)+'</b><span>m D+</span></div>');
   if(big&&s.zt)n.push('<div><b style="color:'+zc+'">'+esc(s.zt.replace(/^Z\d\s*/,''))+'</b><span>zone '+esc(s.z[1])+'</span></div>');
-  const tags=(OWNER&&s.cp&&!s.r?'<span class="tag" title="Sur ta Coros">⌚</span>':'')+(s.done||s.r?'<span class="tag ok">✓ Faite</span>':'')+(s.k?'<span class="tag k">Clé</span>':'')+(s.sl?'<span class="tag">'+(s.sl==='m'?'Midi':'Soir')+'</span>':'');
+  const tags=(s.co?'<span class="tag" title="Programmée par Dorian (Nolio)">Coach</span>':'')+(OWNER&&s.cp&&!s.co&&!s.r?'<span class="tag" title="Sur ta Coros">⌚</span>':'')+(s.done||s.r?'<span class="tag ok">✓ Faite</span>':'')+(s.k?'<span class="tag k">Clé</span>':'')+(s.sl?'<span class="tag">'+(s.sl==='m'?'Midi':'Soir')+'</span>':'');
   const date=add(s._ws,s.d);
   return '<button class="sc" style="--zc:'+zc+'" data-s="'+s._ws+'|'+s._i+'"><div class="top"><div><div class="goal">'+esc(s.g)+'</div><h3>'+esc(s.t)+'</h3></div><div class="tags">'+tags+'</div></div><div class="nums">'+n.join('')+'</div>'+resLine(s)+(s.c!=='gym'&&!s.r?'<span class="wx" data-wx="'+date+'|'+(s.sl||'')+'|'+s.m+'"></span>':'')+(big?'<span class="more">'+(s.gk?'Voir les exercices et démarrer':s.wo?'Voir le détail de la séance':'Voir la séance')+'</span>':'')+'</button>'}
 const VWARN={fast:1,short:1,long:1};
@@ -384,7 +384,8 @@ function openSess(ws,i,trigger){const w=PL.find(x=>x.ws===ws);if(!w)return;const
   if(s.r)h+='<div class="did2'+(VWARN[s.r.v]?' warn':'')+'"><b>Ce que j\'ai fait · '+esc(s.r.vt)+'</b>'+hm(s.r.min)+(s.r.km?' · '+km(s.r.km)+' km':'')+(s.r.dp?' · '+fr(s.r.dp)+' m D+':'')+(s.r.hr?' · FC moy. '+s.r.hr:'')+'<div class="muted" style="margin-top:4px;font-size:.88rem">'+esc(resText(s))+'</div></div>';
   else if(s.c!=='gym')h+='<span class="wx" data-wx="'+date+'|'+(s.sl||'')+'|'+s.m+'" style="font-size:.9rem"></span>';
   if(s.gk&&g&&typeof ANIM!=='undefined')h+='<button class="btn" data-gym="'+s.gk+'|'+date+'">▶ Démarrer la séance</button>';
-  if(OWNER&&(s.c==='run'||s.gk)&&!s.r){const dd=diff(T,date);
+  if(s.co&&!s.r)h+='<p class="note">⌚ Séance programmée par Dorian sur Nolio : elle est déjà sur ta Coros, lance-la depuis ta montre.</p>';
+  if(OWNER&&!s.co&&(s.c==='run'||s.gk)&&!s.r){const dd=diff(T,date);
     if(s.cp)h+='<p class="note">⌚ Déjà sur ta Coros (envoyée pour le '+fmtD(s.cp).replace(/\.$/,'')+').</p>';
     else if(dd>=0&&dd<=90)h+='<a class="btn ghost" href="'+CARNET+'#coros='+encodeURIComponent(ws+'#'+i)+'" target="_blank" rel="noopener">⌚ Envoyer sur ma Coros</a><p class="note">S\'ouvre dans ton carnet, qui est connecté à ta montre.</p>'}
   if(s.k)h+='<p class="note">Séance clé de la semaine : c\'est celle à ne pas sauter.</p>';
