@@ -201,7 +201,7 @@ dialog.sheet::backdrop{background:rgba(8,10,12,.55)}
 #lock .card{width:100%;max-width:400px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 20px}
 #lock h1{font:800 1.5rem/1.2 var(--f);margin:0 0 6px}#lock p{color:var(--muted);margin:0 0 16px;font-size:.92rem;line-height:1.45}
 #lock label{display:block;font:700 .8rem var(--f);margin:0 0 6px}#lock input{width:100%;box-sizing:border-box;font:600 1.05rem var(--f);padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);margin-bottom:12px}
-#lock input#lkCode{letter-spacing:.35em;text-align:center;font-size:1.3rem}#lock .btn{width:100%;min-height:48px}#lock .err{color:var(--blaze);font-weight:700;font-size:.86rem;min-height:1.2em;margin:4px 0 0}
+#lock input#lkCode{font-size:.95rem}#lock .btn{width:100%;min-height:48px}#lock .err{color:var(--blaze);font-weight:700;font-size:.86rem;min-height:1.2em;margin:4px 0 0}
 #lock .small{font-size:.8rem;margin:16px 0 0}
 .kgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:14px}
@@ -803,7 +803,20 @@ window.VT_logout=()=>{LS.del('vt-ko');LS.del('vt-kc');LS.del('vt-email')};
 const m=location.hash.match(/[#&]k=([A-Za-z0-9_-]{40,})/);
 if(m){LS.set('vt-kc',m[1]);history.replaceState(null,'',location.pathname+location.search+'#/assistance')}
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function keysFrom(tok){const v=await api('/rest/v1/vault?select=k_owner,k_crew',null,tok);
+  if(!v||!v[0])throw new Error('Aucune clé pour ce compte.');
+  LS.set('vt-ko',v[0].k_owner);LS.set('vt-kc',v[0].k_crew);
+  fetch(SB+'/auth/v1/logout',{method:'POST',headers:{apikey:PK,Authorization:'Bearer '+tok}}).catch(()=>{})}
+async function verifyLink(txt){let th=null;try{const u=new URL(txt.trim());th=u.searchParams.get('token')||u.searchParams.get('token_hash')}catch(e){}
+  if(!th)throw new Error('Lien non reconnu : copie le lien « Sign in » de l\'e-mail.');
+  let s;try{s=await api('/auth/v1/verify',{type:'email',token_hash:th})}catch(e){s=await api('/auth/v1/verify',{type:'magiclink',token_hash:th})}
+  return s.access_token}
+const HP=new URLSearchParams(location.hash.replace(/^#/,''));let BACK=null;
+if(HP.get('access_token')){BACK={tok:HP.get('access_token')};history.replaceState(null,'',location.pathname+location.search+'#/aujourdhui')}
+else if(HP.get('error')){BACK={err:(HP.get('error_description')||'Lien invalide ou expiré.').replace(/\+/g,' ')};history.replaceState(null,'',location.pathname+location.search)}
 async function run(){
+  if(BACK&&BACK.tok){const t=BACK.tok;BACK=null;try{await keysFrom(t)}catch(e){return lock(e.message)}}
+  if(BACK&&BACK.err){const m=BACK.err;BACK=null;return lock(/expired|invalid/i.test(m)?'Ce lien a expiré ou a déjà servi : demande-en un nouveau.':m)}
   const pack=JSON.parse(document.getElementById('enc').textContent||'{}');
   if(!pack.o)return lock('Données indisponibles pour le moment.');
   let D=null,owner=false;const ko=LS.get('vt-ko'),kc=LS.get('vt-kc');
@@ -819,22 +832,20 @@ async function api(path,body,tok){const r=await fetch(SB+path,{method:body?'POST
 function lock(msg){
   let L=document.getElementById('lock');if(!L){L=document.createElement('div');L.id='lock';document.body.appendChild(L)}
   const em=LS.get('vt-email')||'';
-  L.innerHTML='<div class="card" role="dialog" aria-labelledby="lkT"><h1 id="lkT">VictorTrail est privé</h1><p>'+(msg?esc(msg)+' ':'')+'Connecte-toi : tu reçois un code à usage unique par e-mail.</p>'
-   +'<form id="lkF1"><label for="lkMail">Adresse e-mail</label><input id="lkMail" type="email" autocomplete="email" inputmode="email" required value="'+esc(em)+'"><button class="btn" type="submit">Recevoir mon code</button></form>'
-   +'<form id="lkF2" hidden><label for="lkCode">Code reçu par e-mail</label><input id="lkCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" required><button class="btn" type="submit">Ouvrir mon carnet</button><button class="btn ghost" type="button" id="lkBack" style="margin-top:8px">Changer d\'adresse</button></form>'
+  L.innerHTML='<div class="card" role="dialog" aria-labelledby="lkT"><h1 id="lkT">VictorTrail est privé</h1><p>'+(msg?esc(msg)+' ':'')+'Connecte-toi : tu reçois un lien de connexion par e-mail.</p>'
+   +'<form id="lkF1"><label for="lkMail">Adresse e-mail</label><input id="lkMail" type="email" autocomplete="email" inputmode="email" required value="'+esc(em)+'"><button class="btn" type="submit">Recevoir mon lien</button></form>'
+   +'<form id="lkF2" hidden><p>E-mail envoyé (« Your sign-in link »). Touche <b>Sign in</b> dans l\'e-mail.<br>Depuis l\'appli installée sur l\'écran d\'accueil : appui long sur <b>Sign in</b> › Copier le lien, puis colle-le ici.</p><label for="lkCode">Lien (ou code) reçu par e-mail</label><input id="lkCode" autocomplete="one-time-code" autocapitalize="off" spellcheck="false" required><button class="btn" type="submit">Ouvrir mon carnet</button><button class="btn ghost" type="button" id="lkBack" style="margin-top:8px">Changer d\'adresse</button></form>'
    +'<p class="err" id="lkE" role="alert"></p><p class="small">Tu fais partie de l\'équipe d\'assistance ? Ouvre le lien que Victor t\'a envoyé.</p></div>';
-  const E=t=>{document.getElementById('lkE').textContent=t||''};let mail='';
+  const E=t=>{document.getElementById('lkE').textContent=t||''};let mail=LS.get('vt-email')||'';
   document.getElementById('lkF1').onsubmit=async ev=>{ev.preventDefault();E('');mail=document.getElementById('lkMail').value.trim().toLowerCase();const b=ev.target.querySelector('button');b.disabled=true;b.textContent='Envoi…';
-    try{await api('/auth/v1/otp',{email:mail,create_user:false});LS.set('vt-email',mail);document.getElementById('lkF1').hidden=true;document.getElementById('lkF2').hidden=false;document.getElementById('lkCode').focus();E('')}
-    catch(e){E(/signup|not found|not allowed/i.test(e.message)?'Cette adresse n\'a pas accès.':'Envoi impossible : '+e.message)}b.disabled=false;b.textContent='Recevoir mon code'};
+    try{await api('/auth/v1/otp?redirect_to='+encodeURIComponent(location.origin+location.pathname),{email:mail,create_user:false});LS.set('vt-email',mail);document.getElementById('lkF1').hidden=true;document.getElementById('lkF2').hidden=false;document.getElementById('lkCode').focus();E('')}
+    catch(e){E(/signup|not found|not allowed/i.test(e.message)?'Cette adresse n\'a pas accès.':'Envoi impossible : '+e.message)}b.disabled=false;b.textContent='Recevoir mon lien'};
   document.getElementById('lkBack').onclick=()=>{document.getElementById('lkF2').hidden=true;document.getElementById('lkF1').hidden=false};
   document.getElementById('lkF2').onsubmit=async ev=>{ev.preventDefault();E('');const b=ev.target.querySelector('button');b.disabled=true;b.textContent='Vérification…';
-    try{const s=await api('/auth/v1/verify',{type:'email',email:mail,token:document.getElementById('lkCode').value.trim()});
-      const v=await api('/rest/v1/vault?select=k_owner,k_crew',null,s.access_token);
-      if(!v||!v[0])throw new Error('Aucune clé pour ce compte.');
-      LS.set('vt-ko',v[0].k_owner);LS.set('vt-kc',v[0].k_crew);
-      fetch(SB+'/auth/v1/logout',{method:'POST',headers:{apikey:PK,Authorization:'Bearer '+s.access_token}}).catch(()=>{});
-      run()}
+    try{const val=document.getElementById('lkCode').value.trim();let tok;
+      if(/^[0-9]{6,10}$/.test(val)){mail=mail||LS.get('vt-email')||'';tok=(await api('/auth/v1/verify',{type:'email',email:mail,token:val})).access_token}
+      else tok=await verifyLink(val);
+      await keysFrom(tok);run()}
     catch(e){E(/expired|invalid|otp/i.test(e.message)?'Code incorrect ou expiré.':e.message);b.disabled=false;b.textContent='Ouvrir mon carnet'}};
 }
 window.VT_run=run;
