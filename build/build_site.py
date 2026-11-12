@@ -23,6 +23,8 @@ for k in ('acts','plan','week','weeks','weekReal','kpis','gym','fits','traj','ph
     if k in crew: crew[k]=[] if isinstance(d[k],list) else {} if isinstance(d[k],dict) else None
 crew['crewMode']=True
 pack={'v':1,'o':vtcrypt.enc(d,KO),'c':vtcrypt.enc(crew,KC)}
+CH=json.load(open(HERE+'changelog.json'))
+h=h.replace('__CHANGES__',json.dumps(CH,ensure_ascii=False)).replace('__VERSION__',CH[0]['v'])
 h=h.replace('__DATA__',json.dumps(pack))
 open(OUT+'index.html','w').write(h)
 print('ok',os.path.getsize(OUT+'index.html'))

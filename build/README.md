@@ -34,3 +34,7 @@ Pour pousser un passage à tout le monde, compléter `live.json` : `{"race":"dia
 ## Jumeau local
 
 `python3 build/twin.py . <dossiers ou fichiers .fit>` ajoute les sorties à `build/twin-lib.enc.json` (chiffrée) (sorties avec du relief à moins de 120 km de Nice, rééchantillonnées tous les 50 m, départ et arrivée masqués sur 1 km), découpe chaque parcours de `courses/` en montées, descentes et portions roulantes, puis cherche dans les sorties les portions au profil le plus proche (dans les deux sens). Résultat : `twin.enc.json` (chiffré), affiché dans l'appli (Plus › Jumeau local). Un nouveau GPX dans `courses/` est analysé automatiquement au build suivant.
+
+## Versions de l'appli
+
+`build/changelog.json` liste les versions (la plus récente en premier) : `v`, `date`, `name`, `items` (visibles partout) et `os` (seulement dans la copie VictorTrail OS de my-app). `build_site.py` l'intègre dans la page (`<meta name="vt-version">`, historique dans Plus › Nouveautés, résumé des nouveautés à la première ouverture d'une nouvelle version, bandeau « Version x disponible » quand une page plus récente est en ligne). Toute évolution visible de l'appli ajoute une version ici ; les mises à jour de données (tâche horaire) n'en créent pas.
