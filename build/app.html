@@ -196,6 +196,13 @@ dialog.sheet::backdrop{background:rgba(8,10,12,.55)}
 .tw-act .btn{min-height:44px;font-size:.84rem}
 .tw-map{height:240px;border-radius:12px;margin-top:10px;isolation:isolate;z-index:0;position:relative}
 .tw-rv{display:inline-block;font:700 .7rem var(--f);padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--blaze) 15%,transparent);color:var(--blaze);margin-left:4px}
+.tabs.crew a:not([data-t="assistance"]){display:none}.tabs.crew .in{grid-template-columns:1fr}
+#lock{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px 16px;overflow:auto}
+#lock .card{width:100%;max-width:400px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 20px}
+#lock h1{font:800 1.5rem/1.2 var(--f);margin:0 0 6px}#lock p{color:var(--muted);margin:0 0 16px;font-size:.92rem;line-height:1.45}
+#lock label{display:block;font:700 .8rem var(--f);margin:0 0 6px}#lock input{width:100%;box-sizing:border-box;font:600 1.05rem var(--f);padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--ink);margin-bottom:12px}
+#lock input#lkCode{letter-spacing:.35em;text-align:center;font-size:1.3rem}#lock .btn{width:100%;min-height:48px}#lock .err{color:var(--blaze);font-weight:700;font-size:.86rem;min-height:1.2em;margin:4px 0 0}
+#lock .small{font-size:.8rem;margin:16px 0 0}
 .kgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .kpi{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 .kpi .l{font:600 .8rem var(--f);color:var(--muted)}
@@ -325,9 +332,9 @@ dialog.gm::backdrop{background:var(--bg)}
 <dialog class="sheet" id="sheet" aria-labelledby="shT"><div class="sh-h"><div><div class="muted" id="shW" style="font:600 .82rem var(--f)"></div><h2 id="shT"></h2></div><button class="x" id="shX" aria-label="Fermer">✕</button></div><div class="sh-b" id="shB"></div></dialog>
 <dialog class="gm" id="gm" aria-label="Séance de renfo"><div class="in" id="gmIn"></div></dialog>
 <script src="anim.js" onerror="this.remove()"></script>
-<script id="data" type="application/json">__DATA__</script>
-<script>
-const D=JSON.parse(document.getElementById('data').textContent);
+<script id="enc" type="application/json">__DATA__</script>
+<script type="text/x-app" id="app">
+const D=window.VT_D;
 const BRAND_D='__BRAND_D__',BRAND_T='__BRAND_T__';
 const MOIS=['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'];
 const JOURS=['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
@@ -345,7 +352,7 @@ const ZC={Z1:'var(--z1)',Z2:'var(--z2)',Z3:'var(--z3)',Z4:'var(--z4)',Z5:'var(--
 const SH={mb42:'MUT 60',rt100:'UTC 100M',diag:'Diagonale'};
 const PL=D.plan||[];
 const CARNET='https://claude.ai/artifact/BUh4x9Q368yCTYRGsejHVv';
-const OWNER=(()=>{try{if(/(^|[#&])moi(=1)?($|&)/.test(location.hash.slice(1))){localStorage.setItem('vt-owner','1');history.replaceState(null,'',location.pathname+location.search+'#/aujourdhui')}if(/(^|[#&])pasmoi($|&)/.test(location.hash.slice(1)))localStorage.removeItem('vt-owner');return localStorage.getItem('vt-owner')==='1'}catch(e){return false}})();
+const OWNER=!!window.VT_OWNER,CREW=!!D.crewMode;
 const T=(()=>{const q=new URLSearchParams(location.search).get('d');if(/^\d{4}-\d{2}-\d{2}$/.test(q||''))return q;try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Paris'}).format(new Date())}catch(e){return new Date().toISOString().slice(0,10)}})();
 const wd=d=>JOURS[(new Date(pd(d)).getUTCDay()+6)%7];
 const monday=d=>add(d,-((new Date(pd(d)).getUTCDay()+6)%7));
@@ -542,11 +549,12 @@ function vPlus(sub){const el=document.getElementById('s-plus');let h='';const ba
   else if(sub==='courses'){h+=back+'<div class="hd"><h1>Mes courses</h1></div><div class="sess">'+D.races.map(r=>{const n=diff(T,r.date);return '<div class="rc '+r.role+'"><div class="band"><span>Course '+r.role+' · '+fmtDY(r.date)+'</span><span>'+(n>=0?'J−'+n:'Courue')+'</span></div><div class="in"><h2>'+esc(r.name)+'</h2><div class="muted" style="font-size:.86rem">'+esc(r.place)+' · départ '+r.start.replace(':',' h ')+'</div><div class="nums"><div><b>'+r.km+'</b><span>km</span></div><div><b>'+fr(r.dp)+'</b><span>m D+</span></div></div><p class="note" style="color:var(--ink2)">'+esc(r.info)+'</p></div></div>'}).join('')+'</div>';
     h+='<div class="sub"><span>Qualification Diagonale · 2 courses d\'au moins 85 points</span></div><div class="box"><ul class="list"><li><span>Nice by UTMB 100K · 26 sept. 2026</span><b style="color:var(--good)">163 pts ✓</b></li><li><span>MUT 60 · 29 mai 2027</span><b>88 pts à courir</b></li></ul></div>'}
   else if(sub==='journal'){h+=back+'<div class="hd"><h1>Journal</h1><p>Mes dernières séances, depuis ma montre Coros.</p></div><ul class="acts">'+((D.acts||[]).map(a=>{const d=new Date(pd(a.date));return '<li><div class="dt"><b>'+d.getUTCDate()+'</b><span>'+MOIS[d.getUTCMonth()]+'</span></div><div><b>'+esc(a.name||KL[a.k]||'Séance')+'</b><div class="muted" style="font-size:.82rem">'+esc(KL[a.k]||'')+(a.z?' · zone '+a.z.slice(1):'')+'</div></div><div class="st">'+(a.km?km(a.km)+' km<br>':'')+hm(a.dur/60)+(a.dp?' · '+fr(a.dp)+' m':'')+'</div></li>'}).join('')||'<li>Pas encore de séance publiée.</li>')+'</ul>'}
-  else if(sub==='apropos'){h+=back+'<div class="about"><div class="hd"><h1>Victor <span class="kr" style="color:var(--gold);font-weight:500;font-size:1.1rem">빅토르</span></h1><p class="kr" style="color:var(--muted)">파리에서 정상까지</p></div><div class="box"><p style="margin:0">💼 Consultant le jour, 🏃 traileur entre midi et deux, et le week-end ⛰️ je vais vérifier que les montagnes sont toujours là. <b>40 h de boulot par semaine</b>, une vie à côté, et un objectif un peu fou : les <b>180 km de la Diagonale des Fous</b> 🌋, le 14 octobre 2027. Ici, je montre tout : les séances ⏱️, les jambes lourdes 🥵 et les progrès 📈. Rendez-vous sur la ligne d\'arrivée, à La Redoute 🏁</p></div><div class="box line" style="margin-top:12px" id="line"></div><p class="note" id="soc"></p><p class="note">Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros.</p></div>'}
+  else if(sub==='apropos'){h+=back+'<div class="about"><div class="hd"><h1>Victor <span class="kr" style="color:var(--gold);font-weight:500;font-size:1.1rem">빅토르</span></h1><p class="kr" style="color:var(--muted)">파리에서 정상까지</p></div><div class="box"><p style="margin:0">💼 Consultant le jour, 🏃 traileur entre midi et deux, et le week-end ⛰️ je vais vérifier que les montagnes sont toujours là. <b>40 h de boulot par semaine</b>, une vie à côté, et un objectif un peu fou : les <b>180 km de la Diagonale des Fous</b> 🌋, le 14 octobre 2027. Ici, je montre tout : les séances ⏱️, les jambes lourdes 🥵 et les progrès 📈. Rendez-vous sur la ligne d\'arrivée, à La Redoute 🏁</p></div><div class="box line" style="margin-top:12px" id="line"></div><p class="note" id="soc"></p><p class="note">Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros.</p>'+(OWNER?'<div class="box" style="margin-top:12px"><b>Accès privé</b><p class="note" style="margin:6px 0 10px">Tes données sont chiffrées : seuls toi (connecté) et ton équipe d\'assistance (avec le lien) peuvent les lire.</p><div style="display:grid;gap:8px"><button class="btn" id="crewLink">Copier le lien pour mon équipe d\'assistance</button><button class="btn ghost" id="vtOut">Se déconnecter de cet appareil</button></div></div>':'')+'</div>'}
   else{h+='<div class="hd"><h1>Plus</h1></div><nav class="menu"><a href="#/plus/jumeau"><div><span>Jumeau local</span><small>Mes courses reproduites autour de Nice</small></div></a><a href="#/plus/strategie"><div><span>Stratégie de course</span><small>Objectif, nutrition, tableau de marche</small></div></a><a href="#/plus/courses"><div><span>Mes courses</span><small>MUT 60, UTC 100M, Diagonale</small></div></a><a href="#/plus/journal"><div><span>Journal</span><small>Mes dernières séances</small></div></a><a href="#/plus/apropos"><div><span>Présentation</span><small>Qui je suis, la saison en un trait</small></div></a></nav>'}
   el.innerHTML=h;
   if(sub==='strategie')bindStrat();
   if(sub==='jumeau')twDraw();
+  if(sub==='apropos'&&OWNER){const cl=document.getElementById('crewLink');if(cl)cl.onclick=async()=>{const u=(window.VT_HOME||location.origin+location.pathname)+'#/assistance&k='+window.VT_KC();try{if(navigator.share)await navigator.share({title:'VictorTrail · suivi assistance',url:u});else{await navigator.clipboard.writeText(u);cl.textContent='Lien copié ✓'}}catch(e){try{await navigator.clipboard.writeText(u);cl.textContent='Lien copié ✓'}catch(_){prompt('Lien à envoyer à ton équipe :',u)}}};const lo=document.getElementById('vtOut');if(lo)lo.onclick=()=>{if(confirm('Se déconnecter de VictorTrail sur cet appareil ?')){window.VT_logout();location.reload()}}}
   if(sub==='apropos'){const L=document.getElementById('line');L.innerHTML='<svg viewBox="0 -12 568 115" role="img" aria-label="Progression de la saison"><path class="base" d="'+BRAND_D+'"/><path class="tower" d="'+BRAND_T+'"/><path class="done" d="'+BRAND_D+'"/><circle class="goal" cx="262" cy="2" r="6"/><circle class="dot" r="7" cx="0" cy="92"/></svg><p class="note" style="text-align:center;margin:4px 0 0">'+Math.round(D.prog*100)+' % de la saison</p>';
     const p=L.querySelector('.done'),len=p.getTotalLength(),pt=p.getPointAtLength(len*D.prog);p.style.strokeDasharray=(len*D.prog)+' '+len;const dt=L.querySelector('.dot');dt.setAttribute('cx',pt.x);dt.setAttribute('cy',pt.y);
     const S=D.social||{};const ls=[];if(S.ig)ls.push('<a href="https://instagram.com/'+esc(S.ig.replace('@',''))+'" target="_blank" rel="noopener">Instagram</a>');if(S.tt)ls.push('<a href="https://tiktok.com/@'+esc(S.tt.replace('@',''))+'" target="_blank" rel="noopener">TikTok</a>');document.getElementById('soc').innerHTML=ls.join(' · ')}}
@@ -694,7 +702,7 @@ function drawProf(el,id,marks,me){if(!el)return;loadCourse(id).then(c=>{if(!c||!
 
 /* ---------- jumeau local ---------- */
 let TW=null,twCur=null,twAll=false,TWMAP=null;const twSel={};
-function loadTwin(){if(TW)return Promise.resolve(TW);return fetch('twin.json').then(r=>r.ok?r.json():null).then(j=>TW=j).catch(()=>null)}
+function loadTwin(){if(TW)return Promise.resolve(TW);if(!OWNER)return Promise.resolve(null);return fetch('twin.enc.json').then(r=>r.ok?r.json():null).then(b=>b?window.VT_dec(b,'o'):null).then(j=>TW=j).catch(()=>null)}
 const TWK={montee:'Montée',descente:'Descente',roulant:'Roulant'};
 const twCol=p=>p>=85?'var(--good)':p>=70?'var(--gold)':'var(--muted)';
 const kmf=v=>km(Math.round(v*10)/10);
@@ -760,6 +768,7 @@ function twBind(){const box=document.getElementById('tw');box.querySelectorAll('
 function route(){const hsh=location.hash||'';let m=hsh.match(/^#\/([a-z]+)(?:\/([a-z]+))?/);let t=m?m[1]:'';const sub=m?m[2]:'';
   if(!t&&/p=/.test(hsh))t='assistance';
   if(!['aujourdhui','seances','assistance','progres','plus'].includes(t))t='aujourdhui';
+  if(CREW)t='assistance';
   document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id==='s-'+t));
   document.querySelectorAll('.tabs a').forEach(a=>{const on=a.dataset.t===t;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
   ({aujourdhui:vToday,seances:vPlan,assistance:AS.draw,progres:vProg,plus:()=>vPlus(sub)})[t]();
@@ -775,6 +784,62 @@ async function chkLive(){try{const r=await fetch('live.json?t='+Date.now(),{cach
 chkLive();setInterval(chkLive,60000);
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('sw.js').catch(()=>{});
 setInterval(()=>{if(document.getElementById('s-assistance').classList.contains('on')&&!document.activeElement.closest('#asForm'))AS.draw()},120000);
+</script>
+
+<script id="boot">
+/* VictorTrail privé : données chiffrées (AES-GCM), clé récupérée après connexion Supabase (code e-mail), ou lien équipe (#k=…). */
+(function(){
+const SB='https://vvmfutlpcdgufuowcvte.supabase.co',PK='sb_publishable_5vrAEcRUk75_ucJlDecVxA__k8E9iwi';
+const LS={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
+const b64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const b64u=s=>b64(s.replace(/-/g,'+').replace(/_/g,'/')+'==='.slice((s.length+3)%4));
+async function dec(box,k){const key=await crypto.subtle.importKey('raw',b64u(k),'AES-GCM',false,['decrypt']);
+  const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(box.iv)},key,b64(box.ct));
+  return JSON.parse(await new Response(new Blob([pt]).stream().pipeThrough(new DecompressionStream('gzip'))).text())}
+window.VT_dec=(box,w)=>dec(box,LS.get(w==='c'?'vt-kc':'vt-ko'));
+window.VT_KC=()=>LS.get('vt-kc')||'';
+window.VT_logout=()=>{LS.del('vt-ko');LS.del('vt-kc');LS.del('vt-email')};
+// lien équipe : …#/assistance&k=CLE
+const m=location.hash.match(/[#&]k=([A-Za-z0-9_-]{40,})/);
+if(m){LS.set('vt-kc',m[1]);history.replaceState(null,'',location.pathname+location.search+'#/assistance')}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function run(){
+  const pack=JSON.parse(document.getElementById('enc').textContent||'{}');
+  if(!pack.o)return lock('Données indisponibles pour le moment.');
+  let D=null,owner=false;const ko=LS.get('vt-ko'),kc=LS.get('vt-kc');
+  if(ko){try{D=await dec(pack.o,ko);owner=true}catch(e){LS.del('vt-ko')}}
+  if(!D&&kc){try{D=await dec(pack.c,kc)}catch(e){LS.del('vt-kc')}}
+  if(!D)return lock();
+  window.VT_D=D;window.VT_OWNER=owner;
+  const L=document.getElementById('lock');if(L)L.remove();
+  if(D.crewMode){const t=document.querySelector('.tabs');if(t)t.classList.add('crew')}
+  const el=document.createElement('script');el.textContent=document.getElementById('app').textContent;document.body.appendChild(el)}
+async function api(path,body,tok){const r=await fetch(SB+path,{method:body?'POST':'GET',headers:Object.assign({apikey:PK,'Content-Type':'application/json'},tok?{Authorization:'Bearer '+tok}:{}),body:body?JSON.stringify(body):undefined});
+  let j=null;try{j=await r.json()}catch(e){}if(!r.ok)throw new Error((j&&(j.msg||j.message||j.error_description||j.error))||('HTTP '+r.status));return j}
+function lock(msg){
+  let L=document.getElementById('lock');if(!L){L=document.createElement('div');L.id='lock';document.body.appendChild(L)}
+  const em=LS.get('vt-email')||'';
+  L.innerHTML='<div class="card" role="dialog" aria-labelledby="lkT"><h1 id="lkT">VictorTrail est privé</h1><p>'+(msg?esc(msg)+' ':'')+'Connecte-toi : tu reçois un code à usage unique par e-mail.</p>'
+   +'<form id="lkF1"><label for="lkMail">Adresse e-mail</label><input id="lkMail" type="email" autocomplete="email" inputmode="email" required value="'+esc(em)+'"><button class="btn" type="submit">Recevoir mon code</button></form>'
+   +'<form id="lkF2" hidden><label for="lkCode">Code reçu par e-mail</label><input id="lkCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" required><button class="btn" type="submit">Ouvrir mon carnet</button><button class="btn ghost" type="button" id="lkBack" style="margin-top:8px">Changer d\'adresse</button></form>'
+   +'<p class="err" id="lkE" role="alert"></p><p class="small">Tu fais partie de l\'équipe d\'assistance ? Ouvre le lien que Victor t\'a envoyé.</p></div>';
+  const E=t=>{document.getElementById('lkE').textContent=t||''};let mail='';
+  document.getElementById('lkF1').onsubmit=async ev=>{ev.preventDefault();E('');mail=document.getElementById('lkMail').value.trim().toLowerCase();const b=ev.target.querySelector('button');b.disabled=true;b.textContent='Envoi…';
+    try{await api('/auth/v1/otp',{email:mail,create_user:false});LS.set('vt-email',mail);document.getElementById('lkF1').hidden=true;document.getElementById('lkF2').hidden=false;document.getElementById('lkCode').focus();E('')}
+    catch(e){E(/signup|not found|not allowed/i.test(e.message)?'Cette adresse n\'a pas accès.':'Envoi impossible : '+e.message)}b.disabled=false;b.textContent='Recevoir mon code'};
+  document.getElementById('lkBack').onclick=()=>{document.getElementById('lkF2').hidden=true;document.getElementById('lkF1').hidden=false};
+  document.getElementById('lkF2').onsubmit=async ev=>{ev.preventDefault();E('');const b=ev.target.querySelector('button');b.disabled=true;b.textContent='Vérification…';
+    try{const s=await api('/auth/v1/verify',{type:'email',email:mail,token:document.getElementById('lkCode').value.trim()});
+      const v=await api('/rest/v1/vault?select=k_owner,k_crew',null,s.access_token);
+      if(!v||!v[0])throw new Error('Aucune clé pour ce compte.');
+      LS.set('vt-ko',v[0].k_owner);LS.set('vt-kc',v[0].k_crew);
+      fetch(SB+'/auth/v1/logout',{method:'POST',headers:{apikey:PK,Authorization:'Bearer '+s.access_token}}).catch(()=>{});
+      run()}
+    catch(e){E(/expired|invalid|otp/i.test(e.message)?'Code incorrect ou expiré.':e.message);b.disabled=false;b.textContent='Ouvrir mon carnet'}};
+}
+window.VT_run=run;
+if(!window.VT_NOAUTO)run();
+})();
 </script>
 </body>
 </html>

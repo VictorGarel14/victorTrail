@@ -1,15 +1,18 @@
 # Jumeau local : retrouve dans mes sorties autour de Nice les portions qui reproduisent
 # le profil de chaque section de mes courses.
 # usage : python3 twin.py <site> [fichiers .fit ou dossiers ...]
-#   - ajoute les sorties .fit à build/twin-lib.json (bibliothèque persistante, zone privée masquée)
-#   - lit <site>/courses/*.json et écrit <site>/twin.json
+#   - ajoute les sorties .fit à build/twin-lib.enc.json (bibliothèque persistante chiffrée, zone privée masquée)
+#   - lit <site>/courses/*.json et écrit <site>/twin.enc.json (chiffré, clé propriétaire)
 import sys, os, json, math, glob, warnings
 warnings.filterwarnings('ignore')
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__)) + '/'
 SITE = sys.argv[1].rstrip('/') + '/'
-LIB = HERE + 'twin-lib.json'
+LIB = HERE + 'twin-lib.enc.json'   # bibliothèque chiffrée (clé propriétaire)
+LIB_OLD = HERE + 'twin-lib.json'
+sys.path.insert(0, HERE)
+import vtcrypt
 STEP = 50.0           # m entre deux points rééchantillonnés
 PRIV = 1000.0         # m masqués autour de chaque départ / arrivée
 REF = (43.7034, 7.2663)  # Nice centre (place Masséna) pour les distances d'accès
@@ -82,7 +85,9 @@ def read_fit(path):
     }
 
 def load_lib():
-    if os.path.exists(LIB): return json.load(open(LIB))
+    KO = vtcrypt.keys()[0]
+    if os.path.exists(LIB): return vtcrypt.dec(json.load(open(LIB)), KO)
+    if os.path.exists(LIB_OLD): return json.load(open(LIB_OLD))
     return {'v': 1, 'acts': {}}
 
 def add_fits(lib, paths):
@@ -283,13 +288,16 @@ def run_course(cid, c, A):
 def main():
     lib = load_lib()
     n = add_fits(lib, sys.argv[2:])
-    json.dump(lib, open(LIB, 'w'), separators=(',', ':'))
+    KO = vtcrypt.keys()[0]
+    json.dump(vtcrypt.enc(lib, KO), open(LIB, 'w'))
+    if os.path.exists(LIB_OLD): os.remove(LIB_OLD)
     A = prep_acts(lib)
     res = {'n': len(lib['acts']), 'courses': {}}
     for f in sorted(glob.glob(SITE + 'courses/*.json')):
         cid = os.path.basename(f)[:-5]
         res['courses'][cid] = run_course(cid, json.load(open(f)), A)
-    json.dump(res, open(SITE + 'twin.json', 'w'), ensure_ascii=False, separators=(',', ':'))
+    json.dump(vtcrypt.enc(res, KO), open(SITE + 'twin.enc.json', 'w'))
+    if os.path.exists(SITE + 'twin.json'): os.remove(SITE + 'twin.json')
     print('jumeau : %d sorties (+%d), %s' % (len(lib['acts']), n, {k: v['cov'] for k, v in res['courses'].items()}))
 
 if __name__ == '__main__':

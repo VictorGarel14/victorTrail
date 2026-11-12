@@ -1,5 +1,13 @@
 # Régénérer le site
 
+## Données privées
+
+Les données sont chiffrées (AES-256-GCM) au moment du build : rien n'est lisible en clair sur le site public.
+- clé propriétaire `o` : tout le carnet ; clé équipe `c` : seulement l'Assistance (courses, tableau de marche, ravitos).
+- le build lit les clés dans `VT_KO` / `VT_KC` ou dans le fichier désigné par `VT_KEYS` (`{"o": …, "c": …}`), **jamais dans le dépôt**.
+- sur le site, Victor se connecte par code e-mail (Supabase Auth) ; la table `vault` (RLS par e-mail) lui renvoie les clés, gardées sur l'appareil.
+- l'équipe ouvre le lien partagé depuis Plus › À propos (`#/assistance&k=…`) : elle ne voit que l'onglet Assistance.
+
 Le site (`index.html` + `img/`) est construit à partir des données du carnet d'entraînement.
 
 1. Récupérer la page du carnet (artifact) dans `carnet.html` et les documents `state`, `acts-*`, `kitviz` de sa base dans un dossier `db/`.
@@ -25,4 +33,4 @@ Pour pousser un passage à tout le monde, compléter `live.json` : `{"race":"dia
 
 ## Jumeau local
 
-`python3 build/twin.py . <dossiers ou fichiers .fit>` ajoute les sorties à `build/twin-lib.json` (sorties avec du relief à moins de 120 km de Nice, rééchantillonnées tous les 50 m, départ et arrivée masqués sur 1 km), découpe chaque parcours de `courses/` en montées, descentes et portions roulantes, puis cherche dans les sorties les portions au profil le plus proche (dans les deux sens). Résultat : `twin.json`, affiché dans l'appli (Plus › Jumeau local). Un nouveau GPX dans `courses/` est analysé automatiquement au build suivant.
+`python3 build/twin.py . <dossiers ou fichiers .fit>` ajoute les sorties à `build/twin-lib.enc.json` (chiffrée) (sorties avec du relief à moins de 120 km de Nice, rééchantillonnées tous les 50 m, départ et arrivée masqués sur 1 km), découpe chaque parcours de `courses/` en montées, descentes et portions roulantes, puis cherche dans les sorties les portions au profil le plus proche (dans les deux sens). Résultat : `twin.enc.json` (chiffré), affiché dans l'appli (Plus › Jumeau local). Un nouveau GPX dans `courses/` est analysé automatiquement au build suivant.

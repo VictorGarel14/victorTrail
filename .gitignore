@@ -3,3 +3,7 @@ db/
 data.json
 __pycache__/
 coros/
+twin.json
+build/twin-lib.json
+*.keys.json
+vt-keys.json
