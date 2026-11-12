@@ -832,14 +832,14 @@ async function api(path,body,tok){const r=await fetch(SB+path,{method:body?'POST
 function lock(msg){
   let L=document.getElementById('lock');if(!L){L=document.createElement('div');L.id='lock';document.body.appendChild(L)}
   const em=LS.get('vt-email')||'';
-  L.innerHTML='<div class="card" role="dialog" aria-labelledby="lkT"><h1 id="lkT">VictorTrail est privé</h1><p>'+(msg?esc(msg)+' ':'')+'Connecte-toi : tu reçois un lien de connexion par e-mail.</p>'
-   +'<form id="lkF1"><label for="lkMail">Adresse e-mail</label><input id="lkMail" type="email" autocomplete="email" inputmode="email" required value="'+esc(em)+'"><button class="btn" type="submit">Recevoir mon lien</button></form>'
-   +'<form id="lkF2" hidden><p>E-mail envoyé (« Your sign-in link »). Touche <b>Sign in</b> dans l\'e-mail.<br>Depuis l\'appli installée sur l\'écran d\'accueil : appui long sur <b>Sign in</b> › Copier le lien, puis colle-le ici.</p><label for="lkCode">Lien (ou code) reçu par e-mail</label><input id="lkCode" autocomplete="one-time-code" autocapitalize="off" spellcheck="false" required><button class="btn" type="submit">Ouvrir mon carnet</button><button class="btn ghost" type="button" id="lkBack" style="margin-top:8px">Changer d\'adresse</button></form>'
+  L.innerHTML='<div class="card" role="dialog" aria-labelledby="lkT"><h1 id="lkT">VictorTrail est privé</h1><p>'+(msg?esc(msg)+' ':'')+'Connecte-toi : tu reçois un code à usage unique par e-mail.</p>'
+   +'<form id="lkF1"><label for="lkMail">Adresse e-mail</label><input id="lkMail" type="email" autocomplete="email" inputmode="email" required value="'+esc(em)+'"><button class="btn" type="submit">Recevoir mon code</button></form>'
+   +'<form id="lkF2" hidden><p>E-mail envoyé. Saisis le code qu\'il contient (ou colle le lien de connexion s\'il n\'y a pas de code).</p><label for="lkCode">Code reçu par e-mail</label><input id="lkCode" autocomplete="one-time-code" autocapitalize="off" spellcheck="false" required><button class="btn" type="submit">Ouvrir mon carnet</button><button class="btn ghost" type="button" id="lkBack" style="margin-top:8px">Changer d\'adresse</button></form>'
    +'<p class="err" id="lkE" role="alert"></p><p class="small">Tu fais partie de l\'équipe d\'assistance ? Ouvre le lien que Victor t\'a envoyé.</p></div>';
   const E=t=>{document.getElementById('lkE').textContent=t||''};let mail=LS.get('vt-email')||'';
   document.getElementById('lkF1').onsubmit=async ev=>{ev.preventDefault();E('');mail=document.getElementById('lkMail').value.trim().toLowerCase();const b=ev.target.querySelector('button');b.disabled=true;b.textContent='Envoi…';
     try{await api('/auth/v1/otp?redirect_to='+encodeURIComponent(location.origin+location.pathname),{email:mail,create_user:false});LS.set('vt-email',mail);document.getElementById('lkF1').hidden=true;document.getElementById('lkF2').hidden=false;document.getElementById('lkCode').focus();E('')}
-    catch(e){E(/signup|not found|not allowed/i.test(e.message)?'Cette adresse n\'a pas accès.':'Envoi impossible : '+e.message)}b.disabled=false;b.textContent='Recevoir mon lien'};
+    catch(e){E(/signup|not found|not allowed/i.test(e.message)?'Cette adresse n\'a pas accès.':'Envoi impossible : '+e.message)}b.disabled=false;b.textContent='Recevoir mon code'};
   document.getElementById('lkBack').onclick=()=>{document.getElementById('lkF2').hidden=true;document.getElementById('lkF1').hidden=false};
   document.getElementById('lkF2').onsubmit=async ev=>{ev.preventDefault();E('');const b=ev.target.querySelector('button');b.disabled=true;b.textContent='Vérification…';
     try{const val=document.getElementById('lkCode').value.trim();let tok;
