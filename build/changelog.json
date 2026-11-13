@@ -1,5 +1,17 @@
 [
  {
+  "v": "3.4.0",
+  "date": "2026-11-13",
+  "name": "Forme du jour",
+  "items": [
+   "Aujourd'hui : forme du jour avec le questionnaire Hooper (sommeil, stress, fatigue, courbatures), un verdict et un conseil pour la séance",
+   "Score comparé à ma normale des 4 dernières semaines, avec l'historique des 14 derniers jours",
+   "Réponses chiffrées et synchronisées entre mes appareils",
+   "Le rappel de la prochaine course quitte Aujourd'hui (déjà en haut et dans Courses)"
+  ],
+  "os": []
+ },
+ {
   "v": "3.3.0",
   "date": "2026-11-13",
   "name": "Mon vrai menu",

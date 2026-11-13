@@ -399,6 +399,29 @@ dialog.gm::backdrop{background:var(--bg)}
 .nu-toast.on{opacity:1;transform:translate(-50%,0)}
 .nu-tm{position:fixed;right:16px;bottom:calc(var(--tab,64px) + 16px + env(safe-area-inset-bottom));display:none;z-index:59;border:0;background:var(--blaze);color:#fff;border-radius:99px;padding:10px 16px;font:800 .9rem var(--f);font-variant-numeric:tabular-nums;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25)}
 .nu-tm.on{display:block}
+/* forme du jour */
+.hw-q{padding:10px 0;border-top:1px solid var(--line)}
+.hw-q:first-of-type{border-top:0}
+.hw-q .l{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.hw-q .l span{font-size:.82rem;color:var(--muted)}
+.hw-s{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:8px}
+.hw-s button{min-height:42px;border-radius:10px;border:1px solid var(--line);background:var(--paper);font:800 .95rem var(--f);color:var(--ink);cursor:pointer}
+.hw-s button[aria-checked=true]{background:var(--hc);border-color:var(--hc);color:#fff}
+.hw .btn[disabled]{opacity:.45;cursor:default}
+.hw-r{border-left:6px solid var(--hv)}
+.hw-top{display:flex;gap:16px;align-items:center}
+.hw-big{display:flex;align-items:baseline;gap:4px;flex-shrink:0}
+.hw-big b{font:800 2.6rem/1 var(--f);font-variant-numeric:tabular-nums;color:var(--hv)}
+.hw-big span{color:var(--muted);font-weight:700}
+.hw-v b{display:block;font-size:1.05rem;color:var(--hv)}
+.hw-v span{font-size:.9rem;color:var(--ink2)}
+.hw-i{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.hw-i div{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.74rem;color:var(--muted)}
+.hw-i b{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--hc);color:#fff;font-size:.95rem}
+.hw-tip{margin:12px 0 0;padding-left:18px;font-size:.88rem;color:var(--ink2)}
+.hw-h{display:flex;align-items:flex-end;gap:4px;height:46px;margin-top:16px}
+.hw-h i{flex:1;background:var(--muted);border-radius:3px 3px 0 0;min-height:3px}
+.hw-hl{display:flex;justify-content:space-between;font-size:.72rem;color:var(--muted);margin-top:4px}
 </style>
 </head>
 <body>
@@ -505,7 +528,8 @@ function vToday(){const el=document.getElementById('s-aujourdhui');const ws=mond
   const L=dayS(selDay),isT=selDay===T,pre=selDay<D.planStart;
   let h='<div class="hd"><h1 id="h-auj">'+(isT?'Aujourd\'hui':cap(wd(selDay)))+'</h1><p>'+cap(wd(selDay))+' '+fmtD(selDay).replace(/\.$/,'')+(L.length?' · '+(L.length>1?L.length+' séances, ':'')+hm(L.reduce((a,s)=>a+s.m,0)):'')+'</p></div>';
   h+='<div class="strip" role="group" aria-label="Jours de la semaine">'+days.map(d=>{const S=dayS(d);return '<button data-day="'+d+'" class="'+(d===T?'today':'')+'" aria-pressed="'+(d===selDay)+'" aria-label="'+cap(wd(d))+' '+fmtD(d)+(S.length?', '+S.length+' séance'+(S.length>1?'s':''):', repos')+'"><span class="d">'+wd(d).slice(0,3)+'</span><span class="n">'+(+d.slice(8))+'</span><span class="dots">'+S.slice(0,3).map(s=>'<i style="background:'+zcol(s)+'"></i>').join('')+'</span></button>'}).join('')+'</div>';
-  h+='<div class="sess" style="margin-top:14px">';
+  if(isT)h+=hwCard();
+  h+=(isT&&!CREW&&hwKo()?'<div class="sub"><span>'+(L.length>1?'Mes séances':'Ma séance')+'</span></div>':'')+'<div class="sess" style="margin-top:14px">';
   if(L.length)h+=L.map(s=>sessCard(s,true)).join('');
   else h+='<div class="rest"><b>'+(pre?'Pré-saison libre':'Repos')+'</b>'+(pre?'Pas de programme avant le '+fmtD(D.planStart).replace(/\.$/,'')+' : footing au feeling, en aisance.':'Sommeil, hydratation, un peu de mobilité si besoin.')+'</div>';
   actsOn(selDay).forEach(a=>{h+='<div class="did"><span>✓ '+esc(a.name||KL[a.k]||'Séance')+'</span><b class="mono">'+(a.km?km(a.km)+' km · ':'')+hm(a.dur/60)+(a.dp?' · '+fr(a.dp)+' m':'')+'</b></div>'});
@@ -519,10 +543,53 @@ function vToday(){const el=document.getElementById('s-aujourdhui');const ws=mond
     h+='<div class="sub"><span>Ma semaine · '+esc(W.label)+'</span><a href="#/seances">Tout le plan</a></div><div class="box gauges">'+g('Temps',real?real.h*60:0,W.min,hm)+g('Distance',real?real.km:0,W.km,x=>km(Math.round(x))+' km')+g('Dénivelé',real?real.dp:0,W.dp,x=>fr(x)+' m')+(real?'':'<p class="note" style="margin:0">Prévu cette semaine. Le réalisé s\'affiche à la mise à jour du lundi.</p>')+'</div>';
     if(W.note)h+='<div class="wknote">'+esc(W.note)+'</div>'}
   else if(selDay<D.planStart){h+='<div class="sub"><span>La prépa démarre le '+fmtD(D.planStart).replace(/\.$/,'')+'</span><a href="#/seances">Voir le plan</a></div>'}
-  // prochaine course
-  const r=D.races.find(x=>diff(T,x.date)>=0);if(r){const n=diff(T,r.date);h+='<div class="sub"><span>Prochaine course</span></div><a class="box race1" href="#/courses"><div><b>'+esc(r.name)+'</b><div class="muted" style="font-size:.86rem">'+fmtDY(r.date)+' · '+r.km+' km · '+fr(r.dp)+' m D+</div></div><span class="j"><small>J−</small>'+n+'</span></a>'}
   el.innerHTML=h;
   el.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selDay=b.dataset.day;vToday()});wxFill(el)}
+
+/* ---------- forme du jour : questionnaire Hooper (chiffré avec la clé propriétaire, synchronisé entre mes appareils) ---------- */
+const HQ=[['s','Sommeil'],['st','Stress'],['f','Fatigue'],['d','Courbatures']],HL=['Excellent','Très bien','Bien','Moyen','Pas terrible','Mauvais','Très mauvais'];
+const HW={data:{},draft:{},edit:false,boot:false};
+const HSB='https://vvmfutlpcdgufuowcvte.supabase.co',HPK='sb_publishable_5vrAEcRUk75_ucJlDecVxA__k8E9iwi';
+const hwKo=()=>{try{return localStorage.getItem('vt-ko')}catch(e){return null}};
+async function hwKey(){const k=hwKo();return crypto.subtle.importKey('raw',Uint8Array.from(atob(k.replace(/-/g,'+').replace(/_/g,'/')+'==='.slice((k.length+3)%4)),c=>c.charCodeAt(0)),'AES-GCM',false,['encrypt','decrypt'])}
+async function hwTok(){const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('vt-well:'+hwKo()));return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+const hwB64=u=>btoa(String.fromCharCode(...new Uint8Array(u))),hwU8=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function hwRpc(fn,body){const r=await fetch(HSB+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:HPK,'Content-Type':'application/json'},body:JSON.stringify(Object.assign({p_tok:await hwTok()},body))});if(!r.ok)throw new Error(r.status);const t=await r.text();return t?JSON.parse(t):null}
+function hwCache(w){try{if(w)localStorage.setItem('vt-hooper',JSON.stringify({data:HW.data,pend:HW.pend||[]}));else{const c=JSON.parse(localStorage.getItem('vt-hooper')||'null');if(c){HW.data=c.data||{};HW.pend=c.pend||[]}}}catch(e){}}
+async function hwPush(day){const key=await hwKey(),iv=crypto.getRandomValues(new Uint8Array(12)),ct=await crypto.subtle.encrypt({name:'AES-GCM',iv},key,new TextEncoder().encode(JSON.stringify(HW.data[day])));await hwRpc('vt_well_put',{p_day:day,p_box:{iv:hwB64(iv),ct:hwB64(ct)}})}
+async function hwLoad(){if(HW.boot||CREW||!hwKo())return;HW.boot=true;hwCache(false);
+  try{for(const d of (HW.pend||[]).slice()){await hwPush(d);HW.pend=HW.pend.filter(x=>x!==d)}
+    const rows=await hwRpc('vt_well_get',{p_from:add(T,-90)}),key=await hwKey();
+    for(const r of rows||[]){try{const pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:hwU8(r.box.iv)},key,hwU8(r.box.ct));HW.data[r.day]=JSON.parse(new TextDecoder().decode(pt))}catch(e){}}
+    hwCache(true);if(document.getElementById('s-aujourdhui').classList.contains('on'))vToday()}catch(e){HW.off=true}}
+const hwTot=e=>HQ.reduce((a,q)=>a+(+e[q[0]]||0),0);
+function hwEval(day){const e=HW.data[day],t=hwTot(e),past=Object.keys(HW.data).filter(d=>d<day&&diff(d,day)<=28).map(d=>hwTot(HW.data[d]));let st,why;
+  if(past.length>=7){const m=past.reduce((a,b)=>a+b,0)/past.length,sd=Math.max(1.5,Math.sqrt(past.reduce((a,b)=>a+(b-m)**2,0)/past.length)),z=(t-m)/sd;st=z<=0.5?0:z<=1.25?1:2;why='Ma normale sur 4 semaines : '+fr(Math.round(m*10)/10)+'.'}
+  else{st=t<=12?0:t<=17?1:2;why='Repères généraux tant que je n\'ai pas 7 jours de réponses ('+past.length+' pour l\'instant).'}
+  if(st===0&&HQ.some(q=>+e[q[0]]>=6))st=1;return{t,st,why}}
+function hwCard(){if(CREW||!hwKo())return '';hwLoad();const e=HW.data[T];
+  let h='<div class="sub"><span>Forme du jour</span><span>Hooper</span></div>';
+  if(!e||HW.edit){const dr=HW.draft,full=HQ.every(q=>dr[q[0]]);
+    h+='<div class="box hw"><p class="note" style="margin:0 0 4px">Les mêmes questions que sur Nolio. 1 = très bien, 7 = très mal.</p>'+HQ.map(q=>'<div class="hw-q"><div class="l"><b>'+q[1]+'</b><span>'+(dr[q[0]]?HL[dr[q[0]]-1]:'')+'</span></div><div class="hw-s" role="radiogroup" aria-label="'+q[1]+', de 1 très bien à 7 très mal">'+[1,2,3,4,5,6,7].map(v=>'<button role="radio" aria-checked="'+(dr[q[0]]===v)+'" aria-label="'+v+' : '+HL[v-1]+'" data-hw="'+q[0]+'|'+v+'" style="--hc:'+HCOL[v-1]+'">'+v+'</button>').join('')+'</div></div>').join('')+
+      '<button class="btn" data-hw="save"'+(full?'':' disabled')+'>'+(full?'Enregistrer · '+hwTot(dr)+' / 28':'Réponds aux 4 questions')+'</button>'+(e?'<button class="btn ghost" data-hw="cancel">Annuler</button>':'')+'</div>';return h}
+  const R=hwEval(T),V=[['Feu vert','var(--good)'],['Prudence','var(--z4)'],['Journée à alléger','var(--bad)']][R.st];
+  const L=dayS(T),q=L.some(s=>s.k||['Z4','Z5','VMA'].includes(s.z));
+  let adv=R.st===0?(L.length?'Séance comme prévue.':'Profite du repos.'):R.st===1?(q?'Fais l\'échauffement complet puis décide : si les sensations ne viennent pas, passe la séance en endurance facile.':L.length?'Reste bien en endurance, sans forcer.':'Repos bienvenu : sommeil et hydratation.'):(L.length?'Séance courte et facile, ou repos. Si ça dure 2 ou 3 jours, préviens Dorian.':'Repos complet aujourd\'hui. Si ça dure 2 ou 3 jours, préviens Dorian.');
+  const tip=[];if(+e.s>=6)tip.push('Nuit difficile : couche-toi tôt ce soir.');if(+e.d>=6)tip.push('Grosses courbatures : évite les descentes rapides.');if(+e.st>=6)tip.push('Stress élevé : garde la séance simple, sans chrono.');if(+e.f>=6)tip.push('Fatigue marquée : réduis la durée plutôt que l\'intensité.');
+  const days=[...Array(14)].map((_,i)=>add(T,i-13)),mx=28;
+  h+='<div class="box hw hw-r" style="--hv:'+V[1]+'"><div class="hw-top"><div class="hw-big"><b>'+R.t+'</b><span>/ 28</span></div><div class="hw-v"><b>'+V[0]+'</b><span>'+esc(adv)+'</span></div></div>'+
+    '<div class="hw-i">'+HQ.map(x=>'<div><span>'+x[1]+'</span><b style="--hc:'+HCOL[e[x[0]]-1]+'">'+e[x[0]]+'</b></div>').join('')+'</div>'+
+    (tip.length?'<ul class="hw-tip">'+tip.map(x=>'<li>'+x+'</li>').join('')+'</ul>':'')+
+    '<div class="hw-h" aria-label="Score Hooper des 14 derniers jours">'+days.map(d=>{const x=HW.data[d],t=x?hwTot(x):0;return '<i title="'+fmtD(d)+(x?' : '+t:'')+'" style="height:'+(x?Math.max(8,t/mx*100):4)+'%'+(x?'':';opacity:.25')+(d===T?';background:var(--hv)':'')+'"></i>'}).join('')+'</div><div class="hw-hl"><span>il y a 14 j</span><span>aujourd\'hui</span></div>'+
+    '<p class="note">Plus le score est bas, mieux c\'est. '+R.why+(HW.off?' Hors ligne : enregistré sur ce téléphone, synchronisé plus tard.':'')+'</p><button class="btn ghost" data-hw="edit">Modifier mes réponses</button></div>';
+  return h}
+const HCOL=['#2F7D5B','#4E9A6B','#8AAE5B','#C9A227','#D9752B','#C0532F','#B0443B'];
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-hw]');if(!b)return;const [a,v]=b.dataset.hw.split('|');
+  if(a==='edit'){HW.edit=true;HW.draft=Object.assign({},HW.data[T]);vToday();return}
+  if(a==='cancel'){HW.edit=false;vToday();return}
+  if(a==='save'){if(!HQ.every(q=>HW.draft[q[0]]))return;HW.data[T]=Object.assign({},HW.draft,{at:Date.now()});HW.edit=false;HW.draft={};HW.pend=(HW.pend||[]).filter(x=>x!==T).concat([T]);hwCache(true);vToday();
+    try{await hwPush(T);HW.pend=HW.pend.filter(x=>x!==T);HW.off=false}catch(err){HW.off=true}hwCache(true);return}
+  HW.draft[a]=+v;const y=scrollY;vToday();scrollTo(0,y)});
 
 /* ---------- séances (plan semaine par semaine) ---------- */
 const PC={reprise:'#5B6B7A',fondation:'#2F7D5B',dev:'#3E7CB1',spe1:'#7A5BA6',spe2:'#C0392B',recup:'#6B7078',diag:'#B0443B',taper:'#A58D4E',post:'#45494F',pre:'#9AA0A8'};

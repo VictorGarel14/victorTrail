@@ -1,5 +1,5 @@
 /* Victor Trail : fonctionne hors ligne (réseau d'abord pour les données, cache en secours) */
-const V='vt-8';
+const V='vt-9';
 const CORE=['./','index.html','anim.js','manifest.webmanifest','img/icon.svg','img/apple-touch-icon.png','img/icon-512.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>Promise.all(CORE.map(u=>c.add(u).catch(()=>{})))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V&&x!=='vt-tiles').map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
