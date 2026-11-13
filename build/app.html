@@ -198,7 +198,7 @@ dialog.sheet::backdrop{background:rgba(8,10,12,.55)}
 .tw-map{height:240px;border-radius:12px;margin-top:10px;isolation:isolate;z-index:0;position:relative}
 .tw-rv{display:inline-block;font:700 .7rem var(--f);padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--blaze) 15%,transparent);color:var(--blaze);margin-left:4px}
 .tabs.crew{display:none}.hdr-r{display:flex;align-items:center;gap:10px}.me{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);color:var(--ink)}.me svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.me.on{background:var(--ink);color:var(--bg)}
-.nut-h{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.nut-h .box{text-align:center}.nut-h b{display:block;font-size:clamp(.95rem,4.4vw,1.3rem);white-space:nowrap}.nut-h span{font-size:.78rem;color:var(--muted)}
+#s-nutrition.full{padding:0!important;max-width:none!important;margin:0!important}
 #lock{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px 16px;overflow:auto}
 #lock .card{width:100%;max-width:400px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 20px}
 #lock h1{font:800 1.5rem/1.2 var(--f);margin:0 0 6px}#lock p{color:var(--muted);margin:0 0 16px;font-size:.92rem;line-height:1.45}
@@ -603,29 +603,12 @@ function bindStrat(){document.querySelectorAll('[data-st]').forEach(b=>b.onclick
 
 
 
-/* ---------- nutrition ---------- */
-const DOWL=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
-function dayNeeds(ds){const B=D.body||{},w=+B.w;if(!w)return null;const ss=dayS(ds);let run=0,bike=0,gym=0,dp=0,hard=false;
-  ss.forEach(x=>{const m=(x.r&&x.r.min)||x.m||0;if(x.c==='gym')gym+=m;else if(x.c==='bike'||x.c==='cross')bike+=m;else run+=m;dp+=x.dp||0;if(x.k||/Z[45]/.test(x.z||''))hard=true});
-  const endu=run+bike,h=endu/60;
-  const kcal=w*31+w*(run/60)*(hard?11:8.5)*(1+Math.min(.3,dp/Math.max(1,run)/30))+w*(bike/60)*7+w*(gym/60)*5;
-  const cg=endu===0?(gym?[4,5]:[3,5]):endu<60?[5,6]:endu<120?(hard?[6,8]:[5,7]):endu<240?[7,10]:[9,12];
-  return {w,ss,run,bike,gym,endu,hard,dp,kcal:Math.round(kcal/50)*50,cg,carb:cg.map(x=>Math.round(x*w/10)*10),prot:gym?[Math.round(1.8*w),Math.round(2.2*w)]:[Math.round(1.6*w),Math.round(2*w)],water:Math.round((35*w+endu*10)/100)/10}}
-function vNutri(){const el=document.getElementById('s-nutrition');const n=dayNeeds(T);let h='<div class="hd"><h1>Nutrition</h1><p>Mes besoins du jour selon les séances de Dorian, et mes plans de course.</p></div>';
-  if(!n)h+='<div class="box muted">Ajoute ton poids dans ton carnet (Profil) pour calculer tes besoins.</div>';
-  else{const t=n.ss.map(x=>x.t).join(' + ');
-    h+='<div class="box"><div class="muted" style="font:600 .82rem var(--f)">Aujourd\'hui · '+(n.ss.length?esc(t)+' · '+hm(n.endu+n.gym):'repos')+'</div><b style="display:block;font-size:2.2rem;line-height:1.1;margin-top:4px">'+fr(n.kcal)+' kcal</b><span class="muted">environ, pour '+n.w+' kg</span></div>';
-    h+='<div class="nut-h" style="margin-top:10px"><div class="box"><span>Glucides</span><b>'+n.carb[0]+'–'+n.carb[1]+' g</b><span>'+n.cg[0]+'–'+n.cg[1]+' g/kg</span></div><div class="box"><span>Protéines</span><b>'+n.prot[0]+'–'+n.prot[1]+' g</b><span>'+(n.gym?'jour de salle':'1,6–2 g/kg')+'</span></div><div class="box"><span>Eau</span><b>'+String(n.water).replace('.',',')+' L</b><span>sur la journée</span></div></div>';
-    const tips=[];
-    if(n.endu>=75)tips.push(['Avant','Repas riche en glucides 2 à 3 h avant, ou une collation (banane, pain, compote) 1 h avant.']);else if(n.endu)tips.push(['Avant','Une collation si la séance tombe loin du dernier repas.']);
-    if(n.endu>=150)tips.push(['Pendant','60 à 90 g de glucides par heure et 500 à 750 ml d\'eau, avec du sel s\'il fait chaud : c\'est aussi l\'entraînement de ton ventre pour la Diagonale.']);else if(n.endu>=75)tips.push(['Pendant','30 à 60 g de glucides par heure, de l\'eau à la soif.']);else if(n.endu)tips.push(['Pendant','De l\'eau suffit.']);
-    if(n.gym)tips.push(['Salle','20 à 30 g de protéines dans l\'heure qui suit, avec des glucides.']);
-    if(n.endu)tips.push(['Après','Dans l\'heure : glucides + 20 à 30 g de protéines (repas, ou yaourt, fruit et pain).'+(n.hard?' Séance intense : ne zappe pas ce repas.':'')]);
-    if(!n.ss.length)tips.push(['Repos','Mange à ta faim : glucides complets, légumes et protéines à chaque repas. La récupération se fait aussi dans l\'assiette.']);
-    h+='<div class="sub"><span>Autour de la séance</span></div><div class="box"><ul class="list">'+tips.map(x=>'<li><span><b>'+x[0]+'</b><br><small class="muted" style="font-size:.86rem">'+x[1]+'</small></span></li>').join('')+'</ul></div>';
-    const W=weekOf(T);if(W){const m=monday(T);h+='<div class="sub"><span>Ma semaine</span></div><div class="box"><ul class="list">'+DOWL.map((dn,i)=>{const ds=add(m,i),x=dayNeeds(ds);return '<li'+(ds===T?' style="font-weight:700"':'')+'><span>'+dn.slice(0,3)+'. · <small class="muted">'+(x.ss.length?esc(x.ss.map(y=>y.t).join(' + ')):'repos')+'</small></span><b>'+x.carb[0]+'–'+x.carb[1]+' g</b></li>'}).join('')+'</ul><p class="note">Glucides par jour. Repères pour sportif d\'endurance, pas un régime : Dorian a la main sur ta nutrition.</p></div>'}}
-  const S=D.strat||{};h+='<div class="sub"><span>Nutrition de course</span></div><div class="box"><ul class="list">'+(D.races||[]).filter(r=>S[r.id]).map(r=>{const o=S[r.id];return '<li><span><b>'+esc(SH[r.id]||r.name)+'</b><br><small class="muted">objectif '+hm(o.goal*60)+' · '+o.gh+' g/h · '+o.ml+' ml/h · '+o.na+' mg/h</small></span><a href="#/courses/strategie" data-stg="'+r.id+'" style="color:var(--gold);font-weight:700;text-decoration:none">'+fr(o.goal*o.gh)+' g ›</a></li>'}).join('')+'</ul></div>';
-  el.innerHTML=h;el.querySelectorAll('[data-stg]').forEach(a=>a.onclick=()=>{stCur=a.dataset.stg})}
+/* ---------- nutrition : le programme de « Ma cuisine », intégré tel quel ---------- */
+function vNutri(){const el=document.getElementById('s-nutrition');el.classList.add('full');
+  let f=document.getElementById('cuiF');
+  if(!f){el.innerHTML='<iframe id="cuiF" src="/my-app/cuisine/?embed=1" title="Mon programme nutrition" allow="clipboard-write; screen-wake-lock" style="display:block;width:100%;border:0;background:transparent"></iframe>';f=document.getElementById('cuiF')}
+  const fit=()=>{if(!el.classList.contains('on'))return;const top=el.getBoundingClientRect().top,tb=document.querySelector('.tabs');f.style.height=Math.max(320,innerHeight-Math.max(0,top)-(tb?tb.offsetHeight:0))+'px';const over=document.documentElement.scrollHeight-innerHeight;if(over>0)f.style.height=Math.max(320,f.offsetHeight-over)+'px'};
+  fit();requestAnimationFrame(fit);if(!vNutri.b){vNutri.b=1;addEventListener('resize',fit)}}
 
 /* ---------- météo (Open-Meteo, Nice) ---------- */
 const WX={lat:43.70,lon:7.27,key:'wx-nice'};let wxData=null,wxP=null;
