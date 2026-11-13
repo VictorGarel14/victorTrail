@@ -672,12 +672,11 @@ function stratHTML(){const S=D.strat||{},R=D.races,r=R.find(x=>x.id===stCur),o=S
   else h+='<div class="sub"><span>Tableau de marche</span></div><div class="box muted">Les points de passage seront ajoutés dès la publication du parcours officiel.</div>';
   const V=D.ravito;if(V)h+='<div class="sub"><span>Protocole ravito'+(o.stopTot?' · '+hm(o.stopTot)+' d\'arrêt au total':'')+'</span></div><div class="box"><ul class="list">'+V.types.map(x=>'<li><span>'+esc(x[0])+'<br><small class="muted">'+esc(x[2])+'</small></span><b>'+esc(x[1])+'</b></li>').join('')+'</ul><p style="margin:12px 0 0;font-weight:700">Sur place, toujours dans cet ordre</p><ol class="cues">'+V.order.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol><p class="note">À Nice en 2026, j\'ai passé 2 h 31 à l\'arrêt sur les 90 premiers km. C\'est mon plus gros gisement de temps.</p></div>';
   return h}
-function bindStrat(){document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{stCur=b.dataset.st;vPlus('strategie')});
+function bindStrat(){document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{stCur=b.dataset.st;vPlus('strategie','courses')});
   const el=document.getElementById('stProf');if(el){const r=D.races.find(x=>x.id===stCur),o=(D.strat||{})[stCur]||{},st=rStart(r);drawProf(el,stCur,[{km:0,ms:st}].concat((o.rows||[]).map(x=>({km:x.km,ms:st+x.th*36e5,lab:x.nm.split(' ')[0]+' '+String(x.clock||'').slice(5)}))),null)}}
 
 
 
-/* ---------- nutrition : le programme de « Ma cuisine », intégré tel quel ---------- */
 /* ---------- nutrition : le programme de « Ma cuisine » (calculs faits par l'appli cuisine, chargée en arrière-plan) ---------- */
 const NU={C:null,sub:'repas',day:null,dw:null,f:'tous',q:'',prices:false,sh:null,done:{},tm:null};
 const nuE=new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}),nuE2=new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2});

@@ -1,5 +1,14 @@
 [
  {
+  "v": "3.2.1",
+  "date": "2026-11-13",
+  "name": "Correctif",
+  "items": [
+   "Stratégie de course : les boutons MUT 60 et UTC 100M fonctionnent de nouveau"
+  ],
+  "os": []
+ },
+ {
   "v": "3.2.0",
   "date": "2026-11-13",
   "name": "Nutrition",
