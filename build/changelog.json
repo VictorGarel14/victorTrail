@@ -1,5 +1,16 @@
 [
  {
+  "v": "3.6.0",
+  "date": "2026-11-13",
+  "name": "Tous les produits",
+  "items": [
+   "Nutrition : recherche dans Open Food Facts (des millions de produits du commerce, par nom, marque ou code-barres) pour composer ce que j'ai mangé",
+   "Les produits trouvés restent dans « Récents » pour la fois suivante",
+   "Correctif : les nouveaux écrans (forme du jour, choix de semaine, Mon profil, Mes courses) pouvaient s'afficher sans leur mise en forme juste après une mise à jour"
+  ],
+  "os": []
+ },
+ {
   "v": "3.5.0",
   "date": "2026-11-13",
   "name": "Ma fiche",
