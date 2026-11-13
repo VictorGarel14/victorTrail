@@ -322,6 +322,10 @@ dialog.gm::backdrop{background:var(--bg)}
 @media (min-width:760px){.kgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 /* nutrition */
 .nu-tabs{margin-top:4px}
+.nu-add{margin-top:14px}
+.nu-add summary{cursor:pointer;font-weight:800;padding:12px 0;color:var(--gold)}
+.nu-add .box{margin-top:4px}
+.nu-lnk{border:0;background:none;font:700 .82rem var(--f);color:var(--gold);cursor:pointer;padding:6px 0;text-transform:none;letter-spacing:0}
 .nu-tr{display:block;border-left:6px solid var(--tc)}
 .nu-trh{display:flex;align-items:center;gap:12px}
 .nu-trh>div{flex:1;min-width:0}
@@ -712,8 +716,8 @@ function nuGauges(C,day,dt,d){const S=C.S,n=C.dayNeed(dt),g=C.dayGot(day,dt,d);
   h+='</div>';
   if(fu)h+='<div class="sub"><span>Pendant l\'effort</span><span>'+nuF(Math.round(fu.h*10)/10)+' h</span></div><div class="box"><div class="nu-k4"><div><b>'+fu.carb+' g</b><span>glucides ('+fu.ch+' g/h)</span></div><div><b>'+fu.gels+'</b><span>gels TA ou équiv.</span></div><div><b>'+fu.fl+'</b><span>flasques 500 ml</span></div><div><b>'+nuF(fu.water)+' L</b><span>eau · '+fu.na+' mg sodium</span></div></div><p class="note">Commence à manger dès 30-45 min, puis toutes les 20-30 min. Teste ces quantités à l\'entraînement.</p></div>';
   return h}
-function nuMeal(C,id,lab,f,swap){const r=C.RB[id];if(!r)return '';
-  return '<div class="nu-meal"><button class="nu-mm" data-nu="rec|'+id+'">'+(lab?'<small>'+lab+'</small>':'')+'<span>'+(C.S.fav.includes(id)?'♥ ':'')+esc(r.n)+'</span><em>'+Math.round(r.k*f)+' kcal · '+Math.round(r.P*f)+' g prot · '+nuE2.format(C.recCost(r,f))+'</em></button>'+(swap?'<button class="nu-sw" data-nu="'+swap+'" aria-label="Changer : '+esc(r.n)+'" title="Changer">↻</button>':'')+'</div>'}
+function nuMeal(C,id,lab,f,swap){const r=C.RB[id];if(!r)return '';if(r.fx)f=1;
+  return '<div class="nu-meal"><button class="nu-mm" data-nu="rec|'+id+'">'+(lab?'<small>'+lab+'</small>':'')+'<span>'+(C.S.fav.includes(id)?'♥ ':'')+esc(r.n)+'</span><em>'+Math.round(r.k*f)+' kcal · '+Math.round(r.P*f)+' g prot · '+(r.cu?'ajouté':nuE2.format(C.recCost(r,f)))+'</em></button>'+(swap?'<button class="nu-sw" data-nu="'+swap+'" aria-label="Changer : '+esc(r.n)+'" title="Changer">↻</button>':'')+'</div>'}
 function nuRepas(C){const S=C.S,wi=S.week,w=S.weeks[wi],ws=C.dateOf(wi,0);
   if(NU.day==null||NU.dw!==wi){let d0=0;for(let i=0;i<7;i++)if(C.dateOf(wi,i)===T)d0=i;NU.day=d0;NU.dw=wi}
   const d=NU.day,dt=C.dateOf(wi,d),tr=C.dayTrain(dt),f=C.dayFactor(dt),day=w.days[d];
@@ -724,13 +728,13 @@ function nuRepas(C){const S=C.S,wi=S.week,w=S.weeks[wi],ws=C.dateOf(wi,0);
   const fix=S.fixL.includes(d),has=C.SLOTS.some(sl=>day[sl[0]])||fix;
   h+='<div class="sub"><span>Au menu</span></div>';
   if(!has)h+='<div class="rest"><b>Pas de repas à la maison</b>Ajoute-en dans « Mes repas ».</div>';
-  else{h+='<div class="box nu-meals">';let fixed=false;C.SLOTS.forEach(sl=>{if(sl[0]!=='m'&&!fixed){fixed=true;if(fix)h+=nuMeal(C,'ext_salade','Midi · acheté',1,'')}const id=day[sl[0]];if(id)h+=nuMeal(C,id,sl[1],f,'swap|'+d+'.'+sl[0])});h+='</div>'}
+  else{h+='<div class="box nu-meals">';let fixed=false;C.SLOTS.forEach(sl=>{if(sl[0]!=='m'&&!fixed){fixed=true;if(fix)h+=nuMeal(C,'ext_salade','Midi · acheté',1,'')}const id=day[sl[0]];if(id)h+=nuMeal(C,id,sl[1],f,'pick|'+d+'.'+sl[0])});h+='</div>'}
   if(has)h+=nuGauges(C,day,dt,d);
   let kc=0,nd=0;w.days.forEach((dy,i)=>{let k=0,any=false;const ff=C.dayFactor(C.dateOf(wi,i));C.SLOTS.forEach(sl=>{const r=C.RB[dy[sl[0]]];if(r){k+=r.k*ff;any=true}});if(any){kc+=k;nd++}});
   const wm=C.weekMeals(w),wc=C.weekCost(w);
   h+='<div class="sub"><span>Ma semaine</span></div><div class="box"><div class="nu-k3"><div><b>'+nuEur(wc)+'</b><span>de courses</span></div><div><b>'+wm+'</b><span>repas + '+w.snacks.length+' collations</span></div><div><b>'+Math.round(nd?kc/nd:0)+'</b><span>kcal / jour</span></div></div><p class="note" style="margin-top:8px">≈ '+nuEur(wc/Math.max(1,wm+w.snacks.length*0.4))+' par repas.</p>'+
     '<button class="btn" data-nu="batch">Batch cooking du dimanche</button><div class="nu-2"><button class="btn ghost" data-nu="regen">Nouvelle semaine</button><button class="btn ghost" data-nu="set">Mes repas</button></div></div>';
-  if(w.snacks.length)h+='<div class="sub"><span>Collations de la semaine</span></div><div class="box nu-meals">'+w.snacks.map((id,i)=>nuMeal(C,id,'',S.portion,'swapsn|'+i)).join('')+'</div>';
+  if(w.snacks.length)h+='<div class="sub"><span>Collations de la semaine</span></div><div class="box nu-meals">'+w.snacks.map((id,i)=>nuMeal(C,id,'',S.portion,'pick|s.'+i)).join('')+'</div>';
   h+='<p class="note">'+(C.synced?'Synchronisé avec mon plan : les portions suivent l\'entraînement du jour (× 0,9 au repos jusqu\'à × 1,35 en sortie longue). ':'')+'Les veilles et jours de sortie longue privilégient des repas riches en glucides faciles à digérer, puis des repas de récupération riches en protéines. Besoins calculés avec des repères de nutrition du sport d\'endurance (glucides de 4 g/kg au repos à 9-10 g/kg en sortie longue ou course, protéines 1,6 à 2 g/kg) : à ajuster avec Dorian. Valeurs et prix indicatifs.</p>';
   return h}
 
@@ -787,14 +791,15 @@ function nuBudget(C){const S=C.S,raw=C.monthCost(),mc=raw*1.15,b=C.budgetVal(),b
 /* --- fiches (recette, batch, réglages) --- */
 function nuOpen(sh,trig){NU.sh=sh;lastFocus=trig||null;nuSheet(true);if(!dlg.open)dlg.showModal?dlg.showModal():dlg.setAttribute('open','')}
 function nuSheet(top){const C=NU.C,sh=NU.sh;if(!C||!sh)return;const y=dlg.scrollTop;let w='',t='',h='';
-  if(sh.k==='rec'){const r=C.RB[sh.id],S=C.S,f=S.portion,fav=S.fav.includes(sh.id),ex=S.excl.includes(sh.id);
-    w=({pdj:'Petit-déj',plat:'Plat',snack:'Collation',ext:'Acheté'})[r.t]+(r.m?' · '+r.m+' min':'');t=esc(r.n);
+  if(sh.k==='rec'){const r=C.RB[sh.id],S=C.S,f=r.fx?1:S.portion,fav=S.fav.includes(sh.id),ex=S.excl.includes(sh.id);
+    w=r.cu?'Ce que j\'ai mangé':({pdj:'Petit-déj',plat:'Plat',snack:'Collation',ext:'Acheté'})[r.t]+(r.m?' · '+r.m+' min':'');t=esc(r.n);
     h+='<div class="nu-k4" style="margin-top:4px"><div><b>'+Math.round(r.k*f)+'</b><span>kcal</span></div><div><b>'+Math.round(r.P*f)+' g</b><span>protéines</span></div><div><b>'+Math.round(r.G*f)+' g</b><span>glucides</span></div><div><b>'+Math.round(r.L*f)+' g</b><span>lipides</span></div></div>';
     h+='<p class="note">'+nuE2.format(C.recCost(r,f))+' la portion'+(f!==1?' (portion × '+nuF(f)+')':'')+'</p>';
     const tg=r.tags.map(x=>'<span class="tag">'+C.TAGS[x]+'</span>');if(tg.length)h+='<div class="nu-tg" style="margin-top:10px">'+tg.join('')+'</div>';
     if(r.src)h+='<a class="nu-src" href="'+esc(r.src.url)+'" target="_blank" rel="noopener">♪ Inspiré de '+esc(r.src.by)+' sur TikTok ›</a>';
     if(r.desc)h+='<p class="ds">'+esc(r.desc)+'</p>';
-    h+='<div class="sub"><span>Ingrédients</span></div><ul class="list">'+r.i.map(x=>{const ig=C.ING[x[0]],q=x[1]*f;return '<li><span>'+esc(ig.n)+'</span><b>'+(ig.u==='pc'?nuF(q)+' pièce'+(q>1?'s':''):Math.round(q)+' '+ig.u)+'</b></li>'}).join('')+'</ul>';
+    if(r.cu)h+='<p class="note">'+(r.own?'Ajouté à la main : compté dans les apports du jour, pas dans les courses.':'Produit tout prêt : compté dans les apports du jour. Valeurs indicatives, vérifie celles de ton pot.')+'</p>';
+    if(r.i.length)h+='<div class="sub"><span>Ingrédients</span></div><ul class="list">'+r.i.map(x=>{const ig=C.ING[x[0]],q=x[1]*f;return '<li><span>'+esc(ig.n)+'</span><b>'+(ig.u==='pc'?nuF(q)+' pièce'+(q>1?'s':''):Math.round(q)+' '+ig.u)+'</b></li>'}).join('')+'</ul>';
     const P=C.recipePlan(r,C.METH);
     if(r.ck)h+='<div class="seg" role="group" aria-label="Méthode" style="margin-top:18px"><button data-nu="meth|classic" aria-pressed="'+!P.ck+'">Classique</button><button data-nu="meth|cookeo" aria-pressed="'+P.ck+'">Au Cookeo</button></div><p class="note">'+(P.part?'Au Cookeo : le riz cuit dans le Cookeo pendant que tu fais le reste.':'Deux façons de faire la même recette : choisis-en une.')+'</p>';
     if(P.U&&P.U.length)h+='<div class="sub"><span>Ustensiles</span></div><div class="nu-tg">'+P.U.map(x=>'<span class="tag">'+esc(x)+'</span>').join('')+'</div>';
@@ -804,6 +809,16 @@ function nuSheet(top){const C=NU.C,sh=NU.sh;if(!C||!sh)return;const y=dlg.scroll
     if(r.sk)h+='<div class="did2" style="margin-top:14px"><b>Au shaker électrique</b>'+esc(r.sk)+'</div>';
     if(C.hasAvoid(r))h+='<div class="did2 warn" style="margin-top:14px"><b>Contient un ingrédient que j\'évite</b>Elle n\'est pas proposée dans mes plannings.</div>';
     if(r.t!=='ext')h+='<div class="nu-2"><button class="btn'+(fav?'':' ghost')+'" data-nu="fav|'+r.id+'" aria-pressed="'+fav+'">'+(fav?'♥ Favori':'♡ Favori')+'</button><button class="btn ghost" data-nu="excl|'+r.id+'">'+(ex?'Reproposer':'Ne plus proposer')+'</button></div>'}
+  else if(sh.k==='pick'){const S=C.S,w0=S.weeks[S.week],sn=sh.sn!=null,cur=sn?w0.snacks[sh.sn]:w0.days[sh.d][sh.s],type=sn?'snack':sh.s==='m'?'pdj':'plat',lab=sn?'Collation':C.SLOTS.find(x=>x[0]===sh.s)[1];
+    w=(sn?'Collations de la semaine':C.DAYS[sh.d]+' '+C.shortD(C.dateOf(S.week,sh.d)))+' · '+lab;t='Changer ce repas';
+    if(cur&&C.RB[cur])h+='<div class="box nu-meals" style="margin-top:4px"><div class="nu-meal"><div class="nu-mm"><small>Prévu</small><span>'+esc(C.RB[cur].n)+'</span></div></div></div>';
+    h+='<button class="btn ghost" data-nu="rnd">↻ Une autre idée au hasard</button>';
+    const mine=Object.values(C.RB).filter(r=>r.cu);
+    h+='<div class="sub"><span>Ce que j\'ai mangé</span></div><div class="box nu-meals">'+mine.map(r=>'<div class="nu-meal"><button class="nu-mm" data-nu="put|'+r.id+'"><span>'+esc(r.n)+'</span><em>'+Math.round(r.k)+' kcal · '+nuF(r.P)+' g prot · '+nuF(r.G)+' g gluc · '+nuF(r.L)+' g lip</em></button>'+(r.own?'<button class="nu-sw" data-nu="delc|'+r.id+'" aria-label="Retirer '+esc(r.n)+' de ma liste" title="Retirer">✕</button>':'')+'</div>').join('')+'</div>';
+    h+='<details class="nu-add"'+(sh.add?' open':'')+'><summary>+ Ajouter autre chose</summary><div class="box"><label class="nu-row"><span>Nom</span><input id="nuCn" type="text" maxlength="80" placeholder="Ex. : skyr, barre protéinée…" style="width:60%"></label>'+
+      [['k','Calories','kcal'],['P','Protéines','g'],['G','Glucides','g'],['L','Lipides','g']].map(x=>'<label class="nu-row"><span>'+x[1]+' <small>'+x[2]+' pour ce que j\'ai mangé</small></span><input id="nuC'+x[0]+'" type="number" inputmode="decimal" min="0" step="0.1"></label>').join('')+
+      '<p class="note" id="nuCe" role="alert"></p><button class="btn" data-nu="addc">Ajouter et choisir</button></div></details>';
+    h+='<div class="sub"><span>Mes recettes</span><button data-nu="pall" aria-pressed="'+!!NU.pall+'" class="nu-lnk">'+(NU.pall?'Seulement les '+({pdj:'petits-déj',plat:'plats',snack:'collations'})[type]:'Toutes les recettes')+'</button></div><input type="search" id="nuPQ" class="nu-q" style="margin-top:0" placeholder="Rechercher une recette…" aria-label="Rechercher une recette" value="'+esc(NU.pq||'')+'"><div id="nuPL">'+nuPickList(C,type)+'</div>'}
   else if(sh.k==='batch'){const P=C.batchPlan();w='Dimanche';t='Batch cooking';
     if(!P)h='<div class="rest"><b>Rien à préparer</b>Aucun plat « batch » cette semaine du lundi au vendredi. Appuie sur « Nouvelle semaine » ou change quelques repas.</div>';
     else{h='<p class="ds" style="margin-top:0">Environ 1 h 30 à 2 h pour préparer '+P.n+' repas de la semaine.</p><div class="sub"><span>Au programme</span></div><div class="box nu-meals">'+P.items.map(x=>'<div class="nu-meal"><button class="nu-mm" data-nu="rec|'+x.id+'"><span>'+esc(C.RB[x.id].n)+'</span><em>'+x.cnt+' portion'+(x.cnt>1?'s':'')+' · '+({cookeo:'Cookeo',four:'Four',plaque:'Plaque'})[x.how]+'</em></button></div>').join('')+'</div>';
@@ -821,6 +836,10 @@ function nuSheet(top){const C=NU.C,sh=NU.sh;if(!C||!sh)return;const y=dlg.scroll
       '<label class="nu-row" style="border:0"><span class="sr">Ajouter un ingrédient</span><select data-nuc="avoid" style="width:100%"><option value="">+ Ajouter un ingrédient…</option>'+Object.keys(C.ING).filter(id=>!av.includes(id)).sort((a,b)=>C.ING[a].n.localeCompare(C.ING[b].n)).map(id=>'<option value="'+id+'">'+esc(C.ING[id].n)+'</option>').join('')+'</select></label>';
     h+='<div class="menu" style="margin-top:18px"><a href="/my-app/cuisine/" target="_blank" rel="noopener"><div><span>Ouvrir « Ma cuisine »</span><small>Sauvegarde, import et remise à zéro</small></div></a></div>'}
   document.getElementById('shW').textContent=w;document.getElementById('shT').innerHTML=t;document.getElementById('shB').innerHTML=h;dlg.scrollTop=top?0:y}
+function nuPickList(C,type){const S=C.S,ql=(NU.pq||'').trim().toLowerCase();
+  const L=C.RECIPES.filter(r=>r.t!=='ext'&&(NU.pall||r.t===type)&&!S.excl.includes(r.id)&&(!ql||(r.n+' '+r.i.map(x=>C.ING[x[0]].n).join(' ')).toLowerCase().includes(ql))).sort((a,b)=>(S.fav.includes(b.id)-S.fav.includes(a.id))||a.n.localeCompare(b.n));
+  if(!L.length)return '<div class="rest" style="margin-top:12px"><b>Aucune recette</b>Essaie un autre mot, ou ajoute-le dans « Ajouter autre chose ».</div>';
+  return '<div class="box nu-meals" style="margin-top:12px">'+L.map(r=>'<div class="nu-meal"><button class="nu-mm" data-nu="put|'+r.id+'"><span>'+(S.fav.includes(r.id)?'♥ ':'')+esc(r.n)+'</span><em>'+r.m+' min · '+Math.round(r.k*S.portion)+' kcal · '+Math.round(r.P*S.portion)+' g prot</em></button></div>').join('')+'</div>'}
 function nuTimer(min){clearInterval(NU.tm);let el=document.getElementById('nuTm');if(!el){el=document.createElement('button');el.id='nuTm';el.className='nu-tm';el.setAttribute('aria-live','polite');el.onclick=()=>{clearInterval(NU.tm);el.classList.remove('on')};document.body.appendChild(el)}
   const end=Date.now()+min*60000;const tick=()=>{const s=Math.max(0,Math.round((end-Date.now())/1000));el.textContent='⏱ '+Math.floor(s/60)+':'+String(s%60).padStart(2,'0')+' · Arrêter';if(!s){clearInterval(NU.tm);el.textContent='⏱ C\'est prêt !';try{beep(3)}catch(e){}setTimeout(()=>el.classList.remove('on'),6000)}};
   el.classList.add('on');tick();NU.tm=setInterval(tick,1000);nuToast('Minuteur lancé : '+min+' min')}
@@ -833,6 +852,14 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-nu]');if(!
     case 'swap':{const p=x.split('.');O.swap(+p[0],p[1]);break}
     case 'swapsn':O.swapsn(+x);break;
     case 'rec':nuOpen({k:'rec',id:x},b);return;
+    case 'pick':{const p=x.split('.');NU.pq='';nuOpen(p[0]==='s'?{k:'pick',sn:+p[1]}:{k:'pick',d:+p[0],s:p[1]},b);return}
+    case 'rnd':{const sh=NU.sh;if(sh.sn!=null)O.swapsn(sh.sn);else O.swap(sh.d,sh.s);dlg.close();m='Nouvelle idée ✓';break}
+    case 'put':{const sh=NU.sh;m=sh.sn!=null?O.setsn(sh.sn,x):O.set(sh.d,sh.s,x);dlg.close();break}
+    case 'pall':NU.pall=!NU.pall;break;
+    case 'delc':m=O.delCustom(x);break;
+    case 'addc':{const g=k=>(document.getElementById('nuC'+k)||{}).value||'',n=g('n').trim(),err=document.getElementById('nuCe');
+      if(!n||g('k')===''){if(err)err.textContent='Indique au moins le nom et les calories.';return}
+      const id=O.addCustom({n,k:g('k'),P:g('P'),G:g('G'),L:g('L')}),sh=NU.sh;m=sh.sn!=null?O.setsn(sh.sn,id):O.set(sh.d,sh.s,id);dlg.close();break}
     case 'batch':nuOpen({k:'batch'},b);return;
     case 'set':nuOpen({k:'set'},b);return;
     case 'regen':m=O.regen();break;
@@ -857,7 +884,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-nu]');if(!
 document.addEventListener('change',e=>{const t=e.target.closest('[data-nuc]');if(!t||!NU.C)return;const v=t.dataset.nuc,i=v.indexOf('|'),a=i<0?v:v.slice(0,i),x=i<0?'':v.slice(i+1),O=NU.C.OPS;let m;
   if(a==='ck')O.check(x,t.checked);else if(a==='avoid'){if(!t.value)return;m=O.avoid(t.value)}else if(a==='price')O.price(x,t.value);else if(O[a])O[a](t.value);else return;
   if(m)nuToast(m);nuRedraw()});
-document.addEventListener('input',e=>{if(e.target.id==='nuQ'&&NU.C){NU.q=e.target.value;const l=document.getElementById('nuList');if(l)l.innerHTML=nuRecList(NU.C)}});
+document.addEventListener('input',e=>{if(e.target.id==='nuQ'&&NU.C){NU.q=e.target.value;const l=document.getElementById('nuList');if(l)l.innerHTML=nuRecList(NU.C)}
+  if(e.target.id==='nuPQ'&&NU.C&&NU.sh&&NU.sh.k==='pick'){NU.pq=e.target.value;const sh=NU.sh,l=document.getElementById('nuPL');if(l)l.innerHTML=nuPickList(NU.C,sh.sn!=null?'snack':sh.s==='m'?'pdj':'plat')}});
 dlg.addEventListener('close',()=>{NU.sh=null});
 
 /* ---------- météo (Open-Meteo, Nice) ---------- */

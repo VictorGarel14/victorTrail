@@ -1,5 +1,15 @@
 [
  {
+  "v": "3.3.0",
+  "date": "2026-11-13",
+  "name": "Mon vrai menu",
+  "items": [
+   "Nutrition : le bouton ↻ d'un repas permet de choisir ce que j'ai vraiment mangé : une recette précise, un produit (HiPRO vanille cookie…) ou autre chose à saisir avec ses calories et macros",
+   "Les ajouts comptent dans les apports du jour, sans toucher à la liste de courses"
+  ],
+  "os": []
+ },
+ {
   "v": "3.2.1",
   "date": "2026-11-13",
   "name": "Correctif",
