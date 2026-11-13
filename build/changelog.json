@@ -1,5 +1,18 @@
 [
  {
+  "v": "3.5.0",
+  "date": "2026-11-13",
+  "name": "Ma fiche",
+  "items": [
+   "Forme du jour plus discrète : une ligne dans Aujourd'hui, le questionnaire et le détail s'ouvrent d'un geste, avec des libellés adaptés à chaque question",
+   "Séances : bouton « Choisir une semaine » pour aller directement à n'importe quelle semaine du plan, et toutes les phases visibles sur ordinateur",
+   "Nutrition : plus de 80 produits courants classés par catégorie (petit-déj, viandes et poissons, féculents, collations, effort, resto…) pour composer ce que j'ai vraiment mangé",
+   "Mon profil : ma fiche complète en rubriques (infos, entraînement, matériel, nutrition et ravito, objectifs, liens), chiffrée et synchronisée",
+   "Courses : une course à la fois, avec Aperçu, Stratégie, Jumeau et Équipe"
+  ],
+  "os": []
+ },
+ {
   "v": "3.4.0",
   "date": "2026-11-13",
   "name": "Forme du jour",
