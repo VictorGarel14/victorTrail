@@ -1,5 +1,18 @@
 [
  {
+  "v": "3.8.0",
+  "date": "2026-11-13",
+  "name": "Nutrition allégée",
+  "items": [
+   "Repas : conseil pour compléter la journée quand les apports ne sont pas atteints (ce qui manque et quoi prendre en collation)",
+   "Nouvel onglet Réglages à la place de Budget : semaine type (enregistrer, appliquer, utiliser pour les nouvelles semaines), équipement de cuisine, aliments que je n'aime pas, repas pris à la maison, besoins",
+   "Courses sur 2 semaines ou le mois : ce qui se garde, ce qu'il faut racheter en cours de route (avec la date) ou congeler",
+   "21 nouvelles recettes healthy (bowls, papillote, curry léger, chili léger, poke maison, overnight oats, smoothie récup…)",
+   "Repas : blocs « Ma semaine » et « Collations de la semaine » retirés, Recettes : liste des créateurs retirée"
+  ],
+  "os": []
+ },
+ {
   "v": "3.7.0",
   "date": "2026-11-13",
   "name": "Ma cuisine équipée",
