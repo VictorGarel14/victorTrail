@@ -1,5 +1,16 @@
 [
  {
+  "v": "3.7.0",
+  "date": "2026-11-13",
+  "name": "Ma cuisine équipée",
+  "items": [
+   "Nutrition : « Mon équipement de cuisine » pour cocher mes appareils (four, Airfryer, micro-ondes, Cookeo, Thermomix, mixeur, blender, shaker électrique, mandoline, grille-pain…)",
+   "Les recettes s'adaptent : celles qui demandent un appareil que je n'ai pas ne sont plus proposées, la méthode Cookeo n'apparaît que si j'en ai un, les ustensiles manquants sont remplacés",
+   "Sans four mais avec un Airfryer : température et temps convertis directement dans la fiche recette"
+  ],
+  "os": []
+ },
+ {
   "v": "3.6.1",
   "date": "2026-11-13",
   "name": "Correctif",
