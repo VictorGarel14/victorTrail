@@ -197,7 +197,8 @@ dialog.sheet::backdrop{background:rgba(8,10,12,.55)}
 .tw-act .btn{min-height:44px;font-size:.84rem}
 .tw-map{height:240px;border-radius:12px;margin-top:10px;isolation:isolate;z-index:0;position:relative}
 .tw-rv{display:inline-block;font:700 .7rem var(--f);padding:2px 8px;border-radius:99px;background:color-mix(in srgb,var(--blaze) 15%,transparent);color:var(--blaze);margin-left:4px}
-.tabs.crew a:not([data-t="assistance"]){display:none}.tabs.crew .in{grid-template-columns:1fr}
+.tabs.crew{display:none}.hdr-r{display:flex;align-items:center;gap:10px}.me{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1px solid var(--line);color:var(--ink)}.me svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}.me.on{background:var(--ink);color:var(--bg)}
+.nut-h{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.nut-h .box{text-align:center}.nut-h b{display:block;font-size:clamp(.95rem,4.4vw,1.3rem);white-space:nowrap}.nut-h span{font-size:.78rem;color:var(--muted)}
 #lock{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px 16px;overflow:auto}
 #lock .card{width:100%;max-width:400px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:24px 20px}
 #lock h1{font:800 1.5rem/1.2 var(--f);margin:0 0 6px}#lock p{color:var(--muted);margin:0 0 16px;font-size:.92rem;line-height:1.45}
@@ -323,21 +324,23 @@ dialog.gm::backdrop{background:var(--bg)}
 </style>
 </head>
 <body>
-<header class="bar"><div class="in"><a class="brand" href="#/aujourdhui" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="__BRAND_C__" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a><a class="cd" id="cd" href="#/plus/courses"></a></div>
+<header class="bar"><div class="in"><a class="brand" href="#/aujourdhui" aria-label="Accueil"><svg viewBox="44 -4 290 100" aria-hidden="true"><path d="__BRAND_C__" fill="none" stroke="#EDEDED" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="262" cy="2" r="9" fill="#C9B37E"/></svg>VICTOR</a><span class="hdr-r"><a class="cd" id="cd" href="#/courses"></a><a class="me" id="meBtn" href="#/profil" aria-label="Mon profil et mes progrès"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></a></span></div>
 <a class="livepill" id="livepill" href="#/assistance"><i></i><span id="liveT">En direct : voir ma position</span></a></header>
 <main>
 <section class="scr" id="s-aujourdhui" aria-labelledby="h-auj"></section>
 <section class="scr" id="s-seances"></section>
+<section class="scr" id="s-nutrition"></section>
+<section class="scr" id="s-courses"></section>
 <section class="scr" id="s-assistance"></section>
-<section class="scr" id="s-progres"></section>
-<section class="scr" id="s-plus"></section>
+<section class="scr" id="s-victory"></section>
+<section class="scr" id="s-profil"></section>
 </main>
 <nav class="tabs" aria-label="Navigation"><div class="in">
  <a href="#/aujourdhui" data-t="aujourdhui"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Aujourd'hui</a>
  <a href="#/seances" data-t="seances"><svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Séances</a>
- <a href="#/assistance" data-t="assistance"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Assistance</a>
- <a href="#/progres" data-t="progres"><svg viewBox="0 0 24 24"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/></svg>Progrès</a>
- <a href="#/plus" data-t="plus"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18.5" cy="12" r="1.6"/></svg>Plus</a>
+ <a href="#/nutrition" data-t="nutrition"><svg viewBox="0 0 24 24"><path d="M12 7c-3-3-8-1-8 4 0 5 4 10 8 10s8-5 8-10c0-5-5-7-8-4z"/><path d="M12 7c0-2 1-4 3-5"/></svg>Nutrition</a>
+ <a href="#/courses" data-t="courses"><svg viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>Courses</a>
+ <a href="#/victory" data-t="victory"><svg viewBox="0 0 24 24"><path d="M4 4h4.5l3 9 3.5-9H19l-6.5 16h-2z"/></svg>VIC'TORY</a>
 </div></nav>
 <dialog class="sheet" id="sheet" aria-labelledby="shT"><div class="sh-h"><div><div class="muted" id="shW" style="font:600 .82rem var(--f)"></div><h2 id="shT"></h2></div><button class="x" id="shX" aria-label="Fermer">✕</button></div><div class="sh-b" id="shB"></div></dialog>
 <dialog class="gm" id="gm" aria-label="Séance de renfo"><div class="in" id="gmIn"></div></dialog>
@@ -439,7 +442,7 @@ function vToday(){const el=document.getElementById('s-aujourdhui');const ws=mond
     if(W.note)h+='<div class="wknote">'+esc(W.note)+'</div>'}
   else if(selDay<D.planStart){h+='<div class="sub"><span>La prépa démarre le '+fmtD(D.planStart).replace(/\.$/,'')+'</span><a href="#/seances">Voir le plan</a></div>'}
   // prochaine course
-  const r=D.races.find(x=>diff(T,x.date)>=0);if(r){const n=diff(T,r.date);h+='<div class="sub"><span>Prochaine course</span></div><a class="box race1" href="#/plus/courses"><div><b>'+esc(r.name)+'</b><div class="muted" style="font-size:.86rem">'+fmtDY(r.date)+' · '+r.km+' km · '+fr(r.dp)+' m D+</div></div><span class="j"><small>J−</small>'+n+'</span></a>'}
+  const r=D.races.find(x=>diff(T,x.date)>=0);if(r){const n=diff(T,r.date);h+='<div class="sub"><span>Prochaine course</span></div><a class="box race1" href="#/courses"><div><b>'+esc(r.name)+'</b><div class="muted" style="font-size:.86rem">'+fmtDY(r.date)+' · '+r.km+' km · '+fr(r.dp)+' m D+</div></div><span class="j"><small>J−</small>'+n+'</span></a>'}
   el.innerHTML=h;
   el.querySelectorAll('[data-day]').forEach(b=>b.onclick=()=>{selDay=b.dataset.day;vToday()});wxFill(el)}
 
@@ -545,7 +548,12 @@ function spark(k){const P=k.spark||[];if(P.length<2)return '';const W=200,H=36,p
   const x0=pd(P[0][0]),x1=pd(P[P.length-1][0]);const X=d=>p+(pd(d)-x0)/((x1-x0)||1)*(W-2*p);const Y=v=>{const r=(v-mn)/(mx-mn);return p+(k.inv?r:1-r)*(H-2*p)};
   if(k.bars){const bw=(W-2*p)/P.length*.7;return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true">'+P.map((q,i)=>'<rect x="'+(p+i*(W-2*p)/P.length).toFixed(1)+'" width="'+bw.toFixed(1)+'" y="'+Y(q[1]).toFixed(1)+'" height="'+Math.max(.5,H-p-Y(q[1])).toFixed(1)+'" fill="'+(i===P.length-1?'var(--gold)':'var(--ink)')+'" fill-opacity="'+(i===P.length-1?1:.45)+'"/>').join('')+'</svg>'}
   const L=P[P.length-1];return '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" aria-hidden="true"><path d="'+P.map((q,i)=>(i?'L':'M')+X(q[0]).toFixed(1)+','+Y(q[1]).toFixed(1)).join('')+'" fill="none" stroke="var(--ink)" stroke-width="2" vector-effect="non-scaling-stroke"/><circle cx="'+X(L[0]).toFixed(1)+'" cy="'+Y(L[1]).toFixed(1)+'" r="3" fill="var(--gold)"/></svg>'}
-function vProg(){const el=document.getElementById('s-progres');let h='<div class="hd"><h1>Progrès</h1><p>Mes indicateurs, comparés aux 4 dernières semaines.</p></div>';
+function vProfil(sub){if(sub==='journal')return vPlus('journal','profil');return vProg()}
+function labHTML(){const L=D.lab,Z=D.zl,P=D.zsp;if(!L&&!Z)return '';let h='<div class="sub"><span>Test labo · '+esc((L&&L.src)||'')+'</span></div><div class="box">';
+  if(L)h+='<ul class="list"><li><span>VO₂max</span><b>'+esc(L.max&&L.max.vo2)+' ml/kg/min</b></li><li><span>1er seuil</span><b>'+L.vt1.fc+' bpm · '+fr(L.vt1.vam)+' m/h</b></li><li><span>2e seuil</span><b>'+L.vt2.fc+' bpm · '+fr(L.vt2.vam)+' m/h</b></li><li><span>FC max</span><b>'+L.max.fc+' bpm</b></li></ul>';
+  if(Z)h+='<div class="sub" style="margin-top:12px"><span>Mes zones</span></div><ul class="list">'+Z.map((z,i)=>{const k='Z'+(i+1),p=P&&P[k];return '<li><span>'+k+'</span><b>'+(i?z[0]+'–'+z[1]:'≤ '+z[1])+' bpm'+(p?' · '+String(p[0]).replace('.',',')+'–'+String(p[1]).replace('.',',')+' km/h':'')+'</b></li>'}).join('')+'</ul>';
+  return h+'</div>'}
+function vProg(){const el=document.getElementById('s-profil');let h='<div class="hd"><h1>Mon profil</h1><p>Mes progrès, mes zones, mes réglages.</p></div>';
   const G=D.ixgoal;if(G){const p=Math.max(0,Math.min(100,(G.cur-G.start.v)/(G.target-G.start.v)*100));
     h+='<div class="box"><b>Objectif UTMB Index '+G.target+' fin 2027</b><div class="ixbar"><i style="width:'+p.toFixed(1)+'%"></i></div><div class="ixl"><span>'+G.start.v+'</span><b>Aujourd\'hui '+G.cur+'</b><span>'+G.target+'</span></div><div class="steps3">'+G.steps.map(x=>'<div><span>'+esc(x.lab)+' · '+fmtD(x.date).replace(/\.$/,'')+'</span><b>'+(x.score?x.score+(x.score>=x.lo?' ✓':''):esc(x.txt))+'</b></div>').join('')+'</div><p class="note">À Nice by UTMB, 650 correspondait à environ 17 h 15. J\'ai mis 23 h 11.</p></div>'}
   const want=['ctl','vma','vo2','thr','ef','vam','vol','dp','long','utmb','rhr','hrv'];
@@ -555,22 +563,26 @@ function vProg(){const el=document.getElementById('s-progres');let h='<div class
     let g='';for(let v=0;v<=top;v+=top>10?4:2)g+='<line x1="'+pl+'" x2="'+w+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="var(--line)"/><text x="'+(pl-6)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+v+'h</text>';
     W.forEach((x,i)=>{const x0=pl+i*bw;if(x.plan)g+='<rect x="'+(x0+bw*.14)+'" width="'+bw*.72+'" y="'+Y(x.plan)+'" height="'+(Y(0)-Y(x.plan))+'" fill="none" stroke="var(--muted)" stroke-dasharray="3 3"/>';if(x.h)g+='<rect x="'+(x0+bw*.24)+'" width="'+bw*.52+'" y="'+Y(x.h)+'" height="'+(Y(0)-Y(x.h))+'" rx="2" fill="'+(i===W.length-1?'var(--gold)':'var(--ink)')+'"/>';if(i%3===(W.length-1)%3)g+='<text x="'+(x0+bw/2)+'" y="'+(hh-6)+'" text-anchor="middle">'+(+x.ws.slice(8))+' '+MOIS[+x.ws.slice(5,7)-1].replace('.','')+'</text>'});
     h+='<div class="sub"><span>Volume · 12 dernières semaines</span><span style="font-weight:500">pointillé = prévu</span></div><div class="box vol"><svg viewBox="0 0 '+w+' '+hh+'" role="img" aria-label="Heures d\'entraînement par semaine">'+g+'</svg></div>'}
-  el.innerHTML=h}
+  h+=labHTML();
+  h+='<nav class="menu" style="margin-top:14px"><a href="#/profil/journal"><div><span>Journal</span><small>Mes dernières séances</small></div></a><a href="#/victory/versions"><div><span>Nouveautés</span><small>Version '+vshort(APPV)+'</small></div></a></nav>';
+  if(OWNER)h+='<div class="box" style="margin-top:14px"><b>Accès privé</b><p class="note" style="margin:6px 0 10px">Tes données sont chiffrées : seuls toi (connecté) et ton équipe d\'assistance (avec le lien) peuvent les lire.</p><div style="display:grid;gap:8px"><button class="btn" id="crewLink">Copier le lien pour mon équipe d\'assistance</button><button class="btn ghost" id="vtOut">Se déconnecter de cet appareil</button></div></div>';
+  el.innerHTML=h;
+  if(OWNER){const cl=document.getElementById('crewLink');if(cl)cl.onclick=async()=>{const u=(window.VT_HOME||location.origin+location.pathname)+'#/assistance&k='+window.VT_KC();try{if(navigator.share)await navigator.share({title:'VictorTrail · suivi assistance',url:u});else{await navigator.clipboard.writeText(u);cl.textContent='Lien copié ✓'}}catch(e){try{await navigator.clipboard.writeText(u);cl.textContent='Lien copié ✓'}catch(_){prompt('Lien à envoyer à ton équipe :',u)}}};const lo=document.getElementById('vtOut');if(lo)lo.onclick=()=>{if(confirm('Se déconnecter de VictorTrail sur cet appareil ?')){window.VT_logout();location.reload()}}}}
 
 /* ---------- plus ---------- */
-function vPlus(sub){const el=document.getElementById('s-plus');let h='';const back='<a class="back" href="#/plus">‹ Plus</a>';
+function vPlus(sub,tab){const el=document.getElementById('s-'+(tab||'victory'));let h='';const back='<a class="back" href="#/'+(tab||'victory')+'">‹ '+({courses:'Courses',victory:'VIC\'TORY',profil:'Mon profil'}[tab||'victory'])+'</a>';
   if(sub==='strategie'){h+=back+'<div class="hd"><h1>Stratégie de course</h1><p>Objectif, nutrition et temps de passage prévus.</p></div>';h+=stratHTML()}
   else if(sub==='jumeau'){h+=back+'<div class="hd"><h1>Jumeau local</h1><p>Les portions de mes sorties autour de Nice qui reproduisent le profil de chaque morceau de mes courses. De quoi répéter la course sans y aller.</p></div><div id="tw"><p class="note">Analyse en cours…</p></div>'}
-  else if(sub==='courses'){h+=back+'<div class="hd"><h1>Mes courses</h1></div><div class="sess">'+D.races.map(r=>{const n=diff(T,r.date);return '<div class="rc '+r.role+'"><div class="band"><span>Course '+r.role+' · '+fmtDY(r.date)+'</span><span>'+(n>=0?'J−'+n:'Courue')+'</span></div><div class="in"><h2>'+esc(r.name)+'</h2><div class="muted" style="font-size:.86rem">'+esc(r.place)+' · départ '+r.start.replace(':',' h ')+'</div><div class="nums"><div><b>'+r.km+'</b><span>km</span></div><div><b>'+fr(r.dp)+'</b><span>m D+</span></div></div><p class="note" style="color:var(--ink2)">'+esc(r.info)+'</p></div></div>'}).join('')+'</div>';
+  else if(sub==='courses'){h+='<div class="hd"><h1>Mes courses</h1><p>Stratégie, nutrition de course, tableau de marche, jumeau local et suivi pour mon équipe.</p></div><div class="menu" style="margin-bottom:14px"><a href="#/courses/strategie"><div><span>Stratégie de course</span><small>Objectif, nutrition, tableau de marche, ravitos</small></div></a><a href="#/courses/jumeau"><div><span>Jumeau local</span><small>Mes courses reproduites autour de Nice</small></div></a><a href="#/assistance"><div><span>Assistance</span><small>Ce que voit mon équipe le jour J, position en direct</small></div></a></div><div class="sess">'+D.races.map(r=>{const n=diff(T,r.date);return '<div class="rc '+r.role+'"><div class="band"><span>Course '+r.role+' · '+fmtDY(r.date)+'</span><span>'+(n>=0?'J−'+n:'Courue')+'</span></div><div class="in"><h2>'+esc(r.name)+'</h2><div class="muted" style="font-size:.86rem">'+esc(r.place)+' · départ '+r.start.replace(':',' h ')+'</div><div class="nums"><div><b>'+r.km+'</b><span>km</span></div><div><b>'+fr(r.dp)+'</b><span>m D+</span></div></div><p class="note" style="color:var(--ink2)">'+esc(r.info)+'</p></div></div>'}).join('')+'</div>';
     h+='<div class="sub"><span>Qualification Diagonale · 2 courses d\'au moins 85 points</span></div><div class="box"><ul class="list"><li><span>Nice by UTMB 100K · 26 sept. 2026</span><b style="color:var(--good)">163 pts ✓</b></li><li><span>MUT 60 · 29 mai 2027</span><b>88 pts à courir</b></li></ul></div>'}
   else if(sub==='journal'){h+=back+'<div class="hd"><h1>Journal</h1><p>Mes dernières séances, depuis ma montre Coros.</p></div><ul class="acts">'+((D.acts||[]).map(a=>{const d=new Date(pd(a.date));return '<li><div class="dt"><b>'+d.getUTCDate()+'</b><span>'+MOIS[d.getUTCMonth()]+'</span></div><div><b>'+esc(a.name||KL[a.k]||'Séance')+'</b><div class="muted" style="font-size:.82rem">'+esc(KL[a.k]||'')+(a.z?' · zone '+a.z.slice(1):'')+'</div></div><div class="st">'+(a.km?km(a.km)+' km<br>':'')+hm(a.dur/60)+(a.dp?' · '+fr(a.dp)+' m':'')+'</div></li>'}).join('')||'<li>Pas encore de séance publiée.</li>')+'</ul>'}
   else if(sub==='versions'){h+=back+'<div class="hd"><h1>Nouveautés</h1><p>Ce qui a changé dans l\'appli, version après version. Les données (séances, plan du coach) se mettent à jour toutes les heures, sans changer de version.</p></div><div class="vers">'+CHANGES.filter(c=>vitems(c).length).map((c,i)=>'<section class="ver'+(i===0?' cur':'')+'"><div class="vh"><span class="vn">'+vshort(c.v)+'</span><div><b>'+esc(c.name)+'</b><small>'+fmtDY(c.date)+(i===0?' · version installée':'')+'</small></div></div><ul>'+vitems(c).map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul></section>').join('')+'</div>'}
-  else if(sub==='apropos'){h+=back+'<div class="about"><div class="hd"><h1>Victor <span class="kr" style="color:var(--gold);font-weight:500;font-size:1.1rem">빅토르</span></h1><p class="kr" style="color:var(--muted)">파리에서 정상까지</p></div><div class="box"><p style="margin:0">💼 Consultant le jour, 🏃 traileur entre midi et deux, et le week-end ⛰️ je vais vérifier que les montagnes sont toujours là. <b>40 h de boulot par semaine</b>, une vie à côté, et un objectif un peu fou : les <b>180 km de la Diagonale des Fous</b> 🌋, le 14 octobre 2027. Ici, je montre tout : les séances ⏱️, les jambes lourdes 🥵 et les progrès 📈. Rendez-vous sur la ligne d\'arrivée, à La Redoute 🏁</p></div><div class="box line" style="margin-top:12px" id="line"></div><p class="note" id="soc"></p><p class="note">Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros.</p><p class="note"><a href="#/plus/versions">VictorTrail '+vshort(APPV)+' · nouveautés ›</a></p>'+(OWNER?'<div class="box" style="margin-top:12px"><b>Accès privé</b><p class="note" style="margin:6px 0 10px">Tes données sont chiffrées : seuls toi (connecté) et ton équipe d\'assistance (avec le lien) peuvent les lire.</p><div style="display:grid;gap:8px"><button class="btn" id="crewLink">Copier le lien pour mon équipe d\'assistance</button><button class="btn ghost" id="vtOut">Se déconnecter de cet appareil</button></div></div>':'')+'</div>'}
-  else{h+='<div class="hd"><h1>Plus</h1></div><nav class="menu"><a href="#/plus/jumeau"><div><span>Jumeau local</span><small>Mes courses reproduites autour de Nice</small></div></a><a href="#/plus/strategie"><div><span>Stratégie de course</span><small>Objectif, nutrition, tableau de marche</small></div></a><a href="#/plus/courses"><div><span>Mes courses</span><small>MUT 60, UTC 100M, Diagonale</small></div></a><a href="#/plus/journal"><div><span>Journal</span><small>Mes dernières séances</small></div></a><a href="#/plus/apropos"><div><span>Présentation</span><small>Qui je suis, la saison en un trait</small></div></a><a href="#/plus/versions"><div><span>Nouveautés</span><small>Version '+vshort(APPV)+' · historique des mises à jour</small></div></a></nav><p class="note" style="text-align:center;margin-top:16px">VictorTrail '+vshort(APPV)+' · données du '+fmtDY(D.today)+'</p>'}
+  else if(sub==='apropos'){h+=back+'<div class="about"><div class="hd"><h1>Victor <span class="kr" style="color:var(--gold);font-weight:500;font-size:1.1rem">빅토르</span></h1><p class="kr" style="color:var(--muted)">파리에서 정상까지</p></div><div class="box"><p style="margin:0">💼 Consultant le jour, 🏃 traileur entre midi et deux, et le week-end ⛰️ je vais vérifier que les montagnes sont toujours là. <b>40 h de boulot par semaine</b>, une vie à côté, et un objectif un peu fou : les <b>180 km de la Diagonale des Fous</b> 🌋, le 14 octobre 2027. Ici, je montre tout : les séances ⏱️, les jambes lourdes 🥵 et les progrès 📈. Rendez-vous sur la ligne d\'arrivée, à La Redoute 🏁</p></div><div class="box line" style="margin-top:12px" id="line"></div><p class="note" id="soc"></p><p class="note">Mis à jour le '+fmtDY(D.today)+' · données de ma montre Coros.</p><p class="note"><a href="#/victory/versions">VictorTrail '+vshort(APPV)+' · nouveautés ›</a></p>'+'</div>'}
+  else{h+='<div class="hd"><h1>VIC\'TORY</h1><p class="sig">Continuer à rêver, juste assez pour tenir debout.</p></div><nav class="menu"><a href="#/victory/apropos"><div><span>Présentation</span><small>Qui je suis, la saison en un trait</small></div></a><a href="#/victory/versions"><div><span>Nouveautés</span><small>Version '+vshort(APPV)+' · historique des mises à jour</small></div></a></nav><p class="note" style="text-align:center;margin-top:16px">VictorTrail '+vshort(APPV)+' · données du '+fmtDY(D.today)+'</p>'}
   el.innerHTML=h;
   if(sub==='strategie')bindStrat();
   if(sub==='jumeau')twDraw();
-  if(sub==='apropos'&&OWNER){const cl=document.getElementById('crewLink');if(cl)cl.onclick=async()=>{const u=(window.VT_HOME||location.origin+location.pathname)+'#/assistance&k='+window.VT_KC();try{if(navigator.share)await navigator.share({title:'VictorTrail · suivi assistance',url:u});else{await navigator.clipboard.writeText(u);cl.textContent='Lien copié ✓'}}catch(e){try{await navigator.clipboard.writeText(u);cl.textContent='Lien copié ✓'}catch(_){prompt('Lien à envoyer à ton équipe :',u)}}};const lo=document.getElementById('vtOut');if(lo)lo.onclick=()=>{if(confirm('Se déconnecter de VictorTrail sur cet appareil ?')){window.VT_logout();location.reload()}}}
+  if(false){const cl=document.getElementById('crewLink');if(cl)cl.onclick=async()=>{const u=(window.VT_HOME||location.origin+location.pathname)+'#/assistance&k='+window.VT_KC();try{if(navigator.share)await navigator.share({title:'VictorTrail · suivi assistance',url:u});else{await navigator.clipboard.writeText(u);cl.textContent='Lien copié ✓'}}catch(e){try{await navigator.clipboard.writeText(u);cl.textContent='Lien copié ✓'}catch(_){prompt('Lien à envoyer à ton équipe :',u)}}};const lo=document.getElementById('vtOut');if(lo)lo.onclick=()=>{if(confirm('Se déconnecter de VictorTrail sur cet appareil ?')){window.VT_logout();location.reload()}}}
   if(sub==='apropos'){const L=document.getElementById('line');L.innerHTML='<svg viewBox="0 -12 568 115" role="img" aria-label="Progression de la saison"><path class="base" d="'+BRAND_D+'"/><path class="tower" d="'+BRAND_T+'"/><path class="done" d="'+BRAND_D+'"/><circle class="goal" cx="262" cy="2" r="6"/><circle class="dot" r="7" cx="0" cy="92"/></svg><p class="note" style="text-align:center;margin:4px 0 0">'+Math.round(D.prog*100)+' % de la saison</p>';
     const p=L.querySelector('.done'),len=p.getTotalLength(),pt=p.getPointAtLength(len*D.prog);p.style.strokeDasharray=(len*D.prog)+' '+len;const dt=L.querySelector('.dot');dt.setAttribute('cx',pt.x);dt.setAttribute('cy',pt.y);
     const S=D.social||{};const ls=[];if(S.ig)ls.push('<a href="https://instagram.com/'+esc(S.ig.replace('@',''))+'" target="_blank" rel="noopener">Instagram</a>');if(S.tt)ls.push('<a href="https://tiktok.com/@'+esc(S.tt.replace('@',''))+'" target="_blank" rel="noopener">TikTok</a>');document.getElementById('soc').innerHTML=ls.join(' · ')}}
@@ -579,7 +591,7 @@ function stratHTML(){const S=D.strat||{},R=D.races,r=R.find(x=>x.id===stCur),o=S
   let h='<div class="seg" role="group" aria-label="Course">'+R.map(x=>'<button data-st="'+x.id+'" aria-pressed="'+(x.id===stCur)+'">'+esc(SH[x.id]||x.name)+'</button>').join('')+'</div>';
   h+='<div class="stg" style="margin-top:12px">'+[['Objectif',hm(H*60),r.km+' km · '+fr(r.dp)+' m D+'],['Glucides',o.gh+' g/h',fr(H*o.gh)+' g au total'],['Eau',o.ml+' ml/h',km(Math.round(H*o.ml/100)/10)+' L au total'],['Sodium',o.na+' mg/h',fr(H*o.na)+' mg au total']].map(([l,v,s])=>'<div class="box"><span>'+l+'</span><b>'+v+'</b><span>'+s+'</span></div>').join('')+'</div>';
   if(o.model){const d=(H/o.model.tot-1)*100;h+='<div class="mdl">Avec mon niveau actuel, le modèle prévoit <b>'+hm(o.model.tot*60)+'</b> (entre '+hm(o.model.opt*60)+' et '+hm(o.model.pess*60)+'). '+(Math.abs(d)<3?'C\'est mon objectif.':d<0?'Mon objectif demande d\'aller '+Math.round(-d)+' % plus vite : la progression à construire.':'Mon objectif laisse '+Math.round(d)+' % de marge.')+'</div>'}
-  if((D.courses||[]).includes(stCur))h+='<div class="prof" id="stProf"></div><p class="note" style="margin-top:6px"><a href="#/plus/jumeau" onclick="twCur=stCur" style="color:var(--gold);font-weight:700;text-decoration:none">Où m\'entraîner sur ce profil autour de Nice ›</a></p>';
+  if((D.courses||[]).includes(stCur))h+='<div class="prof" id="stProf"></div><p class="note" style="margin-top:6px"><a href="#/courses/jumeau" onclick="twCur=stCur" style="color:var(--gold);font-weight:700;text-decoration:none">Où m\'entraîner sur ce profil autour de Nice ›</a></p>';
   if(o.cues)h+='<div class="sub"><span>À chaque bip de la montre (toutes les 20 min)</span></div><div class="box"><ul class="cues" style="margin:0">'+o.cues.map(c=>'<li>'+esc(c)+'</li>').join('')+'</ul></div>';
   else h+='<div class="sub"><span>Toutes les 20 minutes</span></div><div class="box">'+fr(o.gh/3)+' g de glucides, '+fr(o.ml/3)+' ml d\'eau, '+fr(o.na/3)+' mg de sodium.</div>';
   if(o.rows&&o.rows.length)h+='<div class="sub"><span>Tableau de marche · départ '+fmtD(r.date).replace(/\.$/,'')+' à '+r.start.replace(':',' h ')+'</span></div><div class="box" style="padding-top:4px;padding-bottom:4px">'+o.rows.map((x,i)=>'<div class="tmrow'+(x.base?' bv':'')+'" style="'+(i?'':'border-top:0')+'"><span class="a"><b>'+(x.night?'☾ ':'')+esc(x.nm)+'</b></span><span class="b">'+esc(x.clock)+'</span><small>'+(x.km!=null?'km '+km(x.km)+' · ':'')+esc(x.t)+' de course</small><small>barrière '+esc(x.barClock)+'</small>'+(x.carry?'<span class="f">À emporter : '+esc(x.carry)+'</span>':'')+'</div>').join('')+'</div><p class="note">☾ = de nuit. Temps calés sur les barrières horaires pour un objectif de '+hm(H*60)+'.</p>';
@@ -589,6 +601,31 @@ function stratHTML(){const S=D.strat||{},R=D.races,r=R.find(x=>x.id===stCur),o=S
 function bindStrat(){document.querySelectorAll('[data-st]').forEach(b=>b.onclick=()=>{stCur=b.dataset.st;vPlus('strategie')});
   const el=document.getElementById('stProf');if(el){const r=D.races.find(x=>x.id===stCur),o=(D.strat||{})[stCur]||{},st=rStart(r);drawProf(el,stCur,[{km:0,ms:st}].concat((o.rows||[]).map(x=>({km:x.km,ms:st+x.th*36e5,lab:x.nm.split(' ')[0]+' '+String(x.clock||'').slice(5)}))),null)}}
 
+
+
+/* ---------- nutrition ---------- */
+const DOWL=['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+function dayNeeds(ds){const B=D.body||{},w=+B.w;if(!w)return null;const ss=dayS(ds);let run=0,bike=0,gym=0,dp=0,hard=false;
+  ss.forEach(x=>{const m=(x.r&&x.r.min)||x.m||0;if(x.c==='gym')gym+=m;else if(x.c==='bike'||x.c==='cross')bike+=m;else run+=m;dp+=x.dp||0;if(x.k||/Z[45]/.test(x.z||''))hard=true});
+  const endu=run+bike,h=endu/60;
+  const kcal=w*31+w*(run/60)*(hard?11:8.5)*(1+Math.min(.3,dp/Math.max(1,run)/30))+w*(bike/60)*7+w*(gym/60)*5;
+  const cg=endu===0?(gym?[4,5]:[3,5]):endu<60?[5,6]:endu<120?(hard?[6,8]:[5,7]):endu<240?[7,10]:[9,12];
+  return {w,ss,run,bike,gym,endu,hard,dp,kcal:Math.round(kcal/50)*50,cg,carb:cg.map(x=>Math.round(x*w/10)*10),prot:gym?[Math.round(1.8*w),Math.round(2.2*w)]:[Math.round(1.6*w),Math.round(2*w)],water:Math.round((35*w+endu*10)/100)/10}}
+function vNutri(){const el=document.getElementById('s-nutrition');const n=dayNeeds(T);let h='<div class="hd"><h1>Nutrition</h1><p>Mes besoins du jour selon les séances de Dorian, et mes plans de course.</p></div>';
+  if(!n)h+='<div class="box muted">Ajoute ton poids dans ton carnet (Profil) pour calculer tes besoins.</div>';
+  else{const t=n.ss.map(x=>x.t).join(' + ');
+    h+='<div class="box"><div class="muted" style="font:600 .82rem var(--f)">Aujourd\'hui · '+(n.ss.length?esc(t)+' · '+hm(n.endu+n.gym):'repos')+'</div><b style="display:block;font-size:2.2rem;line-height:1.1;margin-top:4px">'+fr(n.kcal)+' kcal</b><span class="muted">environ, pour '+n.w+' kg</span></div>';
+    h+='<div class="nut-h" style="margin-top:10px"><div class="box"><span>Glucides</span><b>'+n.carb[0]+'–'+n.carb[1]+' g</b><span>'+n.cg[0]+'–'+n.cg[1]+' g/kg</span></div><div class="box"><span>Protéines</span><b>'+n.prot[0]+'–'+n.prot[1]+' g</b><span>'+(n.gym?'jour de salle':'1,6–2 g/kg')+'</span></div><div class="box"><span>Eau</span><b>'+String(n.water).replace('.',',')+' L</b><span>sur la journée</span></div></div>';
+    const tips=[];
+    if(n.endu>=75)tips.push(['Avant','Repas riche en glucides 2 à 3 h avant, ou une collation (banane, pain, compote) 1 h avant.']);else if(n.endu)tips.push(['Avant','Une collation si la séance tombe loin du dernier repas.']);
+    if(n.endu>=150)tips.push(['Pendant','60 à 90 g de glucides par heure et 500 à 750 ml d\'eau, avec du sel s\'il fait chaud : c\'est aussi l\'entraînement de ton ventre pour la Diagonale.']);else if(n.endu>=75)tips.push(['Pendant','30 à 60 g de glucides par heure, de l\'eau à la soif.']);else if(n.endu)tips.push(['Pendant','De l\'eau suffit.']);
+    if(n.gym)tips.push(['Salle','20 à 30 g de protéines dans l\'heure qui suit, avec des glucides.']);
+    if(n.endu)tips.push(['Après','Dans l\'heure : glucides + 20 à 30 g de protéines (repas, ou yaourt, fruit et pain).'+(n.hard?' Séance intense : ne zappe pas ce repas.':'')]);
+    if(!n.ss.length)tips.push(['Repos','Mange à ta faim : glucides complets, légumes et protéines à chaque repas. La récupération se fait aussi dans l\'assiette.']);
+    h+='<div class="sub"><span>Autour de la séance</span></div><div class="box"><ul class="list">'+tips.map(x=>'<li><span><b>'+x[0]+'</b><br><small class="muted" style="font-size:.86rem">'+x[1]+'</small></span></li>').join('')+'</ul></div>';
+    const W=weekOf(T);if(W){const m=monday(T);h+='<div class="sub"><span>Ma semaine</span></div><div class="box"><ul class="list">'+DOWL.map((dn,i)=>{const ds=add(m,i),x=dayNeeds(ds);return '<li'+(ds===T?' style="font-weight:700"':'')+'><span>'+dn.slice(0,3)+'. · <small class="muted">'+(x.ss.length?esc(x.ss.map(y=>y.t).join(' + ')):'repos')+'</small></span><b>'+x.carb[0]+'–'+x.carb[1]+' g</b></li>'}).join('')+'</ul><p class="note">Glucides par jour. Repères pour sportif d\'endurance, pas un régime : Dorian a la main sur ta nutrition.</p></div>'}}
+  const S=D.strat||{};h+='<div class="sub"><span>Nutrition de course</span></div><div class="box"><ul class="list">'+(D.races||[]).filter(r=>S[r.id]).map(r=>{const o=S[r.id];return '<li><span><b>'+esc(SH[r.id]||r.name)+'</b><br><small class="muted">objectif '+hm(o.goal*60)+' · '+o.gh+' g/h · '+o.ml+' ml/h · '+o.na+' mg/h</small></span><a href="#/courses/strategie" data-stg="'+r.id+'" style="color:var(--gold);font-weight:700;text-decoration:none">'+fr(o.goal*o.gh)+' g ›</a></li>'}).join('')+'</ul></div>';
+  el.innerHTML=h;el.querySelectorAll('[data-stg]').forEach(a=>a.onclick=()=>{stCur=a.dataset.stg})}
 
 /* ---------- météo (Open-Meteo, Nice) ---------- */
 const WX={lat:43.70,lon:7.27,key:'wx-nice'};let wxData=null,wxP=null;
@@ -781,13 +818,17 @@ function twDraw(){const box=document.getElementById('tw');if(!box)return;
 function twBind(){const box=document.getElementById('tw');box.querySelectorAll('[data-twc]').forEach(b=>b.onclick=()=>{twCur=b.dataset.twc;twDraw()});const a=box.querySelector('[data-twall]');if(a)a.onclick=()=>{twAll=!twAll;twDraw()}}
 
 /* ---------- navigation ---------- */
-function route(){const hsh=location.hash||'';let m=hsh.match(/^#\/([a-z]+)(?:\/([a-z]+))?/);let t=m?m[1]:'';const sub=m?m[2]:'';
+const OLD={'plus/strategie':'courses/strategie','plus/jumeau':'courses/jumeau','plus/courses':'courses','plus/journal':'profil/journal','plus/apropos':'victory/apropos','plus/versions':'victory/versions','plus/cartes':'victory/cartes','plus':'victory','progres':'profil'};
+function route(){const hsh=location.hash||'';let m=hsh.match(/^#\/([a-z]+)(?:\/([a-z]+))?/);let t=m?m[1]:'';let sub=m?m[2]:'';
+  const o=OLD[t+(sub?'/'+sub:'')]||(t==='plus'||t==='progres'?OLD[t]:null);if(o){history.replaceState(null,'','#/'+o);[t,sub]=o.split('/');sub=sub||''}
   if(!t&&/p=/.test(hsh))t='assistance';
-  if(!['aujourdhui','seances','assistance','progres','plus'].includes(t))t='aujourdhui';
+  if(!['aujourdhui','seances','nutrition','courses','assistance','victory','profil'].includes(t))t='aujourdhui';
   if(CREW)t='assistance';
   document.querySelectorAll('.scr').forEach(s=>s.classList.toggle('on',s.id==='s-'+t));
-  document.querySelectorAll('.tabs a').forEach(a=>{const on=a.dataset.t===t;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
-  ({aujourdhui:vToday,seances:vPlan,assistance:AS.draw,progres:vProg,plus:()=>vPlus(sub)})[t]();
+  const tt=t==='assistance'?'courses':t;
+  document.querySelectorAll('.tabs a').forEach(a=>{const on=a.dataset.t===tt;a.classList.toggle('on',on);if(on)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  const mb=document.getElementById('meBtn');if(mb){mb.classList.toggle('on',t==='profil');if(CREW)mb.style.display='none'}
+  ({aujourdhui:vToday,seances:vPlan,nutrition:vNutri,courses:()=>vPlus(sub||'courses','courses'),assistance:AS.draw,victory:()=>vPlus(sub,'victory'),profil:()=>vProfil(sub)})[t]();
   if(dlg.open)dlg.close()}
 window.addEventListener('hashchange',()=>{route();window.scrollTo(0,0)});
 route();
@@ -800,7 +841,7 @@ route();
   setTimeout(()=>{if(dlg.open)return;lastFocus=null;
     document.getElementById('shW').textContent='Nouveautés · version '+vshort(APPV);
     document.getElementById('shT').textContent=nw[0].name;
-    document.getElementById('shB').innerHTML='<div class="vers">'+nw.map((c,i)=>(i?'<p class="note" style="margin:14px 0 4px">Version '+vshort(c.v)+' · '+esc(c.name)+'</p>':'')+'<ul class="whatsnew">'+vitems(c).map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>').join('')+'</div><div style="display:grid;gap:8px;margin-top:16px"><button class="btn" id="wnOk">C\'est parti</button><a class="btn ghost" href="#/plus/versions" id="wnAll">Tout l\'historique</a></div>';
+    document.getElementById('shB').innerHTML='<div class="vers">'+nw.map((c,i)=>(i?'<p class="note" style="margin:14px 0 4px">Version '+vshort(c.v)+' · '+esc(c.name)+'</p>':'')+'<ul class="whatsnew">'+vitems(c).map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul>').join('')+'</div><div style="display:grid;gap:8px;margin-top:16px"><button class="btn" id="wnOk">C\'est parti</button><a class="btn ghost" href="#/victory/versions" id="wnAll">Tout l\'historique</a></div>';
     document.getElementById('wnOk').onclick=()=>dlg.close();
     dlg.showModal?dlg.showModal():dlg.setAttribute('open','')},600)})();
 (function(){let busy=false,last=Date.now();

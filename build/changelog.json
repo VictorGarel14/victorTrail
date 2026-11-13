@@ -1,71 +1,127 @@
 [
-  {"v": "3.0.0", "date": "2026-11-12", "name": "Privé",
-   "items": [
-     "Données chiffrées : sans connexion, le site n'affiche plus rien de personnel",
-     "Connexion par code à usage unique reçu par e-mail, une fois par appareil",
-     "Lien équipe d'assistance (Plus › Présentation) : l'équipe ne voit que l'onglet Assistance",
-     "Bouton « Se déconnecter de cet appareil »",
-     "Historique des versions (Plus › Nouveautés), résumé des nouveautés à l'ouverture et alerte quand une mise à jour est disponible"
-   ],
-   "os": ["Parcours de mes anciennes sorties chiffrés eux aussi"]},
-  {"v": "2.5.0", "date": "2026-11-11", "name": "Mode coach",
-   "items": [
-     "Les séances de Dorian (Nolio, reçues via Coros) remplacent le plan généré",
-     "Étiquette « Coach » sur ses séances et sa consigne dans la fiche",
-     "Screening biomécanique du 12 nov. avec le protocole complet des tests en salle"
-   ]},
-  {"v": "2.4.0", "date": "2026-11-10", "name": "Test labo",
-   "items": [
-     "Zones cardio issues du test au CMS (IPI 1 et 2, SV2) et allures terrain par zone",
-     "Indicateurs de progression recalés : VO₂ max labo, allure au seuil, oxydation des graisses",
-     "Paliers d'UTMB Index revus pour le MUT 60, l'UTC 100M et la Diagonale"
-   ],
-   "os": [
-     "Parcours conseillés dans la fiche séance : depuis la maison, le bureau ou une gare, avec trace GPX pour la Coros",
-     "Icône VIC'TORY (le V et l'éclair)"
-   ]},
-  {"v": "2.3.0", "date": "2026-11-08", "name": "VictorTrail OS",
-   "items": [],
-   "os": [
-     "Nouvelle interface dans le style 25H",
-     "Le Bestiaire : une carte de mon personnage dévoilée chaque vendredi jusqu'à la Diagonale"
-   ]},
-  {"v": "2.2.0", "date": "2026-11-05", "name": "Jumeau local",
-   "items": [
-     "Jumeau local : chaque morceau de mes courses retrouvé dans mes sorties autour de Nice",
-     "Profil d'altitude : zoom et D+/D− cumulés",
-     "Plan : charge type de 20 h en phase spécifique"
-   ]},
-  {"v": "2.1.0", "date": "2026-11-04", "name": "Modèle de course",
-   "items": [
-     "Temps de passage calculés par le moteur PaceTrail, calé sur ma course de Nice",
-     "Profil d'altitude interactif",
-     "Bouton « Envoyer sur ma Coros » dans la fiche séance"
-   ]},
-  {"v": "2.0.0", "date": "2026-10-29", "name": "Nouvelle appli",
-   "items": [
-     "Un écran par onglet : Aujourd'hui, Séances, Assistance, Progrès, Plus",
-     "Fonctionne hors ligne",
-     "Bilan des séances, mode salle animé, météo du jour",
-     "Carte et planning de route du MUT 60",
-     "Objectif UTC 100M : 21 h 30"
-   ]},
-  {"v": "1.2.0", "date": "2026-10-28", "name": "Objectif 650",
-   "items": [
-     "Objectif UTMB Index 650 fin 2027",
-     "Protocole ravito pour l'équipe d'assistance"
-   ]},
-  {"v": "1.1.0", "date": "2026-10-26", "name": "Aujourd'hui",
-   "items": [
-     "Onglet Aujourd'hui et tableau de bord",
-     "Position en direct dans Assistance",
-     "Fiches des exercices de renfo"
-   ]},
-  {"v": "1.0.0", "date": "2026-10-25", "name": "Premier départ",
-   "items": [
-     "Plan d'entraînement et stratégie de course",
-     "Version iPhone : barre d'onglets et icône d'écran d'accueil",
-     "Assistance : heures d'arrivée estimées, ravitos et compte à rebours",
-     "Bandeau de suivi en direct"
-   ]}
+ {
+  "v": "3.1.0",
+  "date": "2026-11-13",
+  "name": "Nouveaux onglets",
+  "items": [
+   "Nouveaux onglets : Aujourd'hui, Séances, Nutrition, Courses, VIC'TORY",
+   "Nutrition : mes besoins du jour (énergie, glucides, protéines, eau) selon les séances de Dorian, conseils avant, pendant et après, la semaine et mes plans de course",
+   "Courses : stratégie, jumeau local et assistance réunis par course",
+   "Mon profil, via l'icône en haut à droite : progrès, index UTMB, test labo et zones, journal, lien équipe et déconnexion"
+  ],
+  "os": [
+   "Le Bestiaire passe dans l'onglet VIC'TORY, avec la carte de la semaine en vedette"
+  ]
+ },
+ {
+  "v": "3.0.0",
+  "date": "2026-11-12",
+  "name": "Privé",
+  "items": [
+   "Données chiffrées : sans connexion, le site n'affiche plus rien de personnel",
+   "Connexion par code à usage unique reçu par e-mail, une fois par appareil",
+   "Lien équipe d'assistance (Plus › Présentation) : l'équipe ne voit que l'onglet Assistance",
+   "Bouton « Se déconnecter de cet appareil »",
+   "Historique des versions (Plus › Nouveautés), résumé des nouveautés à l'ouverture et alerte quand une mise à jour est disponible"
+  ],
+  "os": [
+   "Parcours de mes anciennes sorties chiffrés eux aussi"
+  ]
+ },
+ {
+  "v": "2.5.0",
+  "date": "2026-11-11",
+  "name": "Mode coach",
+  "items": [
+   "Les séances de Dorian (Nolio, reçues via Coros) remplacent le plan généré",
+   "Étiquette « Coach » sur ses séances et sa consigne dans la fiche",
+   "Screening biomécanique du 12 nov. avec le protocole complet des tests en salle"
+  ]
+ },
+ {
+  "v": "2.4.0",
+  "date": "2026-11-10",
+  "name": "Test labo",
+  "items": [
+   "Zones cardio issues du test au CMS (IPI 1 et 2, SV2) et allures terrain par zone",
+   "Indicateurs de progression recalés : VO₂ max labo, allure au seuil, oxydation des graisses",
+   "Paliers d'UTMB Index revus pour le MUT 60, l'UTC 100M et la Diagonale"
+  ],
+  "os": [
+   "Parcours conseillés dans la fiche séance : depuis la maison, le bureau ou une gare, avec trace GPX pour la Coros",
+   "Icône VIC'TORY (le V et l'éclair)"
+  ]
+ },
+ {
+  "v": "2.3.0",
+  "date": "2026-11-08",
+  "name": "VictorTrail OS",
+  "items": [],
+  "os": [
+   "Nouvelle interface dans le style 25H",
+   "Le Bestiaire : une carte de mon personnage dévoilée chaque vendredi jusqu'à la Diagonale"
+  ]
+ },
+ {
+  "v": "2.2.0",
+  "date": "2026-11-05",
+  "name": "Jumeau local",
+  "items": [
+   "Jumeau local : chaque morceau de mes courses retrouvé dans mes sorties autour de Nice",
+   "Profil d'altitude : zoom et D+/D− cumulés",
+   "Plan : charge type de 20 h en phase spécifique"
+  ]
+ },
+ {
+  "v": "2.1.0",
+  "date": "2026-11-04",
+  "name": "Modèle de course",
+  "items": [
+   "Temps de passage calculés par le moteur PaceTrail, calé sur ma course de Nice",
+   "Profil d'altitude interactif",
+   "Bouton « Envoyer sur ma Coros » dans la fiche séance"
+  ]
+ },
+ {
+  "v": "2.0.0",
+  "date": "2026-10-29",
+  "name": "Nouvelle appli",
+  "items": [
+   "Un écran par onglet : Aujourd'hui, Séances, Assistance, Progrès, Plus",
+   "Fonctionne hors ligne",
+   "Bilan des séances, mode salle animé, météo du jour",
+   "Carte et planning de route du MUT 60",
+   "Objectif UTC 100M : 21 h 30"
+  ]
+ },
+ {
+  "v": "1.2.0",
+  "date": "2026-10-28",
+  "name": "Objectif 650",
+  "items": [
+   "Objectif UTMB Index 650 fin 2027",
+   "Protocole ravito pour l'équipe d'assistance"
+  ]
+ },
+ {
+  "v": "1.1.0",
+  "date": "2026-10-26",
+  "name": "Aujourd'hui",
+  "items": [
+   "Onglet Aujourd'hui et tableau de bord",
+   "Position en direct dans Assistance",
+   "Fiches des exercices de renfo"
+  ]
+ },
+ {
+  "v": "1.0.0",
+  "date": "2026-10-25",
+  "name": "Premier départ",
+  "items": [
+   "Plan d'entraînement et stratégie de course",
+   "Version iPhone : barre d'onglets et icône d'écran d'accueil",
+   "Assistance : heures d'arrivée estimées, ravitos et compte à rebours",
+   "Bandeau de suivi en direct"
+  ]
+ }
 ]
