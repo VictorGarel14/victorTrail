@@ -1,5 +1,14 @@
 [
  {
+  "v": "3.6.1",
+  "date": "2026-11-13",
+  "name": "Correctif",
+  "items": [
+   "Forme du jour : la réponse choisie s'affiche en couleur, bien visible, et les autres s'estompent"
+  ],
+  "os": []
+ },
+ {
   "v": "3.6.0",
   "date": "2026-11-13",
   "name": "Tous les produits",
