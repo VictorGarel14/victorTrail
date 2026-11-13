@@ -1,11 +1,23 @@
 [
  {
+  "v": "3.2.0",
+  "date": "2026-11-13",
+  "name": "Nutrition",
+  "items": [
+   "Nutrition repensée : Repas, Courses, Recettes et Budget dans le style de l'appli, avec le même programme que « Ma cuisine »",
+   "Repas : semaine et jour à choisir, séance du jour, apports du jour, pendant l'effort, menu avec bouton pour changer un plat",
+   "Fiches recette dans l'appli : ingrédients, méthode classique ou Cookeo, étapes à cocher, minuteur, réglage du four",
+   "Courses à cocher par rayon (1 semaine, 2 semaines ou le mois), batch cooking du dimanche et réglages « Mes repas »"
+  ],
+  "os": []
+ },
+ {
   "v": "3.1.0",
   "date": "2026-11-13",
   "name": "Nouveaux onglets",
   "items": [
    "Nouveaux onglets : Aujourd'hui, Séances, Nutrition, Courses, VIC'TORY",
-   "Nutrition : le programme de « Ma cuisine » directement dans l'appli (repas de la semaine adaptés aux séances, besoins du jour, pendant l'effort, liste de courses, recettes, budget)",
+   "Nutrition : le programme de « Ma cuisine » dans l'appli (repas adaptés aux séances, besoins du jour, pendant l'effort, liste de courses, recettes, budget)",
    "Courses : stratégie, jumeau local et assistance réunis par course",
    "Mon profil, via l'icône en haut à droite : progrès, index UTMB, test labo et zones, journal, lien équipe et déconnexion"
   ],
