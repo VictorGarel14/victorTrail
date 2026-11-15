@@ -1,5 +1,16 @@
 [
  {
+  "v": "3.9.0",
+  "date": "2026-11-15",
+  "name": "En plus",
+  "items": [
+   "Nutrition › Repas : « J'ai mangé autre chose » pour ajouter ce que je mange en plus de mes repas (une pomme, des Krisprolls avec de la crème de spéculoos…), compté dans les apports du jour",
+   "Plusieurs aliments d'un coup, avec les quantités, depuis les produits, la recherche Open Food Facts, mes recettes ou la saisie libre",
+   "Nouveaux produits : Krisprolls, biscottes, crème de spéculoos, pâte à tartiner, viennoiseries, glace, chips, fruits de saison…"
+  ],
+  "os": []
+ },
+ {
   "v": "3.8.0",
   "date": "2026-11-13",
   "name": "Nutrition allégée",
