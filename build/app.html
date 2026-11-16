@@ -752,7 +752,7 @@ function nuBoot(){if(NU.boot)return;NU.boot=1;
 function nuToast(m){if(!m)return;let t=document.getElementById('nuToast');if(!t){t=document.createElement('div');t.id='nuToast';t.className='nu-toast';t.setAttribute('role','status');document.body.appendChild(t)}t.textContent=m;t.classList.add('on');clearTimeout(nuToast.h);nuToast.h=setTimeout(()=>t.classList.remove('on'),1800)}
 function nuRedraw(){const el=document.getElementById('s-nutrition');if(el&&el.classList.contains('on'))vNutri(NU.sub);if(dlg.open&&NU.sh)nuSheet()}
 function vNutri(sub){const el=document.getElementById('s-nutrition');el.classList.remove('full');const old=document.getElementById('cuiF');if(old)old.remove();
-  nuBoot();sub=NUSUB.some(x=>x[0]===sub)?sub:'repas';NU.sub=sub;const C=NU.C;
+  nuBoot();sub=NUSUB.some(x=>x[0]===sub)?sub:'repas';NU.sub=sub;const C=NU.C;if(C&&C.SYNC&&Date.now()-(NU.lp||0)>60000){NU.lp=Date.now();C.SYNC.pull()}
   let h='<div class="hd"><h1>Nutrition</h1><p>'+({repas:'Mes repas, adaptés à mes séances',courses:'Ma liste de courses',recettes:'Toutes mes recettes',reglages:'Ma semaine type, mon équipement, mes goûts'})[sub]+'</p></div>';
   h+='<div class="seg nu-tabs" role="group" aria-label="Rubriques nutrition">'+NUSUB.map(x=>'<button data-nu="sub|'+x[0]+'" aria-pressed="'+(sub===x[0])+'">'+x[1]+'</button>').join('')+'</div>';
   if(!C){el.innerHTML=h+'<div class="rest" style="margin-top:16px">'+(NU.err?'<b>Programme indisponible</b>Impossible de charger « Ma cuisine » pour le moment. Réessaie avec du réseau.':'<b>Chargement…</b>Je prépare mes repas de la semaine.')+'</div>';return}
@@ -862,6 +862,8 @@ function nuReglages(C){const S=C.S,T0=S.tpl;let h='<div class="sub"><span>Ma sem
     '<div class="nu-row" style="margin-top:10px"><span>Pour toutes les nouvelles semaines<small>Sinon, menus variés automatiquement</small></span><button class="nu-sw2" data-nu="tauto" aria-pressed="'+!!S.tplAuto+'" aria-label="Utiliser la semaine type pour les nouvelles semaines"></button></div><button class="btn ghost" data-nu="tdel">Supprimer ma semaine type</button>'}
   h+='</div><div class="sub"><span>Ma semaine en cours</span></div><div class="nu-2" style="margin-top:-12px"><button class="btn" data-nu="batch">Batch cooking</button><button class="btn ghost" data-nu="regen">Nouveaux menus</button></div>';
   h+='<div class="sub"><span>Mon équipement de cuisine</span></div>'+nuEqBody(C)+nuSetBody(C);
+  const Y=C.SYNC&&C.SYNC.state;h+='<div class="sub"><span>Synchronisation</span></div><div class="box"><p style="margin:0 0 4px"><b>'+(!Y||Y.ok===null?'Synchronisation en cours…':Y.ok?'Synchronisé entre mes appareils ✓':'Pas de réseau : synchronisé dès que possible')+'</b></p><p class="note" style="margin-top:0">Menus, ajouts, courses cochées et réglages sont chiffrés avec ma clé et partagés entre le téléphone et l\'ordinateur. En cas de modification sur deux appareils, la plus récente l\'emporte.</p><button class="btn ghost" data-nu="ysync">Synchroniser maintenant</button>'+
+    (C.SYNC&&C.SYNC.hasBak()?'<div class="did2 warn" style="margin-top:12px"><b>Menus d\'avant la synchronisation</b>Cet appareil avait ses propres menus avant d\'être synchronisé. Je peux les remettre à la place (et les envoyer sur mes autres appareils).</div><div class="nu-2"><button class="btn" data-nu="ybak">Restaurer</button><button class="btn ghost" data-nu="ydrop">Ignorer</button></div>':'')+'</div>';
   return h}
 /* --- Budget --- */
 function nuBudget(C){const S=C.S,raw=C.monthCost(),mc=raw*1.15,b=C.budgetVal(),ba=C.budgetApp(),wm=S.weeks.reduce((s,w)=>s+C.weekMeals(w),0),dif=b-mc;
@@ -1004,6 +1006,9 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-nu]');if(!
     case 'set':nuOpen({k:'set'},b);return;
     case 'eqs':e.preventDefault();nuOpen({k:'eq'},b);return;
     case 'eq':m=O.equip(x);break;
+    case 'ysync':C.SYNC.pull().then(()=>{nuToast(C.SYNC.state.ok?'Synchronisé ✓':'Synchronisation impossible pour le moment');nuRedraw()});return;
+    case 'ybak':if(!confirm('Remplacer les menus synchronisés par ceux de cet appareil ?'))return;m=C.SYNC.restoreBak();break;
+    case 'ydrop':C.SYNC.dropBak();break;
     case 'tsave':m=O.saveTpl(S_week());break;
     case 'tapply':m=O.applyTpl(+x);break;
     case 'tauto':m=O.tplAuto();break;
