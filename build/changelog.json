@@ -1,5 +1,16 @@
 [
  {
+  "v": "3.10.0",
+  "date": "2026-11-18",
+  "name": "Ma dépense",
+  "items": [
+   "Nutrition › Repas : « Ma dépense du jour » estimée (métabolisme de base, vie quotidienne, séances du plan ou réellement faites)",
+   "L'objectif calorique du jour suit cette dépense : protéines et lipides en g/kg, les glucides complètent",
+   "Réglages › Mes besoins : niveau d'activité hors sport ; taille et année de naissance reprises de Mon profil"
+  ],
+  "os": []
+ },
+ {
   "v": "3.9.1",
   "date": "2026-11-16",
   "name": "Synchro nutrition",
