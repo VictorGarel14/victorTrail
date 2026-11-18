@@ -6,7 +6,8 @@
   "items": [
    "Nutrition : les calories brûlées sur mes séances viennent de la montre Coros quand l'activité est synchronisée (y compris les activités hors plan, comme le home trainer)",
    "Pour les séances à venir, estimation à partir du plan ; pour les jours passés sans mesure, à partir de ce qui a été réalisé",
-   "Détail des séances du jour dans « Ma dépense du jour », avec la source (montre, réalisé, prévu)"
+   "Détail des séances du jour dans « Ma dépense du jour », avec la source (montre, réalisé, prévu)",
+   "Séances : les activités faites en dehors du plan (home trainer, renfo…) apparaissent dans la semaine avec l'étiquette « Hors plan »"
   ],
   "os": []
  },
