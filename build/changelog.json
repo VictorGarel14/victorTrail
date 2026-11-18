@@ -1,5 +1,18 @@
 [
  {
+  "v": "3.11.0",
+  "date": "2026-11-18",
+  "name": "Bilan nutrition",
+  "items": [
+   "Nutrition › Bilan : mes apports face à mon entraînement, semaine par semaine (énergie, jour par jour, glucides, protéines, lipides)",
+   "Portions automatiques : les repas faits maison sont dosés chaque jour pour couvrir ma dépense (désactivable dans Réglages)",
+   "Conseils autour des séances : repas de récupération, veille de sortie longue, ravito pendant l'effort",
+   "« À faire » : manger plus ou moins, et quoi ajouter concrètement",
+   "Suivi du poids (1 à 2 fois par semaine) avec la tendance, utilisé pour juger si les apports sont bien calés"
+  ],
+  "os": []
+ },
+ {
   "v": "3.10.0",
   "date": "2026-11-18",
   "name": "Ma dépense",
