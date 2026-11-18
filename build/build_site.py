@@ -16,6 +16,25 @@ def _num(x):
 d['body']={'w':_num(pf.get('weight')),'fcmax':pf.get('fcmax'),'fcrest':pf.get('fcrest')}
 d['lab']=pf.get('lab'); d['zl']=pf.get('zl'); d['zsp']=pf.get('zsp')
 d['social']={k:(st.get('social') or {}).get(k,'') for k in ('ig','tt')}
+# calories mesurées par la montre (coros/records.txt écrit par la mise à jour automatique), pour la nutrition
+import re as _re
+def _coros_kcal(path):
+    out=[]
+    if not os.path.exists(path): return out
+    for b in _re.split(r'\n(?=\d+\. )',open(path,encoding='utf-8').read()):
+        m=_re.match(r'\d+\. (.+?) — (\d{4}-\d\d-\d\d)',b);k=_re.search(r'Calories: *(\d+) *kcal',b)
+        if not m or not k: continue
+        du=_re.search(r'Duration: *([\d:]+)',b);mins=0
+        if du:
+            p=[int(x) for x in du.group(1).split(':')];mins=round((p[0]*60+p[1]+p[2]/60) if len(p)==3 else (p[0]+p[1]/60))
+        lid=_re.search(r'LabelId: *(\d+)',b)
+        TR={'Outdoor Run':'Course à pied','Indoor Run':'Course sur tapis','Trail Run':'Trail','Track Run':'Piste','Hike':'Randonnée','Mountain Climb':'Montagne','Outdoor Bike':'Vélo','Indoor Cycling':'Vélo d\'intérieur','Indoor Bike':'Vélo d\'intérieur','Strength':'Renforcement','Gym Cardio':'Cardio','Walk':'Marche','Pool Swim':'Natation'}
+        loc=_re.search(r'Location: *(.+)',b);nm=TR.get(m.group(1).strip(),m.group(1).strip())
+        if loc and not _re.match(r'^[\d\s.,-]+$',loc.group(1)):
+            t=loc.group(1).strip();nm=(t[:1]+t[1:].lower()) if t.isupper() else t
+        out.append({'date':m.group(2),'name':nm,'min':mins,'kcal':int(k.group(1)),'id':lid.group(1) if lid else ''})
+    return out
+d['kcal']=_coros_kcal(OUT+'coros/records.txt')
 BD='M0 92 H52 C60 88 66 80 70 70 L76 50 L80 30 L83 14 L86 30 L90 50 L96 70 C100 80 106 88 114 92 H150 L196 52 L214 64 L262 2 L286 34 L304 22 L360 92 H568'
 BT='M67 70 H99 M74 50 H92 M64 92 C70 80 96 80 102 92'
 BC='M50 92 C60 88 66 80 70 70 L76 50 L80 30 L83 14 L86 30 L90 50 L96 70 C100 80 106 88 114 92 H150 L196 52 L214 64 L262 2 L286 34 L304 22 L330 92'
