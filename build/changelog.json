@@ -1,5 +1,13 @@
 [
  {
+  "v": "3.13.1",
+  "date": "2026-11-19",
+  "name": "Renfo animé",
+  "items": [
+   "Une animation du mouvement pour chaque exercice (abduction, crabe, sauts latéraux, pogos, drop jumps, deep squat, hip airplane, chaise romaine… en plus des existantes), toujours visible pendant la séance avec la consigne de la phase en cours"
+  ]
+ },
+ {
   "v": "3.13.0",
   "date": "2026-11-19",
   "name": "Renfo du coach",
