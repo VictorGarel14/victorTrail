@@ -1,5 +1,17 @@
 [
  {
+  "v": "3.13.0",
+  "date": "2026-11-19",
+  "name": "Renfo du coach",
+  "items": [
+   "Séances : nouvel espace Renfo avec les séances A et B de Dorian, semaine par semaine (variantes S1–2, dès S3, S5, S7 appliquées automatiquement)",
+   "Chaque exercice explique comment le faire, avec l'animation du mouvement quand elle existe",
+   "Pendant la séance : répétitions et charges notées série par série, ressenti (RIR) et minuteur de récup qui se lance tout seul",
+   "Charge proposée à partir de la séance précédente : on monte quand la dernière série laissait 3 répétitions en réserve",
+   "Progression : courbe des charges par exercice, régularité semaine par semaine et historique modifiable, synchronisés entre le téléphone et l'ordinateur"
+  ]
+ },
+ {
   "v": "3.12.0",
   "date": "2026-11-18",
   "name": "Calories de la montre",
