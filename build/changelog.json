@@ -1,5 +1,15 @@
 [
  {
+  "v": "3.13.2",
+  "date": "2026-11-22",
+  "name": "Apports plus justes",
+  "items": [
+   "Nutrition : les calories et macros de chaque recette sont recalculées à partir de leurs ingrédients (tables Ciqual et étiquettes) ; plusieurs anciennes recettes étaient surévaluées de 10 à 35 %",
+   "Portions du jour : seuls les féculents (riz, pâtes, pommes de terre, pain, avoine) suivent ta dépense, la viande, le poisson et les laitages restent à la même quantité ; les protéines ne s'envolent plus les grosses journées",
+   "Salade du midi recalculée avec ta nouvelle composition (riz, tomate, chou rouge, deux poulets, oignon rouge, vinaigrette miel-moutarde)"
+  ]
+ },
+ {
   "v": "3.13.1",
   "date": "2026-11-19",
   "name": "Renfo animé",

@@ -769,7 +769,7 @@ function vNutri(sub){const el=document.getElementById('s-nutrition');el.classLis
 /* --- Repas --- */
 function nuTrain(C,tr,f){if(!tr)return '';
   if(tr.type==='charge')return '<div class="box nu-tr" style="--tc:'+NUC.charge+'"><div class="nu-trh"><span class="nu-ti" aria-hidden="true">🍝</span><div><b>Charge glucidique · J−'+tr.j+' '+esc(tr.race.name.split(' · ')[0])+'</b><small>10 g de glucides/kg, peu de fibres et de gras, beaucoup d\'eau</small></div></div><p class="note">Privilégie riz blanc, pâtes, pain blanc, pommes de terre sans peau, compote, miel. Évite légumineuses, crudités, légumes riches en fibres et plats gras. Teste-le avant une sortie longue, jamais pour la première fois avant la course.</p></div>';
-  const t=C.DT[tr.type];return '<div class="box nu-tr" style="--tc:'+NUC[tr.type]+'"><div class="nu-trh"><span class="nu-ti" aria-hidden="true">'+t[1]+'</span><div><b>'+t[0]+'</b><small>'+(tr.l.length?tr.l.map(x=>esc(x.t)).join(' + ')+' · '+hm(tr.m)+(tr.dp?' · '+fr(Math.round(tr.dp))+' m D+':''):'Jour sans entraînement')+'</small></div><span class="tag'+(f>1.2?' k':'')+'" title="Portions du jour">× '+nuF(f)+'</span></div></div>'}
+  const t=C.DT[tr.type];return '<div class="box nu-tr" style="--tc:'+NUC[tr.type]+'"><div class="nu-trh"><span class="nu-ti" aria-hidden="true">'+t[1]+'</span><div><b>'+t[0]+'</b><small>'+(tr.l.length?tr.l.map(x=>esc(x.t)).join(' + ')+' · '+hm(tr.m)+(tr.dp?' · '+fr(Math.round(tr.dp))+' m D+':''):'Jour sans entraînement')+'</small></div><span class="tag'+(f>1.2?' k':'')+'" title="Féculents du jour (riz, pâtes, pommes de terre, pain, avoine) : le reste de l\'assiette ne change pas">Féculents × '+nuF(f)+'</span></div></div>'}
 function nuGauges(C,day,dt,d){const S=C.S,n=C.dayNeed(dt),g=C.dayGot(day,dt,d);
   const R=[['Calories','k','kcal','var(--blaze)'],['Glucides','G','g','var(--z3)'],['Protéines','P','g','var(--gold)'],['Lipides','L','g','var(--good)']];
   const B=n.burn;let h='';
@@ -802,8 +802,9 @@ function nuAdvice(C,n,g,fu){const S=C.S,fc=fu?Math.min(fu.carb,Math.max(0,n.G-g.
   if(P>15)h+='<p class="note">Il manquera encore ≈ '+Math.round(P)+' g de protéines : ajoute une portion de viande, poisson, œufs ou un skyr à un repas.</p>';
   if(overL)h+='<p class="note">Lipides au-dessus du plafond : choisis un plat plus léger avec ↻ (poisson blanc, volaille, légumineuses).</p>';
   return h}
+const nuM=(C,r,f)=>C.mac?C.mac(r,f):{k:r.k*f,P:r.P*f,G:r.G*f,L:r.L*f};
 function nuMeal(C,id,lab,f,swap){const r=C.RB[id];if(!r)return '';if(r.fx)f=1;
-  return '<div class="nu-meal"><button class="nu-mm" data-nu="rec|'+id+'">'+(lab?'<small>'+lab+'</small>':'')+'<span>'+(C.S.fav.includes(id)?'♥ ':'')+esc(r.n)+'</span><em>'+Math.round(r.k*f)+' kcal · '+Math.round(r.P*f)+' g prot · '+(r.cu?'ajouté':nuE2.format(C.recCost(r,f)))+'</em></button>'+(swap?'<button class="nu-sw" data-nu="'+swap+'" aria-label="Changer : '+esc(r.n)+'" title="Changer">↻</button>':'')+'</div>'}
+  return '<div class="nu-meal"><button class="nu-mm" data-nu="rec|'+id+'">'+(lab?'<small>'+lab+'</small>':'')+'<span>'+(C.S.fav.includes(id)?'♥ ':'')+esc(r.n)+'</span><em>'+Math.round(nuM(C,r,f).k)+' kcal · '+Math.round(nuM(C,r,f).P)+' g prot · '+(r.cu?'ajouté':nuE2.format(C.recCost(r,f)))+'</em></button>'+(swap?'<button class="nu-sw" data-nu="'+swap+'" aria-label="Changer : '+esc(r.n)+'" title="Changer">↻</button>':'')+'</div>'}
 function nuRepas(C){const S=C.S,wi=S.week,w=S.weeks[wi],ws=C.dateOf(wi,0);
   if(NU.day==null||NU.dw!==wi){let d0=0;for(let i=0;i<7;i++)if(C.dateOf(wi,i)===T)d0=i;NU.day=d0;NU.dw=wi}
   const d=NU.day,dt=C.dateOf(wi,d),tr=C.dayTrain(dt),f=C.dayFactor(dt),day=w.days[d];
@@ -820,7 +821,7 @@ function nuRepas(C){const S=C.S,wi=S.week,w=S.weeks[wi],ws=C.dateOf(wi,0);
   if(X.length)h+='<div class="box nu-meals">'+X.map((x,i)=>{const r=C.RB[x[0]];if(!r)return '';return '<div class="nu-meal"><div class="nu-mm"><span>'+(x[1]!==1?nuF(x[1])+' × ':'')+esc(r.n)+'</span><em>'+(r.por?esc(r.por)+' · ':'')+Math.round(r.k*x[1])+' kcal · '+nuF(Math.round(r.P*x[1]*10)/10)+' g prot · '+nuF(Math.round(r.G*x[1]*10)/10)+' g gluc</em></div><button class="nu-sw" data-nu="xdel|'+i+'" aria-label="Retirer '+esc(r.n)+'" title="Retirer">✕</button></div>'}).join('')+'</div>';
   h+='<button class="btn ghost nu-xadd" data-nu="xadd">+ J\'ai mangé autre chose</button>';
   if(has||X.length)h+=nuGauges(C,day,dt,d);
-  h+='<p class="note">'+(C.synced?'Synchronisé avec mon plan : les portions suivent l\'entraînement du jour (× 0,9 au repos jusqu\'à × 1,35 en sortie longue). ':'')+'Les veilles et jours de sortie longue privilégient des repas riches en glucides faciles à digérer, puis des repas de récupération riches en protéines. Besoins calculés avec des repères de nutrition du sport d\'endurance (glucides de 4 g/kg au repos à 9-10 g/kg en sortie longue ou course, protéines 1,6 à 2 g/kg) : à ajuster avec Dorian. Valeurs et prix indicatifs.</p>';
+  h+='<p class="note">'+(C.synced?'Synchronisé avec mon plan : les féculents (riz, pâtes, pommes de terre, pain, avoine) suivent l\'entraînement du jour, la viande, le poisson et les laitages restent à la même quantité. ':'')+'Les veilles et jours de sortie longue privilégient des repas riches en glucides faciles à digérer, puis des repas de récupération riches en protéines. Besoins calculés avec des repères de nutrition du sport d\'endurance (glucides de 4 g/kg au repos à 9-10 g/kg en sortie longue ou course, protéines 1,6 à 2 g/kg) : à ajuster avec Dorian. Valeurs et prix indicatifs.</p>';
   return h}
 
 /* --- Courses --- */
@@ -863,7 +864,7 @@ function nuRecList(C){const S=C.S,f=NU.f,ql=NU.q.trim().toLowerCase();
   let h='<div class="sub"><span>'+L.length+' recette'+(L.length>1?'s':'')+'</span></div>';
   if(!L.length)return h+'<div class="rest"><b>Aucune recette</b>Essaie un autre mot ou un autre filtre.</div>';
   return h+'<div class="box nu-meals">'+L.map(r=>{const ex=S.excl.includes(r.id),tg=[];if(r.pro)tg.push('<span class="tag k">⚡ Prozis / AM</span>');else if(r.src)tg.push('<span class="tag">♪ '+esc(r.src.by)+'</span>');if(r.ov)tg.push('<span class="tag">Four</span>');if(r.ck)tg.push('<span class="tag">Cookeo</span>');if(r.sk)tg.push('<span class="tag">Shaker</span>');r.tags.forEach(t=>tg.push('<span class="tag">'+C.TAGS[t]+'</span>'));if(ex)tg.push('<span class="tag nu-x">Exclue</span>');
-    return '<div class="nu-meal'+(ex?' ex':'')+'"><button class="nu-mm" data-nu="rec|'+r.id+'"><span>'+(S.fav.includes(r.id)?'♥ ':'')+esc(r.n)+'</span><em>'+r.m+' min · '+Math.round(r.k*S.portion)+' kcal · '+Math.round(r.P*S.portion)+' g prot · '+nuE2.format(C.recCost(r,S.portion))+'</em><span class="nu-tg">'+tg.join('')+'</span></button></div>'}).join('')+'</div>'}
+    return '<div class="nu-meal'+(ex?' ex':'')+'"><button class="nu-mm" data-nu="rec|'+r.id+'"><span>'+(S.fav.includes(r.id)?'♥ ':'')+esc(r.n)+'</span><em>'+r.m+' min · '+Math.round(nuM(C,r,S.portion).k)+' kcal · '+Math.round(nuM(C,r,S.portion).P)+' g prot · '+nuE2.format(C.recCost(r,S.portion))+'</em><span class="nu-tg">'+tg.join('')+'</span></button></div>'}).join('')+'</div>'}
 
 /* --- Bilan : mes apports face à mon entraînement --- */
 const NUOUT={k:700,P:30,G:80,L:25};
@@ -872,7 +873,7 @@ function nuDayIn(C,wi,d){const S=C.S,w=S.weeks[wi],day=w.days[d],dt=C.dateOf(wi,
   const fix=S.fixL.includes(d);
   C.SLOTS.forEach(sl=>{const k=sl[0],id=day[k];
     if(k==='d'&&fix){const r=C.RB.ext_salade;add(r,1);o.meals.push({k,lab:sl[1],P:r.P,G:r.G,k2:r.k});return}
-    if(id&&C.RB[id]){const r=C.RB[id],q=r.fx?1:f;add(r,q);o.meals.push({k,lab:sl[1],P:r.P*q,G:r.G*q,k2:r.k*q})}
+    if(id&&C.RB[id]){const r=C.RB[id],M=nuM(C,r,r.fx?1:f);add(M,1);o.meals.push({k,lab:sl[1],P:M.P,G:M.G,k2:M.k})}
     else if(!S.grid[d][k]){add(NUOUT,1);o.out++;o.meals.push({k,lab:sl[1],P:NUOUT.P,G:NUOUT.G,k2:NUOUT.k,out:true})}});
   ((S.extra||{})[dt]||[]).forEach(x=>{const r=C.RB[x[0]];if(r)add(r,x[1])});
   const sn=w.snacks.map(id=>C.RB[id]).filter(Boolean);sn.forEach(r=>add(r,S.portion/7));
@@ -963,13 +964,13 @@ function nuOpen(sh,trig){NU.sh=sh;lastFocus=trig||null;nuSheet(true);if(!dlg.ope
 function nuSheet(top){const C=NU.C,sh=NU.sh;if(!C||!sh)return;const y=dlg.scrollTop;let w='',t='',h='';
   if(sh.k==='rec'){const r=C.RB[sh.id],S=C.S,f=r.fx?1:S.portion,fav=S.fav.includes(sh.id),ex=S.excl.includes(sh.id);
     w=r.cu?'Ce que j\'ai mangé':({pdj:'Petit-déj',plat:'Plat',snack:'Collation',ext:'Acheté'})[r.t]+(r.m?' · '+r.m+' min':'');t=esc(r.n);
-    h+='<div class="nu-k4" style="margin-top:4px"><div><b>'+Math.round(r.k*f)+'</b><span>kcal</span></div><div><b>'+Math.round(r.P*f)+' g</b><span>protéines</span></div><div><b>'+Math.round(r.G*f)+' g</b><span>glucides</span></div><div><b>'+Math.round(r.L*f)+' g</b><span>lipides</span></div></div>';
-    h+='<p class="note">'+nuE2.format(C.recCost(r,f))+' la portion'+(f!==1?' (portion × '+nuF(f)+')':'')+'</p>';
+    const M=nuM(C,r,f);h+='<div class="nu-k4" style="margin-top:4px"><div><b>'+Math.round(M.k)+'</b><span>kcal</span></div><div><b>'+Math.round(M.P)+' g</b><span>protéines</span></div><div><b>'+Math.round(M.G)+' g</b><span>glucides</span></div><div><b>'+Math.round(M.L)+' g</b><span>lipides</span></div></div>';
+    h+='<p class="note">'+nuE2.format(C.recCost(r,f))+' la portion'+(f!==1?' (féculents × '+nuF(f)+')':'')+'</p>';
     const tg=r.tags.map(x=>'<span class="tag">'+C.TAGS[x]+'</span>');if(tg.length)h+='<div class="nu-tg" style="margin-top:10px">'+tg.join('')+'</div>';
     if(r.src)h+='<a class="nu-src" href="'+esc(r.src.url)+'" target="_blank" rel="noopener">♪ Inspiré de '+esc(r.src.by)+' sur TikTok ›</a>';
     if(r.desc)h+='<p class="ds">'+esc(r.desc)+'</p>';
     if(r.cu)h+='<p class="note">'+(r.own?'Ajouté à la main : compté dans les apports du jour, pas dans les courses.':'Produit tout prêt : compté dans les apports du jour. Valeurs indicatives, vérifie celles de ton pot.')+'</p>';
-    if(r.i.length)h+='<div class="sub"><span>Ingrédients</span></div><ul class="list">'+r.i.map(x=>{const ig=C.ING[x[0]],q=x[1]*f;return '<li><span>'+esc(ig.n)+'</span><b>'+(ig.u==='pc'?nuF(q)+' pièce'+(q>1?'s':''):Math.round(q)+' '+ig.u)+'</b></li>'}).join('')+'</ul>';
+    if(r.i.length)h+='<div class="sub"><span>Ingrédients</span></div><ul class="list">'+r.i.map(x=>{const ig=C.ING[x[0]],q=x[1]*(C.qf?C.qf(x[0],f):f);return '<li><span>'+esc(ig.n)+'</span><b>'+(ig.u==='pc'?nuF(q)+' pièce'+(q>1?'s':''):Math.round(q)+' '+ig.u)+'</b></li>'}).join('')+'</ul>';
     const P=C.recipePlan(r,C.METH);
     if(P.canCk)h+='<div class="seg" role="group" aria-label="Méthode" style="margin-top:18px"><button data-nu="meth|classic" aria-pressed="'+!P.ck+'">Classique</button><button data-nu="meth|cookeo" aria-pressed="'+P.ck+'">Au Cookeo</button></div><p class="note">'+(P.part?'Au Cookeo : le riz cuit dans le Cookeo pendant que tu fais le reste.':'Deux façons de faire la même recette : choisis-en une.')+'</p>';
     if(P.U&&P.U.length)h+='<div class="sub"><span>Ustensiles</span></div><div class="nu-tg">'+P.U.map(x=>'<span class="tag">'+esc(x)+'</span>').join('')+'</div>';
@@ -1038,7 +1039,7 @@ function nuSetBody(C){const S=C.S,av=S.avoid||[];let h='';
     h+='<div class="sub"><span>Mes besoins</span></div><div class="box"><label class="nu-row"><span>Mon poids (kg)<small>Repris de Mon profil, modifiable ici</small></span><input type="number" inputmode="decimal" data-nuc="kg" value="'+esc(Math.round(C.kgOf()*10)/10)+'"></label>'+
       '<label class="nu-row"><span>Activité hors sport<small>Travail, trajets, marche du quotidien</small></span><select data-nuc="neat">'+Object.keys(C.NEAT).map(k=>'<option value="'+k+'"'+((S.neat||'norm')===k?' selected':'')+'>'+C.NEAT[k][1].split(' (')[0]+'</option>').join('')+'</select></label>'+
       '<label class="nu-row"><span>Collations / semaine</span><input type="number" inputmode="numeric" min="0" max="14" data-nuc="snacks" value="'+S.snacks+'"></label>'+
-      '<div class="nu-row"><span>Portions automatiques<small>Les repas faits maison sont dosés pour couvrir ma dépense du jour</small></span><button class="nu-sw2" data-nu="autop" aria-pressed="'+(S.autoPortion!==false)+'" aria-label="Portions automatiques"></button></div>'+
+      '<div class="nu-row"><span>Portions automatiques<small>Les féculents des repas faits maison sont dosés pour couvrir ma dépense du jour, le reste de l\'assiette ne bouge pas</small></span><button class="nu-sw2" data-nu="autop" aria-pressed="'+(S.autoPortion!==false)+'" aria-label="Portions automatiques"></button></div>'+
       (S.autoPortion===false?'<label class="nu-row"><span>Taille des portions<small>À augmenter en grosse période</small></span><select data-nuc="portion">'+[0.8,1,1.2,1.4,1.6].map(p=>'<option value="'+p+'"'+(S.portion===p?' selected':'')+'>× '+nuF(p)+'</option>').join('')+'</select></label>':'')+
       '<label class="nu-row"><span>Jour de sortie longue<small>Seulement si le plan est injoignable</small></span><select data-nuc="longRun"><option value="-1"'+(S.longRun<0?' selected':'')+'>Aucun</option>'+C.DAYS.map((dn,d)=>'<option value="'+d+'"'+(S.longRun===d?' selected':'')+'>'+dn+'</option>').join('')+'</select></label>'+
       '<div class="nu-row"><span>Lipides au minimum<small>Plats les moins gras, plafond 0,8 g/kg/jour</small></span><button class="nu-sw2" data-nu="lowfat" aria-pressed="'+(S.lowfat!==false)+'" aria-label="Lipides au minimum"></button></div>'+
