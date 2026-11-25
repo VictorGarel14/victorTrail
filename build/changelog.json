@@ -1,5 +1,16 @@
 [
  {
+  "v": "3.15.0",
+  "date": "2026-11-25",
+  "name": "Ressenti et bilan",
+  "items": [
+   "Ressenti de séance : après chaque activité synchronisée, note l'effort de 1 (très facile) à 10 (maximal) depuis Aujourd'hui ; la charge de la semaine = ressenti × minutes, synchronisée entre tes appareils",
+   "Bilan de la semaine (Séances › Bilan, et rappel sur Aujourd'hui du lundi au mercredi) : volume à pied et à vélo face au prévu, séances du coach faites ou manquées, renfo, charge ressentie comparée aux 4 semaines d'avant, Hooper, nutrition, points à surveiller et aperçu de la semaine suivante",
+   "Dénivelé négatif : le D− de tes sorties s'affiche à côté du D+ dans Ma semaine et dans le bilan (mesuré par la montre, sinon estimé à partir de la trace)",
+   "Les animations des exercices du renfo ne sont plus effacées par les mises à jour du site"
+  ]
+ },
+ {
   "v": "3.14.0",
   "date": "2026-11-25",
   "name": "Vélo à part",

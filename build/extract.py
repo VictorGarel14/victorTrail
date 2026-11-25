@@ -18,12 +18,33 @@ if CO and os.path.exists(CO+'records.txt'):
     crec=open(CO+'records.txt').read()
     for f in glob.glob(CO+'*.fit'): cfit[os.path.basename(f)[:-4]]=base64.b64encode(open(f,'rb').read()).decode()
     for f in glob.glob(CO+'detail-*.txt'): cdet[os.path.basename(f)[7:-4]]=open(f).read()
+# dénivelé positif / négatif par activité : session FIT (total_ascent / total_descent), sinon fiche détail Coros (« Elevation Gain / Loss »)
+cdm={}
+if CO:
+    try:
+        try: import fitdecode
+        except ImportError:
+            import subprocess;subprocess.run([sys.executable,'-m','pip','install','-q','fitdecode','--break-system-packages'],capture_output=True);import fitdecode
+        for f in glob.glob(CO+'*.fit'):
+            try:
+                with fitdecode.FitReader(f) as fr:
+                    for fm in fr:
+                        if isinstance(fm,fitdecode.FitDataMessage) and fm.name=='session':
+                            up=fm.get_value('total_ascent',fallback=None);dn=fm.get_value('total_descent',fallback=None)
+                            if dn is not None: cdm[os.path.basename(f)[:-4]]=[up,dn]
+            except Exception: pass
+    except Exception: pass
+    import re as _re0
+    for k,t in cdet.items():
+        m=_re0.search(r'Elevation Gain\s*/\s*Loss:\s*(\d+)\s*m\s*/\s*(\d+)',t)
+        if m and k not in cdm: cdm[k]=[int(m.group(1)),int(m.group(2))]
 MERGE=r"""
-([txt,fits,det])=>{if(!txt)return 0;const recs=corosRecords(txt);const known=new Set(Object.values(state.acts).map(a=>a.coros).filter(Boolean));let n=0;
+([txt,fits,det,dm])=>{if(!txt)return 0;const recs=corosRecords(txt);const known=new Set(Object.values(state.acts).map(a=>a.coros).filter(Boolean));let n=0;
  recs.forEach(x=>{if(known.has(x.id))return;let a=null;const b=fits[x.id];
   if(b){try{const bin=atob(b);const u=new Uint8Array(bin.length);for(let k=0;k<bin.length;k++)u[k]=bin.charCodeAt(k);a=parseFIT(u.buffer);a.name=x.name}catch(e){a=null}}
   if(!a){let dp=0;const d=det[x.id];if(d){const m=d.match(/Elevation Gain[^:]*:\s*(\d+)/);if(m)dp=+m[1]}
     a={date:x.date,time:x.ts?new Date(x.ts*1000).toTimeString().slice(0,5):'',type:corosType(x.st),cat:corosCat(x.st),name:x.name,dur:x.dur,km:x.km,dp,hr:x.hr,mhr:null,zs:null,src:'coros'}}
+  if(dm&&dm[x.id]){const v=dm[x.id];if(v[1]!=null)a.dm=Math.round(v[1]);if(!a.dp&&v[0])a.dp=Math.round(v[0])}
   a.cat=corosCat(x.st);a.type=corosType(x.st);a.coros=x.id;a.cst=x.st;a.id='coros-'+x.id;state.acts[a.id]=a;n++});return n}
 """
 JS=r"""
@@ -64,8 +85,10 @@ const strat={};RACES.forEach(r=>{const st=stratState(r.id),C=CPS[r.id],H=+st.goa
   {const B=ravitoBudget(r.id);if(B)o.stopTot=B.tot}
   strat[r.id]=o});
 const tr=trajectory();
+const dmOf=a=>{if(a.dm!=null)return a.dm;const T=a.trk;if(Array.isArray(T)&&T.length>5&&a.dp){let u=0,d=0,p=null;T.forEach(q=>{const e=q[2];if(e==null)return;if(p!=null){if(e>p)u+=e-p;else d+=p-e}p=e});if(u>0)return Math.round(a.dp*d/u)}return a.dp||0};
+const acts2=Object.values(state.acts).filter(a=>a.date<=t&&a.date>=addD(t,-42)).sort((a,b)=>(b.date+(b.time||'')).localeCompare(a.date+(a.time||''))).map(a=>({date:a.date,time:a.time||'',k:actKind(a),name:String(a.name||a.type||'').split(' · ')[0].slice(0,60),km:+(+(a.km||0)).toFixed(1),dp:r0(a.dp||0),dm:r0(dmOf(a)),dme:a.dm==null,dur:r0(a.dur||0),load:a.load||null,id:a.coros||a.id||null}));
 return {plan,strat,today:t,prog:seasonProg(),phase:phaseOf(t).name,phaseGoal:phaseOf(t).goal,planStart:PLAN_START,week:wk(ws),next:wk(addD(ws,7)),weekReal:{h:+(st.min/60).toFixed(1),km:+st.km.toFixed(1),dp:r0(st.dp),n:st.n},
- weeks:F.weeks,acts:F.acts,physio:(()=>{const p=physio();return{pace:p.pace,vam:Math.round(p.vam),desc:p.desc,drift:p.drift,src:p.src}})(),ravito:{ref:RAVITO.ref.txt,types:RAVITO.types,order:RAVITO.order,rules:RAVITO.rules,crew:RAVITO.crew,before:RAVITO.before},ixgoal:(()=>{const L=(state.index||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));const sc=state.raceScore||{};return{target:IXGOAL.target,start:IXGOAL.start,cur:(L[L.length-1]||{}).utmb||IXGOAL.start.v,nice:IXGOAL.nice,steps:IXGOAL.steps.map(x=>({lab:x.lab,date:RACES.find(r=>r.id===x.race).date,txt:x.txt,lo:x.lo,score:+sc[x.race]||null}))}})(),gym:Object.fromEntries(Object.entries(GYM).map(([k,g])=>[k,{n:g.name,w:g.when,dur:g.dur,intro:g.intro,ex:g.ex.map(e=>[e[1],e[2],e[0]])}])),kpis:K,races:R,index:(state.index||[]).slice(-1)[0]||null,
+ weeks:F.weeks,acts:F.acts,acts2,physio:(()=>{const p=physio();return{pace:p.pace,vam:Math.round(p.vam),desc:p.desc,drift:p.drift,src:p.src}})(),ravito:{ref:RAVITO.ref.txt,types:RAVITO.types,order:RAVITO.order,rules:RAVITO.rules,crew:RAVITO.crew,before:RAVITO.before},ixgoal:(()=>{const L=(state.index||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));const sc=state.raceScore||{};return{target:IXGOAL.target,start:IXGOAL.start,cur:(L[L.length-1]||{}).utmb||IXGOAL.start.v,nice:IXGOAL.nice,steps:IXGOAL.steps.map(x=>({lab:x.lab,date:RACES.find(r=>r.id===x.race).date,txt:x.txt,lo:x.lo,score:+sc[x.race]||null}))}})(),gym:Object.fromEntries(Object.entries(GYM).map(([k,g])=>[k,{n:g.name,w:g.when,dur:g.dur,intro:g.intro,ex:g.ex.map(e=>[e[1],e[2],e[0]])}])),kpis:K,races:R,index:(state.index||[]).slice(-1)[0]||null,
  traj:{real:tr.pts.filter((_,i)=>i%3===0).map(p=>[p.d,+p.real.toFixed(1)]),plan:tr.plan.filter((_,i)=>i%3===0).map(p=>[p.d,+p.v.toFixed(1)])},
  fits:Object.fromEntries(['train','diag','rt100','mb42'].map(f=>[f,fitItems(f).map(x=>({cat:x.cat,name:x.name,brand:x.brand,bag:x.bag,eid:x.eid}))])),
  phases:PHASES.map(p=>({short:p.short,name:p.name,from:p.from,to:p.to,goal:p.goal}))}})()
@@ -79,14 +102,16 @@ async def main():
         await pg.evaluate("()=>{if(typeof fixActs==='function')fixActs();if(typeof migrateState==='function')migrateState();if(typeof physioRecal==='function')physioRecal()}")
         await pg.evaluate("(c)=>{if(typeof CPUSH!=='undefined')CPUSH=c}",cpush)
         await pg.evaluate("(c)=>{if(c&&typeof COACH!=='undefined'){COACH=c;PLAN=null}}",coach)
-        nm=await pg.evaluate(MERGE,[crec,cfit,cdet])
+        nm=await pg.evaluate(MERGE,[crec,cfit,cdet,cdm])
         if crec: print('coros : +',nm,'activité(s)')
         out=await pg.evaluate(JS)
         json.dump(out,open(OUT,'w'),ensure_ascii=False,indent=1)
         # moteur d'animation des exercices (repris tel quel du carnet)
         import re as _re
         m=_re.search(r'(const BOX=.*?)\n/\* ---- historique des charges',html,_re.S)
-        if m: open(os.path.join(os.path.dirname(os.path.abspath(OUT)),'anim.js'),'w').write('/* animations des exercices (carnet) */\nconst clamp=(v,a,b)=>Math.max(a,Math.min(b,v));\n'+m.group(1)+'\n')
+        if m:
+            ex=os.path.join(os.path.dirname(os.path.abspath(__file__)),'anim-extra.js')
+            open(os.path.join(os.path.dirname(os.path.abspath(OUT)),'anim.js'),'w').write('/* animations des exercices (carnet) */\nconst clamp=(v,a,b)=>Math.max(a,Math.min(b,v));\n'+m.group(1)+'\n'+(open(ex).read() if os.path.exists(ex) else ''))
         print(errs or 'ok', out['today'], out['phase'], len(out['acts'] or []), [k['l']+'='+str(k['val']) for k in out['kpis']])
         await b.close()
 asyncio.run(main())

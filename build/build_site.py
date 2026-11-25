@@ -44,7 +44,7 @@ sys.path.insert(0,HERE);import vtcrypt
 KO,KC=vtcrypt.keys()
 CREW_KEYS={'races','strat','crew','courses','ravito','today','planStart','physio','index','social'}
 crew={k:(v if k in CREW_KEYS else ([] if isinstance(v,list) else {} if isinstance(v,dict) else v if not isinstance(v,(str,int,float)) else v)) for k,v in d.items()}
-for k in ('acts','plan','week','weeks','weekReal','kpis','gym','fits','traj','phases','ixgoal','next','prog'):
+for k in ('acts','acts2','plan','week','weeks','weekReal','kpis','gym','fits','traj','phases','ixgoal','next','prog'):
     if k in crew: crew[k]=[] if isinstance(d[k],list) else {} if isinstance(d[k],dict) else None
 crew['crewMode']=True
 pack={'v':1,'o':vtcrypt.enc(d,KO),'c':vtcrypt.enc(crew,KC)}
