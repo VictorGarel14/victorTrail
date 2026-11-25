@@ -1,5 +1,15 @@
 [
  {
+  "v": "3.14.0",
+  "date": "2026-11-25",
+  "name": "Vélo à part",
+  "items": [
+   "Ma semaine : la course à pied et le trail d'un côté (temps, distance, D+), le vélo de l'autre (temps, D+), puis le volume total ; les km à vélo ne gonflent plus la distance à pied",
+   "Le réalisé se remplit au fil des séances synchronisées depuis la montre, sans attendre le lundi",
+   "Séances : le résumé de la semaine sépare aussi le temps à pied et le temps à vélo"
+  ]
+ },
+ {
   "v": "3.13.2",
   "date": "2026-11-22",
   "name": "Apports plus justes",
