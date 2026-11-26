@@ -1,5 +1,13 @@
 [
  {
+  "v": "3.17.1",
+  "date": "2026-11-26",
+  "name": "Forme du matin",
+  "items": [
+   "Correction : la forme du matin était bien enregistrée, mais Aujourd'hui ne la rechargeait plus à l'ouverture de l'app et affichait « pas encore renseignée »"
+  ]
+ },
+ {
   "v": "3.17.0",
   "date": "2026-11-26",
   "name": "Onglets plus clairs",

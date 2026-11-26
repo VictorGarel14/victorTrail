@@ -440,6 +440,7 @@ document.addEventListener('click',e=>{const g=e.target.closest('[data-gym]');if(
 let selDay=T;
 function vToday(){const el=document.getElementById('s-aujourdhui');const ws=monday(T);const days=[...Array(7)].map((_,i)=>add(ws,i));
   const L=dayS(selDay),isT=selDay===T,pre=selDay<D.planStart,me=OWNER&&!CREW;
+  if(me&&hwKo()){if(!HW.boot)hwLoad();else if(!Object.keys(HW.data).length)hwCache(false)}
   let h='<div class="hd"><h1 id="h-auj">'+(isT?'Aujourd\'hui':cap(wd(selDay)))+'</h1><p>'+cap(wd(selDay))+' '+fmtD(selDay).replace(/\.$/,'')+'</p></div>';
   h+='<div class="strip" role="group" aria-label="Jours de la semaine">'+days.map(d=>{const S=dayS(d);return '<button data-day="'+d+'" class="'+(d===T?'today':'')+'" aria-pressed="'+(d===selDay)+'" aria-label="'+cap(wd(d))+' '+fmtD(d)+(S.length?', '+S.length+' séance'+(S.length>1?'s':''):', repos')+'"><span class="d">'+wd(d).slice(0,3)+'</span><span class="n">'+(+d.slice(8))+'</span><span class="dots">'+S.slice(0,3).map(s=>'<i style="background:'+zcol(s)+'"></i>').join('')+'</span></button>'}).join('')+'</div>';
   // 1. la séance
