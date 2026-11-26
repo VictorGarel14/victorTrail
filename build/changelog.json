@@ -1,5 +1,16 @@
 [
  {
+  "v": "3.17.0",
+  "date": "2026-11-26",
+  "name": "Onglets plus clairs",
+  "items": [
+   "Le guide « Comment marche l'appli » est maintenant dans Mon profil, rubrique Aide",
+   "Séances : un résumé simple en haut (séances faites sur prévues, temps à pied et à vélo, lien vers le bilan) ; les anciennes pastilles de phases ont disparu",
+   "Nutrition : le verdict du jour d'abord (« Journée bien couverte », « Il manque ≈ 300 kcal »…), puis le menu, les idées pour compléter et le ravito ; le détail du calcul est replié. Sous-onglets renommés : Ma semaine, Liste",
+   "Courses : s'ouvre sur la prochaine course, une phrase explique chaque onglet, et le tableau de marche tient en une ligne par point de passage (touche pour voir quoi emporter)"
+  ]
+ },
+ {
   "v": "3.16.0",
   "date": "2026-11-26",
   "name": "Plus simple",
