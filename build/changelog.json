@@ -1,5 +1,13 @@
 [
  {
+  "v": "3.15.1",
+  "date": "2026-11-26",
+  "name": "Profil au doigt",
+  "items": [
+   "Assistance › Profil : glisse le doigt sur le profil pour déplacer le point (km, altitude, pente, D+ / D− cumulés, heure de passage) ; deux doigts pour zoomer et faire défiler"
+  ]
+ },
+ {
   "v": "3.15.0",
   "date": "2026-11-25",
   "name": "Ressenti et bilan",
